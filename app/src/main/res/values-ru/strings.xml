@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Фильмы</string>
+    <string name="bott_nav_item_home">Главная</string>
+    <string name="bott_nav_item_favorites">Избранное</string>
+    <string name="bott_nav_item_watchlater">Отложенное</string>
+    <string name="bott_nav_item_settings">Настройки</string>
+</resources>
