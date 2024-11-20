@@ -3,7 +3,7 @@ package com.moves.data.remote.response
 data class ResultDTO(
     val adult: Boolean,
     val backdrop_path: String,
-    val genre_ids: List<Int>,
+//    val genre_ids: List<Int>,
     val id: Int,
     val original_language: String,
     val original_title: String,
