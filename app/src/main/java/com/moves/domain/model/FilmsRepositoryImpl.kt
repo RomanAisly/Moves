@@ -1,8 +1,8 @@
 package com.moves.domain.model
 
+import com.moves.BuildConfig
 import com.moves.data.local.FilmsDB
 import com.moves.data.remote.FilmsAPI
-import com.moves.domain.di.AppModule
 import com.moves.utils.ResultData
 import com.moves.utils.toFilmsEntity
 import com.moves.utils.toLocalFilms
@@ -27,7 +27,7 @@ class FilmsRepositoryImpl @Inject constructor(
                 return@flow
             }
             val remoteFilms = try {
-                api.getFilmsByApi(apiKey = AppModule.API_KEY, page = 1)
+                api.getFilmsByApi(apiKey = BuildConfig.API_KEY, page = 1)
             } catch (e: IOException) {
                 e.printStackTrace()
                 emit(ResultData.Error(message = "Network error: ${e.message}"))
