@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class FilmsEntity(
     val adult: Boolean,
     val backdrop_path: String,
-//    val genre_ids: List<Int>,
+    val genre_ids: String,
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val original_language: String,

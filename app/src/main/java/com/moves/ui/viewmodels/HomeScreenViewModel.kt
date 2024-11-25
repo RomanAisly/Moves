@@ -28,7 +28,7 @@ class HomeScreenViewModel @Inject constructor(private val repositoryImpl: FilmsR
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            repositoryImpl.getFilms(page = 1, forceFetch = false).collectLatest { result ->
+            repositoryImpl.getFilms(page = 2, forceFetch = false).collectLatest { result ->
                 when (result) {
                     is ResultData.Success -> {
                         result.data?.let { films ->

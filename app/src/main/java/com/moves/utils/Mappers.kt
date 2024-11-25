@@ -8,7 +8,7 @@ fun ResultDTO.toFilmsEntity(): FilmsEntity {
     return FilmsEntity(
         adult = adult,
         backdrop_path = backdrop_path,
-//        genre_ids = genre_ids,
+        genre_ids = genre_ids.joinToString(","),
         id = id,
         original_language = original_language,
         original_title = original_title,
@@ -27,7 +27,7 @@ fun FilmsEntity.toLocalFilms(): Films {
     return Films(
         adult = adult,
         backdrop_path = backdrop_path,
-//        genre_ids = genre_ids,
+        genre_ids = genre_ids.split(",").map { it.toInt() },
         id = id,
         original_language = original_language,
         original_title = original_title,
