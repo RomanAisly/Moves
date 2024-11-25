@@ -32,7 +32,9 @@ fun FilmsItem(modifier: Modifier = Modifier, films: Films) {
             error = painterResource(id = R.drawable.no_internet),
             contentScale = ContentScale.FillBounds,
             modifier = modifier
-                .padding(8.dp) .clip(MaterialTheme.shapes.large).clickable {  }
+                .padding(8.dp)
+                .clip(MaterialTheme.shapes.large)
+                .clickable { }
 
         )
 
@@ -44,6 +46,6 @@ fun FilmsItem(modifier: Modifier = Modifier, films: Films) {
             modifier = modifier.padding(bottom = 10.dp)
         )
 
-        RatingBar(rating = films.vote_average / 2)
+        RatingBar(rating = films.vote_average / 2, modifier = modifier.padding(bottom = 2.dp))
     }
 }
