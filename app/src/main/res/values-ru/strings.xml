@@ -7,4 +7,8 @@
     <string name="bott_nav_item_settings">Настройки</string>
     <string name="toast">Соединение прервано</string>
     <string name="cont_desc_rating_of_the_film">рейтинг фильма</string>
+    <string name="film_category_popular">Популярное</string>
+    <string name="film_category_top">Топ</string>
+    <string name="film_category_now_playing">Смотрят сейчас</string>
+    <string name="film_category_upcoming">Скоро появится</string>
 </resources>

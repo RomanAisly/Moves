@@ -21,6 +21,7 @@ import com.moves.domain.model.Films
 
 @Composable
 fun FilmsItem(modifier: Modifier = Modifier, films: Films) {
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
 
@@ -34,8 +35,7 @@ fun FilmsItem(modifier: Modifier = Modifier, films: Films) {
             modifier = modifier
                 .padding(8.dp)
                 .clip(MaterialTheme.shapes.large)
-                .clickable { }
-
+                .clickable {}
         )
 
         Text(

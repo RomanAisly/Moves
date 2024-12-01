@@ -4,6 +4,10 @@
     <string name="bott_nav_item_favorites">Favorites</string>
     <string name="bott_nav_item_watchlater">Later</string>
     <string name="bott_nav_item_settings">Settings</string>
-    <string name="toast">Connection failed</string>
+    <string name="toast">Connection\'s failed</string>
     <string name="cont_desc_rating_of_the_film">rating of film</string>
+    <string name="film_category_popular">Popular</string>
+    <string name="film_category_top">Top</string>
+    <string name="film_category_now_playing">Now Playing</string>
+    <string name="film_category_upcoming">Upcoming</string>
 </resources>

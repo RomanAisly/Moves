@@ -15,7 +15,10 @@ class FilmsRepositoryImpl @Inject constructor(
     private val api: FilmsAPI,
     private val db: FilmsDB
 ) : FilmsRepository {
-    override suspend fun getFilms(page: Int, forceFetch: Boolean): Flow<ResultData<List<Films>>> {
+    override suspend fun getFilms(
+        page: Int,
+        forceFetch: Boolean
+    ): Flow<ResultData<List<Films>>> {
         return flow {
             val localFilms = db.dao().getLocalFilms()
             val shouldFetch = localFilms.isNotEmpty() && !forceFetch

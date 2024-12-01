@@ -2,7 +2,6 @@ package com.moves.domain.navigation
 
 import kotlinx.serialization.Serializable
 
-@Serializable
 sealed class Screens {
 
     @Serializable
@@ -16,4 +15,7 @@ sealed class Screens {
 
     @Serializable
     data object Settings: Screens()
+
+    @Serializable
+    data object Details: Screens()
 }

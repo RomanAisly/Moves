@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.moves.ui.screens.DetailsScreen
 import com.moves.ui.screens.FavoritesScreen
 import com.moves.ui.screens.HomeScreen
 import com.moves.ui.screens.SettingsScreen
@@ -54,6 +55,7 @@ fun NavGraph(modifier: Modifier = Modifier, navHostController: NavHostController
             composable<Screens.Favorites> { FavoritesScreen() }
             composable<Screens.WatchLater> { WatchLaterScreen() }
             composable<Screens.Settings> { SettingsScreen() }
+            composable<Screens.Details> { DetailsScreen() }
         }
     }
 }

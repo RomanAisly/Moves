@@ -28,19 +28,20 @@ class HomeScreenViewModel @Inject constructor(private val repositoryImpl: FilmsR
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            repositoryImpl.getFilms(page = 2, forceFetch = false).collectLatest { result ->
-                when (result) {
-                    is ResultData.Success -> {
-                        result.data?.let { films ->
-                            _allFilms.update { films }
+            repositoryImpl.getFilms(page = 2, forceFetch = false)
+                .collectLatest { result ->
+                    when (result) {
+                        is ResultData.Success -> {
+                            result.data?.let { films ->
+                                _allFilms.update { films }
+                            }
+                        }
+
+                        is ResultData.Error -> {
+                            _toast.send(true)
                         }
                     }
-
-                    is ResultData.Error -> {
-                        _toast.send(true)
-                    }
                 }
-            }
         }
     }
 
