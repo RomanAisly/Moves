@@ -53,19 +53,19 @@ fun HomeScreen(modifier: Modifier = Modifier, viewModel: HomeScreenViewModel = h
                 horizontalArrangement = Arrangement.spacedBy(6.dp)
             ) {
                 CategoryButton(
-                    onClick = {},
+                    changeCategory = {},
                     categoryName = stringResource(R.string.film_category_now_playing)
                 )
                 CategoryButton(
-                    onClick = {},
+                    changeCategory = {},
                     categoryName = stringResource(R.string.film_category_popular)
                 )
                 CategoryButton(
-                    onClick = {},
+                    changeCategory = {},
                     categoryName = stringResource(R.string.film_category_top)
                 )
                 CategoryButton(
-                    onClick = {},
+                    changeCategory = {},
                     categoryName = stringResource(R.string.film_category_upcoming)
                 )
             }

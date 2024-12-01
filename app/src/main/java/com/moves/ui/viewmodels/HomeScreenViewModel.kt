@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.moves.domain.model.Films
 import com.moves.domain.model.FilmsRepositoryImpl
+import com.moves.utils.FilmsCategory
 import com.moves.utils.ResultData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +29,11 @@ class HomeScreenViewModel @Inject constructor(private val repositoryImpl: FilmsR
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            repositoryImpl.getFilms(page = 2, forceFetch = false)
+            repositoryImpl.getFilms(
+                page = 1,
+                forceFetch = false,
+                category = FilmsCategory.NOW_PLAYING
+            )
                 .collectLatest { result ->
                     when (result) {
                         is ResultData.Success -> {

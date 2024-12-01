@@ -12,9 +12,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun CategoryButton(modifier: Modifier = Modifier, onClick: () -> Unit, categoryName: String) {
+fun CategoryButton(modifier: Modifier = Modifier, changeCategory: () -> Unit, categoryName: String) {
     Button(
-        onClick = onClick,
+        onClick = changeCategory,
         modifier = modifier.height(36.dp),
         colors = ButtonDefaults.buttonColors(containerColor = Color.Yellow)
     ) {

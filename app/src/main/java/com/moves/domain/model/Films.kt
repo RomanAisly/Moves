@@ -15,4 +15,5 @@ data class Films(
     val video: Boolean,
     val vote_average: Double,
     val vote_count: Int,
+    val category: String
 )

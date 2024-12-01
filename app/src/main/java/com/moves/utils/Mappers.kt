@@ -4,7 +4,7 @@ import com.moves.data.local.FilmsEntity
 import com.moves.data.remote.response.ResultDTO
 import com.moves.domain.model.Films
 
-fun ResultDTO.toFilmsEntity(): FilmsEntity {
+fun ResultDTO.toFilmsEntity(category: String): FilmsEntity {
     return FilmsEntity(
         adult = adult,
         backdrop_path = backdrop_path,
@@ -19,11 +19,12 @@ fun ResultDTO.toFilmsEntity(): FilmsEntity {
         title = title,
         video = video,
         vote_average = vote_average,
-        vote_count = vote_count
+        vote_count = vote_count,
+        category = category
     )
 }
 
-fun FilmsEntity.toLocalFilms(): Films {
+fun FilmsEntity.toLocalFilms(category: String): Films {
     return Films(
         adult = adult,
         backdrop_path = backdrop_path,
@@ -38,6 +39,7 @@ fun FilmsEntity.toLocalFilms(): Films {
         title = title,
         video = video,
         vote_average = vote_average,
-        vote_count = vote_count
+        vote_count = vote_count,
+        category = category
     )
 }

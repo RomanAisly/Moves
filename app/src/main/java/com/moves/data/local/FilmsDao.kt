@@ -10,6 +10,6 @@ interface FilmsDao {
     @Upsert
     suspend fun upsertFilms(films: List<FilmsEntity>)
 
-    @Query("SELECT * FROM filmsentity")
-    suspend fun getLocalFilms(): List<FilmsEntity>
+    @Query("SELECT * FROM filmsentity WHERE category = :category")
+    suspend fun getLocalFilms(category: String): List<FilmsEntity>
 }

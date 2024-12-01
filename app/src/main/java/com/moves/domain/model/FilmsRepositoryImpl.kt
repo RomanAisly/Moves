@@ -16,20 +16,21 @@ class FilmsRepositoryImpl @Inject constructor(
     private val db: FilmsDB
 ) : FilmsRepository {
     override suspend fun getFilms(
+        category: String,
         page: Int,
-        forceFetch: Boolean
+        forceFetch: Boolean,
     ): Flow<ResultData<List<Films>>> {
         return flow {
-            val localFilms = db.dao().getLocalFilms()
+            val localFilms = db.dao().getLocalFilms(category)
             val shouldFetch = localFilms.isNotEmpty() && !forceFetch
             if (shouldFetch) {
                 emit(ResultData.Success(data = localFilms.map { filmsEntity ->
-                    filmsEntity.toLocalFilms()
+                    filmsEntity.toLocalFilms(category)
                 }))
                 return@flow
             }
             val remoteFilms = try {
-                api.getFilmsByApi(page = page)
+                api.getFilmsByApi(category = category, page = page)
             } catch (e: IOException) {
                 e.printStackTrace()
                 emit(ResultData.Error(message = "Network error: ${e.message}"))
@@ -44,10 +45,10 @@ class FilmsRepositoryImpl @Inject constructor(
                 return@flow
             }
             val newFilms = remoteFilms.results.let {
-                it.map { films -> films.toFilmsEntity() }
+                it.map { films -> films.toFilmsEntity(category) }
             }
             db.dao().upsertFilms(newFilms)
-            emit(ResultData.Success(data = newFilms.map { it.toLocalFilms() }))
+            emit(ResultData.Success(data = newFilms.map { it.toLocalFilms(category) }))
         }
     }
 }
