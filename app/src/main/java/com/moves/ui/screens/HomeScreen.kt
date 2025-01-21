@@ -78,7 +78,7 @@ fun HomeScreen(
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2)
             ) {
-                items(allFilms.size) { index ->
+                items(allFilms.size, key = { allFilms[it].id }) { index ->
                     FilmsItem(
                         films = allFilms[index],
                         modifier = modifier,
