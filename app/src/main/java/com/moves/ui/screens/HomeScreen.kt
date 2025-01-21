@@ -19,15 +19,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.moves.R
+import com.moves.domain.navigation.Screens
 import com.moves.ui.components.CategoryButton
 import com.moves.ui.components.FilmsItem
 import com.moves.ui.components.LoadingScreen
 import com.moves.ui.viewmodels.HomeScreenViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier, viewModel: HomeScreenViewModel = hiltViewModel()) {
+fun HomeScreen(
+    modifier: Modifier = Modifier,
+    viewModel: HomeScreenViewModel = koinViewModel(),
+    navigateTo: (Screens) -> Unit
+) {
 
     val context = LocalContext.current
     val allFilms by viewModel.allFilms.collectAsState()
@@ -50,7 +55,7 @@ fun HomeScreen(modifier: Modifier = Modifier, viewModel: HomeScreenViewModel = h
                     .fillMaxWidth()
                     .padding(vertical = 6.dp)
                     .horizontalScroll(state = rememberScrollState()),
-                horizontalArrangement = Arrangement.spacedBy(6.dp)
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 CategoryButton(
                     changeCategory = {},
@@ -69,11 +74,15 @@ fun HomeScreen(modifier: Modifier = Modifier, viewModel: HomeScreenViewModel = h
                     categoryName = stringResource(R.string.film_category_upcoming)
                 )
             }
+
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2)
             ) {
                 items(allFilms.size) { index ->
-                    FilmsItem(films = allFilms[index], modifier = modifier)
+                    FilmsItem(
+                        films = allFilms[index],
+                        modifier = modifier,
+                        navigateTo = { navigateTo(Screens.Details) })
                 }
             }
         }

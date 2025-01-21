@@ -12,4 +12,7 @@ interface FilmsDao {
 
     @Query("SELECT * FROM filmsentity WHERE category = :category")
     suspend fun getLocalFilms(category: String): List<FilmsEntity>
+
+    @Query("SELECT * FROM filmsentity WHERE id = :id")
+    suspend fun getFilmByIds(id: Int) : FilmsEntity
 }

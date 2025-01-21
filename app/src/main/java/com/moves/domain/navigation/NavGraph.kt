@@ -51,7 +51,7 @@ fun NavGraph(modifier: Modifier = Modifier, navHostController: NavHostController
                 )
             }
         ) {
-            composable<Screens.Home> { HomeScreen() }
+            composable<Screens.Home> { HomeScreen(navigateTo = { navHostController.navigate(it) }) }
             composable<Screens.Favorites> { FavoritesScreen() }
             composable<Screens.WatchLater> { WatchLaterScreen() }
             composable<Screens.Settings> { SettingsScreen() }

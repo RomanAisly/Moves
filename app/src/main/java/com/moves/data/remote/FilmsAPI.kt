@@ -13,4 +13,9 @@ interface FilmsAPI {
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
         @Query("page") page: Int
     ): ResponseDTO
+
+    companion object{
+        const val BASE_URL = "https://api.themoviedb.org/3/"
+        const val IMAGE_URL = "https://image.tmdb.org/t/p/w500"
+    }
 }

@@ -9,9 +9,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okio.IOException
 import retrofit2.HttpException
-import javax.inject.Inject
 
-class FilmsRepositoryImpl @Inject constructor(
+class FilmsRepositoryImpl(
     private val api: FilmsAPI,
     private val db: FilmsDB
 ) : FilmsRepository {
@@ -51,4 +50,15 @@ class FilmsRepositoryImpl @Inject constructor(
             emit(ResultData.Success(data = newFilms.map { it.toLocalFilms(category) }))
         }
     }
+
+//    override suspend fun getFilmById(id: Int): Flow<ResultData<Films>> {
+//        return flow {
+//            val filmsEntity = db.dao().getFilmByIds(id)
+//            if (filmsEntity != null) {
+//                emit(ResultData.Success(filmsEntity.toLocalFilms(filmsEntity.category)))
+//                return@flow
+//            }
+//            emit(ResultData.Error(message = "Error: no such film"))
+//        }
+//    }
 }
