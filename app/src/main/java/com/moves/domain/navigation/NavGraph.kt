@@ -23,7 +23,7 @@ import com.moves.ui.screens.WatchLaterScreen
 @Composable
 fun NavGraph(modifier: Modifier = Modifier, navHostController: NavHostController) {
     Scaffold(
-        contentColor = MaterialTheme.colorScheme.background,
+        containerColor = MaterialTheme.colorScheme.background,
         bottomBar = { BottomNavBar(navHostController) }
     ) { innerPadding ->
         NavHost(
@@ -51,11 +51,12 @@ fun NavGraph(modifier: Modifier = Modifier, navHostController: NavHostController
                 )
             }
         ) {
-            composable<Screens.Home> { HomeScreen(navigateTo = { navHostController.navigate(it) }) }
+            composable<Screens.Home> { HomeScreen( navigateTo = navHostController) }
             composable<Screens.Favorites> { FavoritesScreen() }
             composable<Screens.WatchLater> { WatchLaterScreen() }
             composable<Screens.Settings> { SettingsScreen() }
-            composable<Screens.Details> { DetailsScreen() }
+            composable<Screens.Details> {
+                DetailsScreen() }
         }
     }
 }

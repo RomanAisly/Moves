@@ -19,8 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.moves.R
-import com.moves.domain.navigation.Screens
 import com.moves.ui.components.CategoryButton
 import com.moves.ui.components.FilmsItem
 import com.moves.ui.components.LoadingScreen
@@ -31,7 +31,7 @@ import org.koin.androidx.compose.koinViewModel
 fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeScreenViewModel = koinViewModel(),
-    navigateTo: (Screens) -> Unit
+    navigateTo: NavHostController
 ) {
 
     val context = LocalContext.current
@@ -53,7 +53,7 @@ fun HomeScreen(
             Row(
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(vertical = 6.dp)
+                    .padding(vertical = 8.dp)
                     .horizontalScroll(state = rememberScrollState()),
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
@@ -78,11 +78,11 @@ fun HomeScreen(
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2)
             ) {
-                items(allFilms.size, key = { allFilms[it].id }) { index ->
+                items(allFilms.size) { index ->
                     FilmsItem(
                         films = allFilms[index],
                         modifier = modifier,
-                        navigateTo = { navigateTo(Screens.Details) })
+                        navigateTo = navigateTo)
                 }
             }
         }

@@ -14,6 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.moves.R
 import com.moves.data.remote.FilmsAPI
@@ -21,7 +22,7 @@ import com.moves.domain.model.Films
 import com.moves.domain.navigation.Screens
 
 @Composable
-fun FilmsItem(modifier: Modifier = Modifier, films: Films, navigateTo: (Screens) -> Unit) {
+fun FilmsItem(modifier: Modifier = Modifier, films: Films, navigateTo: NavHostController) {
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
@@ -36,7 +37,7 @@ fun FilmsItem(modifier: Modifier = Modifier, films: Films, navigateTo: (Screens)
             modifier = modifier
                 .padding(8.dp)
                 .clip(MaterialTheme.shapes.large)
-                .clickable { navigateTo(Screens.Details) }
+                .clickable { navigateTo.navigate(Screens.Details(films.id)) }
         )
 
         Text(

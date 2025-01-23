@@ -5,6 +5,7 @@ import com.moves.data.local.FilmsDB
 import com.moves.data.remote.FilmsAPI
 import com.moves.domain.model.FilmsRepository
 import com.moves.domain.model.FilmsRepositoryImpl
+import com.moves.ui.viewmodels.DetailsScreenViewModel
 import com.moves.ui.viewmodels.HomeScreenViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -33,4 +34,5 @@ val appModule = module {
         FilmsRepositoryImpl(get(), get())
     }
     viewModel { HomeScreenViewModel(get()) }
+    viewModel { DetailsScreenViewModel(get()) }
 }

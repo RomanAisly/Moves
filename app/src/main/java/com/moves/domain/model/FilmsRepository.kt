@@ -10,5 +10,5 @@ interface FilmsRepository {
         forceFetch: Boolean
     ): Flow<ResultData<List<Films>>>
 
-//    suspend fun getFilmById(id: Int): Flow<ResultData<Films>>
+    suspend fun getFilmById(id: Int): Flow<ResultData<Films>>
 }

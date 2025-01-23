@@ -21,7 +21,6 @@ class HomeScreenViewModel(private val repository: FilmsRepository) :
     private val _allFilms = MutableStateFlow<List<Films>>(emptyList())
     val allFilms = _allFilms.asStateFlow()
 
-    private var _category = FilmsCategory.NOW_PLAYING
 
     private val _toast = Channel<Boolean>()
     val toast = _toast.receiveAsFlow()
@@ -35,7 +34,7 @@ class HomeScreenViewModel(private val repository: FilmsRepository) :
             repository.getFilms(
                 page = 1,
                 forceFetch = false,
-                category = _category
+                category = FilmsCategory.POPULAR
             ).collectLatest { result ->
                 when (result) {
                     is ResultData.Success -> {
