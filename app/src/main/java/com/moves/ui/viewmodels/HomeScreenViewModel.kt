@@ -6,7 +6,6 @@ import com.moves.domain.model.Films
 import com.moves.domain.model.FilmsRepository
 import com.moves.utils.FilmsCategory
 import com.moves.utils.ResultData
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,7 +29,7 @@ class HomeScreenViewModel(private val repository: FilmsRepository) :
     }
 
     private fun showAllFilms() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             repository.getFilms(
                 page = 1,
                 forceFetch = false,

@@ -54,11 +54,8 @@ class FilmsRepositoryImpl(
     override suspend fun getFilmById(id: Int): Flow<ResultData<Films>> {
         return flow {
             val filmsEntity = db.dao().getFilmByIds(id)
-            if (filmsEntity != null) {
-                emit(ResultData.Success(filmsEntity.toLocalFilms(filmsEntity.category)))
-                return@flow
-            }
-            emit(ResultData.Error(message = "Error: no such film"))
+            emit(ResultData.Success(filmsEntity.toLocalFilms(filmsEntity.category)))
+            return@flow
         }
     }
 }

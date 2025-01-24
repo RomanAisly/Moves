@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.moves.ui.screens.DetailsScreen
 import com.moves.ui.screens.FavoritesScreen
 import com.moves.ui.screens.HomeScreen
@@ -51,12 +52,18 @@ fun NavGraph(modifier: Modifier = Modifier, navHostController: NavHostController
                 )
             }
         ) {
-            composable<Screens.Home> { HomeScreen( navigateTo = navHostController) }
+            composable<Screens.Home> {
+                HomeScreen(onFilmClick = { id ->
+                    navHostController.navigate(Screens.Details(id))
+                })
+            }
             composable<Screens.Favorites> { FavoritesScreen() }
             composable<Screens.WatchLater> { WatchLaterScreen() }
             composable<Screens.Settings> { SettingsScreen() }
-            composable<Screens.Details> {
-                DetailsScreen() }
+            composable<Screens.Details> { backStackEntry ->
+                val id = backStackEntry.toRoute<Screens.Details>()
+                DetailsScreen(id)
+            }
         }
     }
 }

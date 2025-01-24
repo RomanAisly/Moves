@@ -34,5 +34,5 @@ val appModule = module {
         FilmsRepositoryImpl(get(), get())
     }
     viewModel { HomeScreenViewModel(get()) }
-    viewModel { DetailsScreenViewModel(get()) }
+    viewModel { DetailsScreenViewModel(get(), get()) }
 }
