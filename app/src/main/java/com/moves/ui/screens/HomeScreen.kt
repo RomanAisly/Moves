@@ -34,7 +34,7 @@ fun HomeScreen(
 ) {
 
     val context = LocalContext.current
-    val allFilms by viewModel.allFilms.collectAsState()
+    val state by viewModel.state.collectAsState()
 
     LaunchedEffect(viewModel.toast) {
         viewModel.toast.collect { show ->
@@ -45,7 +45,7 @@ fun HomeScreen(
         }
     }
 
-    if (allFilms.isEmpty()) {
+    if (state.films.isEmpty()) {
         LoadingScreen()
     } else {
         Column(modifier = modifier.fillMaxSize()) {
@@ -78,9 +78,9 @@ fun HomeScreen(
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2)
             ) {
-                items(allFilms.size, key = { index -> allFilms[index].id }) { index ->
+                items(state.films.size, key = { index -> state.films[index].id }) { index ->
                     FilmsItem(
-                        films = allFilms[index],
+                        films = state.films[index],
                         modifier = modifier,
                         onFilmClick = { id -> onFilmClick(id) })
                 }

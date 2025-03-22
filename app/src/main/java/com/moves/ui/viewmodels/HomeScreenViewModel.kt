@@ -8,17 +8,29 @@ import com.moves.utils.FilmsCategory
 import com.moves.utils.ResultData
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+
+data class HomeScreenState(
+    val isLoading: Boolean = false,
+    val films: List<Films> = emptyList()
+)
 
 class HomeScreenViewModel(private val repository: FilmsRepository) :
     ViewModel() {
 
-    private val _allFilms = MutableStateFlow<List<Films>>(emptyList())
-    val allFilms = _allFilms.asStateFlow()
+    private val _state = MutableStateFlow(HomeScreenState())
+    val state: StateFlow<HomeScreenState> = _state.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = HomeScreenState()
+    )
 
 
     private val _toast = Channel<Boolean>()
@@ -34,11 +46,13 @@ class HomeScreenViewModel(private val repository: FilmsRepository) :
                 page = 1,
                 forceFetch = false,
                 category = FilmsCategory.POPULAR
-            ).collectLatest { result ->
+            ).onStart {
+                _state.update { it.copy(isLoading = true) }
+            }.collectLatest { result ->
                 when (result) {
                     is ResultData.Success -> {
                         result.data?.let { films ->
-                            _allFilms.update { films }
+                            _state.update { it.copy(isLoading = false, films = films) }
                         }
                     }
 
