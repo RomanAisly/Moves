@@ -23,6 +23,7 @@ import com.moves.R
 import com.moves.ui.components.CategoryButton
 import com.moves.ui.components.FilmsItem
 import com.moves.ui.components.LoadingScreen
+import com.moves.ui.events.HomeScreenEvents
 import com.moves.ui.viewmodels.HomeScreenViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -35,17 +36,14 @@ fun HomeScreen(
 
     val context = LocalContext.current
     val state by viewModel.state.collectAsState()
-
-    LaunchedEffect(viewModel.toast) {
-        viewModel.toast.collect { show ->
-            if (show) {
-                Toast.makeText(context, context.getString(R.string.toast), Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
-    }
+    viewModel.onEvent(HomeScreenEvents.ShowFilms)
 
     if (state.films.isEmpty()) {
+        LaunchedEffect(viewModel.toast) {
+            viewModel.toast.collect {
+                Toast.makeText(context, R.string.toast, Toast.LENGTH_SHORT).show()
+            }
+        }
         LoadingScreen()
     } else {
         Column(modifier = modifier.fillMaxSize()) {
