@@ -37,7 +37,13 @@ fun BottomNavBar(navController: NavController) {
         bottomScreens.forEach { screen ->
             NavigationBarItem(
                 selected = currentRoute?.hierarchy?.any { it.route == screen.route::class.qualifiedName } == true,
-                onClick = { navController.navigate(screen.route) },
+                onClick = { navController.navigate(screen.route) {
+                    popUpTo(navController.graph.startDestinationId) {
+                        saveState = true
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                } },
                 icon = {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = screen.icon),

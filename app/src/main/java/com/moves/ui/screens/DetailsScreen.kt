@@ -34,9 +34,9 @@ import com.moves.R
 import com.moves.data.remote.FilmsAPI
 import com.moves.domain.navigation.Screens
 import com.moves.ui.components.CustomIcon
-import com.moves.ui.components.LoadingScreen
 import com.moves.ui.components.RatingBar
 import com.moves.ui.components.SimpleText
+import com.moves.ui.events.DetailScreenEvents
 import com.moves.ui.theme.red
 import com.moves.ui.theme.yellow
 import com.moves.ui.viewmodels.DetailsScreenViewModel
@@ -50,9 +50,7 @@ fun DetailsScreen(
 ) {
 
     val context = LocalContext.current
-    val filmDetails by viewModel.details.collectAsState()
-    val isFavorite by viewModel.isFavorite.collectAsState()
-    val isWatchLater by viewModel.isWatchLater.collectAsState()
+    val state by viewModel.state.collectAsState()
 
     LaunchedEffect(viewModel.toast) {
         viewModel.toast.collect { show ->
@@ -63,79 +61,75 @@ fun DetailsScreen(
         }
     }
 
-    if (filmDetails == null) {
-        LoadingScreen()
-    } else {
-        Column(
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .verticalScroll(rememberScrollState()),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        AsyncImage(
+            model = FilmsAPI.IMAGE_URL + (state.filmDetails?.poster_path ?: ""),
+            contentDescription = state.filmDetails?.title,
+            placeholder = painterResource(id = R.drawable.placeholder_image),
+            error = painterResource(id = R.drawable.no_internet),
+            contentScale = ContentScale.FillBounds,
+            modifier = Modifier
+                .padding(8.dp)
+                .clip(MaterialTheme.shapes.large)
+        )
+
+        RatingBar(rating = 2.5, modifier = modifier)
+
+        SimpleText(
+            text = state.filmDetails?.title ?: "",
+            textSize = 24.sp
+        )
+
+        SimpleText(
+            text = state.filmDetails?.release_date ?: "",
+            textSize = 16.sp
+        )
+        SimpleText(
+            text = state.filmDetails?.overview ?: "",
+            textSize = 16.sp,
+            modifier = Modifier.padding(horizontal = 8.dp)
+        )
+        Row(
             modifier = modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            AsyncImage(
-                model = FilmsAPI.IMAGE_URL + filmDetails?.poster_path,
-                contentDescription = filmDetails?.title,
-                placeholder = painterResource(id = R.drawable.placeholder_image),
-                error = painterResource(id = R.drawable.no_internet),
-                contentScale = ContentScale.FillBounds,
-                modifier = Modifier
-                    .padding(8.dp)
-                    .clip(MaterialTheme.shapes.large)
-            )
+            IconButton(onClick = { viewModel.onEvent(DetailScreenEvents.UpdateFavorite(state.isFavorite)) }) {
+                if (!state.isFavorite) {
+                    CustomIcon(
+                        icon = Icons.Rounded.FavoriteBorder,
+                        contDesc = ""
+                    )
 
-            RatingBar(rating = 2.5, modifier = modifier)
-
-            SimpleText(
-                text = filmDetails?.title ?: "",
-                textSize = 24.sp
-            )
-
-            SimpleText(
-                text = filmDetails?.release_date ?: "",
-                textSize = 16.sp
-            )
-            SimpleText(
-                text = filmDetails?.overview ?: "",
-                textSize = 16.sp,
-                modifier = Modifier.padding(horizontal = 8.dp)
-            )
-            Row(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                IconButton(onClick = viewModel::changeFavorite) {
-                    if (!isFavorite) {
-                        CustomIcon(
-                            icon = Icons.Rounded.FavoriteBorder,
-                            contDesc = ""
-                        )
-
-                    } else {
-                        CustomIcon(
-                            icon = Icons.Filled.Favorite,
-                            contDesc = "",
-                            tint = red
-                        )
-                    }
+                } else {
+                    CustomIcon(
+                        icon = Icons.Filled.Favorite,
+                        contDesc = "",
+                        tint = red
+                    )
                 }
-                IconButton(onClick = viewModel::changeWatchLater) {
-                    if (!isWatchLater) {
-                        CustomIcon(
-                            icon = Icons.Outlined.WatchLater,
-                            contDesc = ""
-                        )
-                    } else {
-                        CustomIcon(
-                            icon = Icons.Filled.WatchLater,
-                            contDesc = "",
-                            tint = yellow
-                        )
-                    }
+            }
+            IconButton(onClick = { viewModel.onEvent(DetailScreenEvents.UpdateWatchLater(state.isWatchLater)) }) {
+                if (!state.isWatchLater) {
+                    CustomIcon(
+                        icon = Icons.Outlined.WatchLater,
+                        contDesc = ""
+                    )
+                } else {
+                    CustomIcon(
+                        icon = Icons.Filled.WatchLater,
+                        contDesc = "",
+                        tint = yellow
+                    )
                 }
             }
         }

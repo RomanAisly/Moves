@@ -27,27 +27,28 @@ class FilmsRepositoryImpl(
                     filmsEntity.toLocalFilms(category)
                 }))
                 return@flow
+            } else {
+                val remoteFilms = try {
+                    api.getFilmsByApi(category = category, page = page)
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    emit(ResultData.Error(message = "Network error: ${e.message}"))
+                    return@flow
+                } catch (e: HttpException) {
+                    e.printStackTrace()
+                    emit(ResultData.Error(message = "Http error: ${e.localizedMessage}"))
+                    return@flow
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    emit(ResultData.Error(message = "Unknown error: ${e.message}"))
+                    return@flow
+                }
+                val newFilms = remoteFilms.results.let {
+                    it.map { films -> films.toFilmsEntity(category) }
+                }
+                db.dao().upsertFilms(newFilms)
+                emit(ResultData.Success(data = newFilms.map { it.toLocalFilms(category) }))
             }
-            val remoteFilms = try {
-                api.getFilmsByApi(category = category, page = page)
-            } catch (e: IOException) {
-                e.printStackTrace()
-                emit(ResultData.Error(message = "Network error: ${e.message}"))
-                return@flow
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                emit(ResultData.Error(message = "Http error: ${e.localizedMessage}"))
-                return@flow
-            } catch (e: Exception) {
-                e.printStackTrace()
-                emit(ResultData.Error(message = "Unknown error: ${e.message}"))
-                return@flow
-            }
-            val newFilms = remoteFilms.results.let {
-                it.map { films -> films.toFilmsEntity(category) }
-            }
-            db.dao().upsertFilms(newFilms)
-            emit(ResultData.Success(data = newFilms.map { it.toLocalFilms(category) }))
         }
     }
 

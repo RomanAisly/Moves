@@ -28,38 +28,34 @@ class HomeScreenViewModel(private val repository: FilmsRepository) :
     )
 
 
-    private val _toast = Channel<Boolean>()
+    private val _toast = Channel<Boolean>(Channel.BUFFERED)
     val toast = _toast.receiveAsFlow()
 
 
     fun onEvent(event: HomeScreenEvents) {
         when (event) {
             is HomeScreenEvents.ShowFilms -> {
-                showAllFilms()
-            }
+                viewModelScope.launch {
+                    repository.getFilms(
+                        page = 1,
+                        forceFetch = false,
+                        category = FilmsCategory.POPULAR
+                    ).collectLatest { result ->
+                        when (result) {
+                            is ResultData.Success -> {
+                                result.data?.let { films ->
+                                    _state.update { it.copy(films = films) }
+                                }
+                            }
 
-        }
-    }
-
-    private fun showAllFilms() {
-        viewModelScope.launch {
-            repository.getFilms(
-                page = 1,
-                forceFetch = false,
-                category = FilmsCategory.POPULAR
-            ).collectLatest { result ->
-                when (result) {
-                    is ResultData.Success -> {
-                        result.data?.let { films ->
-                            _state.update { it.copy(isLoading = false, films = films) }
+                            is ResultData.Error -> {
+                                _toast.send(true)
+                            }
                         }
-                    }
-
-                    is ResultData.Error -> {
-                        _toast.send(true)
                     }
                 }
             }
+
         }
     }
 }
