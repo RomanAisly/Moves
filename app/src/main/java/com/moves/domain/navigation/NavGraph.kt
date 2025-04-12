@@ -17,7 +17,10 @@ import androidx.navigation.toRoute
 import com.moves.ui.screens.DetailsScreen
 import com.moves.ui.screens.FavoritesScreen
 import com.moves.ui.screens.HomeScreen
+import com.moves.ui.screens.NowPlayingScreen
 import com.moves.ui.screens.SettingsScreen
+import com.moves.ui.screens.TopRatedScreen
+import com.moves.ui.screens.UpcomingScreen
 import com.moves.ui.screens.WatchLaterScreen
 
 
@@ -55,6 +58,8 @@ fun NavGraph(modifier: Modifier = Modifier, navHostController: NavHostController
             composable<Screens.Home> {
                 HomeScreen(onFilmClick = { id ->
                     navHostController.navigate(Screens.Details(id))
+                }, onCategoryClick = { category ->
+                    navHostController.navigate(category)
                 })
             }
             composable<Screens.Favorites> { FavoritesScreen() }
@@ -63,6 +68,27 @@ fun NavGraph(modifier: Modifier = Modifier, navHostController: NavHostController
             composable<Screens.Details> { backStackEntry ->
                 val id = backStackEntry.toRoute<Screens.Details>()
                 DetailsScreen(id)
+            }
+            composable<Screens.NowPlaying> {
+                NowPlayingScreen(onFilmClick = { id ->
+                    navHostController.navigate(Screens.Details(id))
+                }, onCategoryClick = { category ->
+                    navHostController.navigate(category)
+                })
+            }
+            composable<Screens.TopRated> {
+                TopRatedScreen(onFilmClick = { id ->
+                    navHostController.navigate(Screens.Details(id))
+                }, onCategoryClick = { category ->
+                    navHostController.navigate(category)
+                })
+            }
+            composable<Screens.Upcoming> {
+                UpcomingScreen(onFilmClick = { id ->
+                    navHostController.navigate(Screens.Details(id))
+                }, onCategoryClick = { category ->
+                    navHostController.navigate(category)
+                })
             }
         }
     }

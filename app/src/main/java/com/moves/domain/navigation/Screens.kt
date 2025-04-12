@@ -19,4 +19,14 @@ sealed class Screens {
 
     @Serializable
     data class Details(val id: Int) : Screens()
+
+    @Serializable
+    data object NowPlaying : Screens()
+
+    @Serializable
+    data object TopRated : Screens()
+
+    @Serializable
+    data object Upcoming : Screens()
+
 }

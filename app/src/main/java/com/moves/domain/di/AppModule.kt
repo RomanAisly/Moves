@@ -7,6 +7,9 @@ import com.moves.domain.model.FilmsRepository
 import com.moves.domain.model.FilmsRepositoryImpl
 import com.moves.ui.viewmodels.DetailsScreenViewModel
 import com.moves.ui.viewmodels.HomeScreenViewModel
+import com.moves.ui.viewmodels.NowPlayingScreenViewModel
+import com.moves.ui.viewmodels.TopRatedScreenViewModel
+import com.moves.ui.viewmodels.UpcomingScreenViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -35,4 +38,7 @@ val appModule = module {
     }
     viewModel { HomeScreenViewModel(get()) }
     viewModel { DetailsScreenViewModel(get(), get()) }
+    viewModel { NowPlayingScreenViewModel(get()) }
+    viewModel { TopRatedScreenViewModel(get()) }
+    viewModel { UpcomingScreenViewModel(get()) }
 }

@@ -26,12 +26,13 @@ import com.moves.ui.components.FilmsItem
 import com.moves.ui.components.LoadingScreen
 import com.moves.ui.events.HomeScreenEvents
 import com.moves.ui.viewmodels.HomeScreenViewModel
+import com.moves.ui.viewmodels.UpcomingScreenViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun HomeScreen(
+fun UpcomingScreen(
     modifier: Modifier = Modifier,
-    viewModel: HomeScreenViewModel = koinViewModel(),
+    viewModel: UpcomingScreenViewModel = koinViewModel(),
     onFilmClick: (id: Int) -> Unit,
     onCategoryClick: (Screens) -> Unit
 ) {
@@ -50,7 +51,7 @@ fun HomeScreen(
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             CategoryButton(
-                changeCategory = {},
+                changeCategory = {onCategoryClick(Screens.Home)},
                 categoryName = stringResource(R.string.film_category_popular)
             )
             CategoryButton(
@@ -62,7 +63,7 @@ fun HomeScreen(
                 categoryName = stringResource(R.string.film_category_top)
             )
             CategoryButton(
-                changeCategory = { onCategoryClick(Screens.Upcoming) },
+                changeCategory = {},
                 categoryName = stringResource(R.string.film_category_upcoming)
             )
         }
