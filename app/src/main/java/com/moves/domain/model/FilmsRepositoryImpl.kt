@@ -1,7 +1,7 @@
 package com.moves.domain.model
 
 import com.moves.data.local.FilmsDB
-import com.moves.data.remote.FilmsAPI
+import com.moves.data.remote.FilmsAPIRequest
 import com.moves.utils.CheckDataResult
 import com.moves.utils.HttpStatus
 import com.moves.utils.toFilmsEntity
@@ -12,7 +12,7 @@ import okio.IOException
 import retrofit2.HttpException
 
 class FilmsRepositoryImpl(
-    private val api: FilmsAPI,
+    private val api: FilmsAPIRequest,
     private val db: FilmsDB
 ) : FilmsRepository {
     override suspend fun getFilms(

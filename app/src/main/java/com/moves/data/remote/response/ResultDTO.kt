@@ -1,5 +1,8 @@
 package com.moves.data.remote.response
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class ResultDTO(
     val adult: Boolean,
     val backdrop_path: String,

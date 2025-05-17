@@ -2,7 +2,7 @@ package com.moves.domain.di
 
 import androidx.room.Room
 import com.moves.data.local.FilmsDB
-import com.moves.data.remote.FilmsAPI
+import com.moves.data.remote.FilmsAPIRequest
 import com.moves.domain.model.FilmsRepository
 import com.moves.domain.model.FilmsRepositoryImpl
 import com.moves.ui.viewmodels.DetailsScreenViewModel
@@ -18,10 +18,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 val appModule = module {
     single {
         Retrofit.Builder()
-            .baseUrl(FilmsAPI.BASE_URL)
+            .baseUrl(FilmsAPIRequest.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(FilmsAPI::class.java)
+            .create(FilmsAPIRequest::class.java)
     }
     single {
         Room.databaseBuilder(
