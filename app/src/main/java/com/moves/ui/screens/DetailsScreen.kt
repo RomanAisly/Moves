@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.moves.R
 import com.moves.data.remote.FilmsAPI
-import com.moves.domain.navigation.Screens
 import com.moves.ui.components.CustomIcon
 import com.moves.ui.components.RatingBar
 import com.moves.ui.components.SimpleText
@@ -44,13 +43,16 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun DetailsScreen(
-    filmId: Screens.Details,
+    filmId: Int,
     modifier: Modifier = Modifier,
     viewModel: DetailsScreenViewModel = koinViewModel()
 ) {
 
     val context = LocalContext.current
     val state by viewModel.state.collectAsState()
+    viewModel.onEvent(DetailScreenEvents.GetFilmDetails(filmId))
+
+
 
     LaunchedEffect(viewModel.toast) {
         viewModel.toast.collect { show ->

@@ -57,7 +57,7 @@ fun NavGraph(modifier: Modifier = Modifier, navHostController: NavHostController
         ) {
             composable<Screens.Home> {
                 HomeScreen(onFilmClick = { id ->
-                    navHostController.navigate(Screens.Details(id))
+                    navHostController.navigate(Screens.Details(id.id))
                 }, onCategoryClick = { category ->
                     navHostController.navigate(category)
                 })
@@ -66,26 +66,26 @@ fun NavGraph(modifier: Modifier = Modifier, navHostController: NavHostController
             composable<Screens.WatchLater> { WatchLaterScreen() }
             composable<Screens.Settings> { SettingsScreen() }
             composable<Screens.Details> { backStackEntry ->
-                val id = backStackEntry.toRoute<Screens.Details>()
-                DetailsScreen(id)
+                val id = backStackEntry.toRoute<Screens.Details>().id
+                DetailsScreen(filmId = id)
             }
             composable<Screens.NowPlaying> {
                 NowPlayingScreen(onFilmClick = { id ->
-                    navHostController.navigate(Screens.Details(id))
+                    navHostController.navigate(Screens.Details(id.id))
                 }, onCategoryClick = { category ->
                     navHostController.navigate(category)
                 })
             }
             composable<Screens.TopRated> {
                 TopRatedScreen(onFilmClick = { id ->
-                    navHostController.navigate(Screens.Details(id))
+                    navHostController.navigate(Screens.Details(id.id))
                 }, onCategoryClick = { category ->
                     navHostController.navigate(category)
                 })
             }
             composable<Screens.Upcoming> {
                 UpcomingScreen(onFilmClick = { id ->
-                    navHostController.navigate(Screens.Details(id))
+                    navHostController.navigate(Screens.Details(id.id))
                 }, onCategoryClick = { category ->
                     navHostController.navigate(category)
                 })

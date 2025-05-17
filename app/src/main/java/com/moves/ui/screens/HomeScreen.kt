@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.moves.R
+import com.moves.domain.model.Films
 import com.moves.domain.navigation.Screens
 import com.moves.ui.components.CategoryButton
 import com.moves.ui.components.FilmsItem
@@ -32,13 +33,12 @@ import org.koin.androidx.compose.koinViewModel
 fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeScreenViewModel = koinViewModel(),
-    onFilmClick: (id: Int) -> Unit,
+    onFilmClick: (id: Films) -> Unit,
     onCategoryClick: (Screens) -> Unit
 ) {
 
     val context = LocalContext.current
     val state by viewModel.state.collectAsState()
-    viewModel.onEvent(HomeScreenEvents.ShowFilms)
 
     Column(modifier = modifier.fillMaxSize()) {
         Row(
@@ -68,20 +68,17 @@ fun HomeScreen(
         }
 
         if (state.films.isEmpty()) {
+            LoadingScreen()
             LaunchedEffect(viewModel.toast) {
                 viewModel.toast.collect {
                     Toast.makeText(context, R.string.toast, Toast.LENGTH_SHORT).show()
                 }
             }
-
-            LoadingScreen()
         } else {
-
-
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2)
             ) {
-                items(state.films.size, key = { index -> state.films[index].id }) { index ->
+                items(state.films.size) { index ->
                     FilmsItem(
                         films = state.films[index],
                         modifier = modifier,

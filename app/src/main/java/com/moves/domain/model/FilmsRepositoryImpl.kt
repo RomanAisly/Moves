@@ -2,7 +2,8 @@ package com.moves.domain.model
 
 import com.moves.data.local.FilmsDB
 import com.moves.data.remote.FilmsAPI
-import com.moves.utils.ResultData
+import com.moves.utils.CheckDataResult
+import com.moves.utils.HttpStatus
 import com.moves.utils.toFilmsEntity
 import com.moves.utils.toLocalFilms
 import kotlinx.coroutines.flow.Flow
@@ -18,12 +19,12 @@ class FilmsRepositoryImpl(
         category: String,
         page: Int,
         forceFetch: Boolean,
-    ): Flow<ResultData<List<Films>>> {
+    ): Flow<CheckDataResult<List<Films>, HttpStatus>> {
         return flow {
             val localFilms = db.dao().getLocalFilms(category)
             val shouldFetch = localFilms.isNotEmpty() && !forceFetch
             if (shouldFetch) {
-                emit(ResultData.Success(data = localFilms.map { filmsEntity ->
+                emit(CheckDataResult.Success(data = localFilms.map { filmsEntity ->
                     filmsEntity.toLocalFilms(category)
                 }))
                 return@flow
@@ -32,30 +33,30 @@ class FilmsRepositoryImpl(
                     api.getFilmsByApi(category = category, page = page)
                 } catch (e: IOException) {
                     e.printStackTrace()
-                    emit(ResultData.Error(message = "Network error: ${e.message}"))
+                    emit(CheckDataResult.Error(error = HttpStatus.BAD_REQUEST))
                     return@flow
                 } catch (e: HttpException) {
                     e.printStackTrace()
-                    emit(ResultData.Error(message = "Http error: ${e.localizedMessage}"))
+                    emit(CheckDataResult.Error(error = HttpStatus.NOT_FOUND))
                     return@flow
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    emit(ResultData.Error(message = "Unknown error: ${e.message}"))
+                    emit(CheckDataResult.Error(error = HttpStatus.INTERNAL_SERVER_ERROR))
                     return@flow
                 }
                 val newFilms = remoteFilms.results.let {
                     it.map { films -> films.toFilmsEntity(category) }
                 }
                 db.dao().upsertFilms(newFilms)
-                emit(ResultData.Success(data = newFilms.map { it.toLocalFilms(category) }))
+                emit(CheckDataResult.Success(data = newFilms.map { it.toLocalFilms(category) }))
             }
         }
     }
 
-    override suspend fun getFilmById(id: Int): Flow<ResultData<Films>> {
+    override suspend fun getFilmById(id: Int): Flow<CheckDataResult<Films, HttpStatus>> {
         return flow {
             val filmsEntity = db.dao().getFilmByIds(id)
-            emit(ResultData.Success(filmsEntity.toLocalFilms(filmsEntity.category)))
+            emit(CheckDataResult.Success(filmsEntity.toLocalFilms(filmsEntity.category)))
             return@flow
         }
     }

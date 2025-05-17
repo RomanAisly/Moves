@@ -27,7 +27,7 @@ fun CategoryButton(
     ) {
         Text(
             text = categoryName,
-            fontSize = 16.sp,
+            fontSize = 14.sp,
             fontWeight = FontWeight.SemiBold
         )
     }

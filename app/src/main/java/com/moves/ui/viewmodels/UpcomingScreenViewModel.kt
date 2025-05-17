@@ -6,7 +6,7 @@ import com.moves.domain.model.FilmsRepository
 import com.moves.ui.events.HomeScreenEvents
 import com.moves.ui.states.HomeScreenState
 import com.moves.utils.FilmsCategory
-import com.moves.utils.ResultData
+import com.moves.utils.CheckDataResult
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -30,6 +30,9 @@ class UpcomingScreenViewModel(private val repository: FilmsRepository) :
     private val _toast = Channel<Boolean>(Channel.BUFFERED)
     val toast = _toast.receiveAsFlow()
 
+    init {
+        onEvent(HomeScreenEvents.ShowFilms)
+    }
 
     fun onEvent(event: HomeScreenEvents) {
         when (event) {
@@ -41,13 +44,13 @@ class UpcomingScreenViewModel(private val repository: FilmsRepository) :
                         category = FilmsCategory.UPCOMING
                     ).collectLatest { result ->
                         when (result) {
-                            is ResultData.Success -> {
-                                result.data?.let { films ->
+                            is CheckDataResult.Success -> {
+                                result.data.let { films ->
                                     _state.update { it.copy(films = films) }
                                 }
                             }
 
-                            is ResultData.Error -> {
+                            is CheckDataResult.Error -> {
                                 _toast.send(true)
                             }
                         }

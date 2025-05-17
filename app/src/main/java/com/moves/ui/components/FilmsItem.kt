@@ -1,8 +1,12 @@
 package com.moves.ui.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,10 +22,11 @@ import com.moves.data.remote.FilmsAPI
 import com.moves.domain.model.Films
 
 @Composable
-fun FilmsItem(modifier: Modifier = Modifier, films: Films, onFilmClick: (id: Int) -> Unit) {
+fun FilmsItem(modifier: Modifier = Modifier, films: Films, onFilmClick: (id: Films) -> Unit) {
 
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
 
     ) {
         AsyncImage(
@@ -31,14 +36,15 @@ fun FilmsItem(modifier: Modifier = Modifier, films: Films, onFilmClick: (id: Int
             error = painterResource(id = R.drawable.no_internet),
             contentScale = ContentScale.FillBounds,
             modifier = modifier
+                .wrapContentSize()
                 .padding(8.dp)
                 .clip(MaterialTheme.shapes.large)
-                .clickable { onFilmClick(films.id) }
+                .clickable { onFilmClick(films) }
         )
 
         SimpleText(
             text = films.title,
-            textSize = 18.sp,
+            textSize = 15.sp,
             modifier = modifier.padding(vertical = 6.dp)
         )
 
