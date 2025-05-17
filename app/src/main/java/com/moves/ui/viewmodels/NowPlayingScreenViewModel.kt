@@ -40,7 +40,6 @@ class NowPlayingScreenViewModel(private val repository: FilmsRepository) :
                 viewModelScope.launch {
                     repository.getFilms(
                         page = 1,
-                        forceFetch = false,
                         category = FilmsCategory.NOW_PLAYING
                     ).collectLatest { result ->
                         when (result) {

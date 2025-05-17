@@ -11,7 +11,8 @@ interface FilmsAPIRequest {
     suspend fun getFilmsByApi(
         @Path("category") category: String,
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
-        @Query("page") page: Int
+        @Query("page") page: Int,
+        @Query("language") language: String = "ru-RU"
     ): ResponseDTO
 
     companion object{

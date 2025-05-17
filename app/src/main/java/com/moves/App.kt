@@ -4,6 +4,7 @@ import android.app.Application
 import com.moves.domain.di.appModule
 import com.moves.domain.di.appModule2
 import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 
 class App : Application() {
@@ -11,7 +12,7 @@ class App : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@App)
-            modules(appModule, appModule2)
+            modules(appModule)
         }
     }
 }

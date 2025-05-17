@@ -17,12 +17,11 @@ class FilmsRepositoryImpl(
 ) : FilmsRepository {
     override suspend fun getFilms(
         category: String,
-        page: Int,
-        forceFetch: Boolean,
+        page: Int
     ): Flow<CheckDataResult<List<Films>, HttpStatus>> {
         return flow {
             val localFilms = db.dao().getLocalFilms(category)
-            val shouldFetch = localFilms.isNotEmpty() && !forceFetch
+            val shouldFetch = localFilms.isEmpty()
             if (shouldFetch) {
                 emit(CheckDataResult.Success(data = localFilms.map { filmsEntity ->
                     filmsEntity.toLocalFilms(category)

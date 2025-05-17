@@ -41,7 +41,6 @@ class HomeScreenViewModel(private val repository: FilmsRepository) :
                 viewModelScope.launch {
                     repository.getFilms(
                         page = 1,
-                        forceFetch = false,
                         category = FilmsCategory.POPULAR
                     ).collectLatest { result ->
                         when (result) {

@@ -40,7 +40,6 @@ class UpcomingScreenViewModel(private val repository: FilmsRepository) :
                 viewModelScope.launch {
                     repository.getFilms(
                         page = 1,
-                        forceFetch = false,
                         category = FilmsCategory.UPCOMING
                     ).collectLatest { result ->
                         when (result) {

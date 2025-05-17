@@ -40,7 +40,6 @@ class TopRatedScreenViewModel(private val repository: FilmsRepository) :
                 viewModelScope.launch {
                     repository.getFilms(
                         page = 1,
-                        forceFetch = false,
                         category = FilmsCategory.TOP
                     ).collectLatest { result ->
                         when (result) {

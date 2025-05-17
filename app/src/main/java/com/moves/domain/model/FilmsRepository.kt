@@ -7,8 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface FilmsRepository {
     suspend fun getFilms(
         category: String,
-        page: Int,
-        forceFetch: Boolean
+        page: Int
     ): Flow<CheckDataResult<List<Films>, HttpStatus>>
 
     suspend fun getFilmById(id: Int): Flow<CheckDataResult<Films, HttpStatus>>
