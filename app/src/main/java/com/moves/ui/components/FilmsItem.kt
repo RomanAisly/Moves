@@ -46,6 +46,12 @@ fun FilmsItem(modifier: Modifier = Modifier, films: Films, onFilmClick: (id: Fil
             modifier = modifier.padding(vertical = 6.dp)
         )
 
+        SimpleText(
+            text = films.release_date,
+            textSize = 12.sp,
+            modifier = modifier.padding(vertical = 6.dp)
+        )
+
         RatingBar(rating = films.vote_average / 2, modifier = modifier.padding(bottom = 6.dp))
     }
 }
