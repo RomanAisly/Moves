@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.moves.R
-import com.moves.data.remote.FilmsAPI
+import com.moves.data.remote.KtorRequest
 import com.moves.ui.components.CustomIcon
 import com.moves.ui.components.RatingBar
 import com.moves.ui.components.SimpleText
@@ -72,7 +72,7 @@ fun DetailsScreen(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         AsyncImage(
-            model = FilmsAPI.IMAGE_URL + (state.filmDetails?.poster_path ?: ""),
+            model = KtorRequest.IMAGE_URL + (state.filmDetails?.poster_path ?: ""),
             contentDescription = state.filmDetails?.title,
             placeholder = painterResource(id = R.drawable.placeholder_image),
             error = painterResource(id = R.drawable.no_internet),

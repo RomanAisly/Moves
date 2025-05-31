@@ -10,7 +10,7 @@ plugins {
 
 val localProperties = Properties()
 val localPropertiesFile = rootProject.file("local.properties")
-if(localPropertiesFile.exists()) {
+if (localPropertiesFile.exists()) {
     localPropertiesFile.inputStream().use {
         localProperties.load(it)
     }
@@ -87,8 +87,6 @@ dependencies {
     implementation(libs.room.runtime)
     ksp(libs.room.compiler)
     implementation(libs.coil)
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.converterJson)
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging)
     implementation(libs.kotlinx.serialization)
@@ -97,4 +95,10 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.logging)
+    implementation(libs.ktor.client.negotiation)
+    implementation(libs.ktor.client.serialization.json)
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.okhttp)
 }

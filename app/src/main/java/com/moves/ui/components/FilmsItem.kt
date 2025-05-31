@@ -3,8 +3,6 @@ package com.moves.ui.components
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.MaterialTheme
@@ -18,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.moves.R
-import com.moves.data.remote.FilmsAPI
+import com.moves.data.remote.KtorRequest
 import com.moves.domain.model.Films
 
 @Composable
@@ -30,7 +28,7 @@ fun FilmsItem(modifier: Modifier = Modifier, films: Films, onFilmClick: (id: Fil
 
     ) {
         AsyncImage(
-            model = FilmsAPI.IMAGE_URL + films.poster_path,
+            model = KtorRequest.IMAGE_URL + films.poster_path,
             contentDescription = films.title,
             placeholder = painterResource(id = R.drawable.placeholder_image),
             error = painterResource(id = R.drawable.no_internet),

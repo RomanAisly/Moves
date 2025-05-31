@@ -1,7 +1,8 @@
 package com.moves.domain.model
 
+import coil.network.HttpException
 import com.moves.data.local.FilmsDB
-import com.moves.data.remote.FilmsAPI
+import com.moves.data.remote.KtorRequest
 import com.moves.utils.CheckDataResult
 import com.moves.utils.HttpStatus
 import com.moves.utils.toFilmsEntity
@@ -9,10 +10,9 @@ import com.moves.utils.toLocalFilms
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okio.IOException
-import retrofit2.HttpException
 
 class FilmsRepositoryImpl(
-    private val api: FilmsAPI,
+    private val api: KtorRequest,
     private val db: FilmsDB
 ) : FilmsRepository {
     override suspend fun getFilms(
@@ -30,7 +30,7 @@ class FilmsRepositoryImpl(
                 return@flow
             } else {
                 val remoteFilms = try {
-                    api.getFilmsByApi(category = category, page = page)
+                    api.getFilms(category = category, page = page)
                 } catch (e: IOException) {
                     e.printStackTrace()
                     emit(CheckDataResult.Error(error = HttpStatus.BAD_REQUEST))
