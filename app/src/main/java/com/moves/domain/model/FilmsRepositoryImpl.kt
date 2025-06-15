@@ -18,6 +18,7 @@ class FilmsRepositoryImpl(
     override suspend fun getFilms(
         category: String,
         page: Int,
+        language: String,
         forceFetch: Boolean,
     ): Flow<CheckDataResult<List<Films>, HttpStatus>> {
         return flow {
@@ -30,7 +31,7 @@ class FilmsRepositoryImpl(
                 return@flow
             } else {
                 val remoteFilms = try {
-                    api.getFilms(category = category, page = page)
+                    api.getFilms(category = category, page = page, language = language)
                 } catch (e: IOException) {
                     e.printStackTrace()
                     emit(CheckDataResult.Error(error = HttpStatus.BAD_REQUEST))

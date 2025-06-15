@@ -11,12 +11,14 @@ class KtorRequest(private val httpClient: HttpClient) {
     suspend fun getFilms(
         category: String,
         apiKey: String = BuildConfig.API_KEY,
-        page: Int
+        page: Int,
+        language: String
     ): ResponseDTO {
         val response = httpClient.get("movie/$category") {
             parameter("category", category)
             parameter("api_key", apiKey)
             parameter("page", page)
+            parameter("language", language)
         }
         return if (response.status.value in 200..299) {
             response.body()

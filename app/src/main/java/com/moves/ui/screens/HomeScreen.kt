@@ -43,8 +43,7 @@ fun HomeScreen(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(vertical = 8.dp)
-                .padding(horizontal = 8.dp)
+                .padding(8.dp)
                 .horizontalScroll(state = rememberScrollState()),
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
@@ -68,7 +67,7 @@ fun HomeScreen(
 
         if (state.films.isEmpty()) {
             LoadingScreen()
-            LaunchedEffect(Unit) {
+            LaunchedEffect(viewModel.toast) {
                 viewModel.toast.collect {
                     Toast.makeText(context, R.string.toast, Toast.LENGTH_SHORT).show()
                 }

@@ -8,6 +8,7 @@ interface FilmsRepository {
     suspend fun getFilms(
         category: String,
         page: Int,
+        language: String,
         forceFetch: Boolean
     ): Flow<CheckDataResult<List<Films>, HttpStatus>>
 
