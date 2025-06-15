@@ -21,20 +21,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.moves.R
 import com.moves.domain.model.Films
-import com.moves.domain.navigation.Screens
 import com.moves.ui.components.CategoryButton
 import com.moves.ui.components.FilmsItem
 import com.moves.ui.components.LoadingScreen
 import com.moves.ui.events.HomeScreenEvents
 import com.moves.ui.viewmodels.HomeScreenViewModel
+import com.moves.utils.FilmsCategory
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeScreenViewModel = koinViewModel(),
-    onFilmClick: (id: Films) -> Unit,
-    onCategoryClick: (Screens) -> Unit
+    onFilmClick: (id: Films) -> Unit
 ) {
 
     val context = LocalContext.current
@@ -50,26 +49,26 @@ fun HomeScreen(
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             CategoryButton(
-                changeCategory = {},
+                changeCategory = { viewModel.onEvent(HomeScreenEvents.ChangeCategory(FilmsCategory.POPULAR)) },
                 categoryName = stringResource(R.string.film_category_popular)
             )
             CategoryButton(
-                changeCategory = { onCategoryClick(Screens.NowPlaying) },
+                changeCategory = { viewModel.onEvent(HomeScreenEvents.ChangeCategory(FilmsCategory.NOW_PLAYING)) },
                 categoryName = stringResource(R.string.film_category_now_playing)
             )
             CategoryButton(
-                changeCategory = { onCategoryClick(Screens.TopRated) },
+                changeCategory = { viewModel.onEvent(HomeScreenEvents.ChangeCategory(FilmsCategory.TOP)) },
                 categoryName = stringResource(R.string.film_category_top)
             )
             CategoryButton(
-                changeCategory = { onCategoryClick(Screens.Upcoming) },
+                changeCategory = { viewModel.onEvent(HomeScreenEvents.ChangeCategory(FilmsCategory.UPCOMING)) },
                 categoryName = stringResource(R.string.film_category_upcoming)
             )
         }
 
         if (state.films.isEmpty()) {
             LoadingScreen()
-            LaunchedEffect(viewModel.toast) {
+            LaunchedEffect(Unit) {
                 viewModel.toast.collect {
                     Toast.makeText(context, R.string.toast, Toast.LENGTH_SHORT).show()
                 }
@@ -78,7 +77,7 @@ fun HomeScreen(
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2)
             ) {
-                items(state.films.size) { index ->
+                items(state.films.size, key = { index -> state.films[index].id }) { index ->
                     FilmsItem(
                         films = state.films[index],
                         modifier = modifier,

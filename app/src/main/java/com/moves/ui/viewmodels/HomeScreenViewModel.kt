@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.moves.domain.model.FilmsRepository
 import com.moves.ui.events.HomeScreenEvents
 import com.moves.ui.states.HomeScreenState
-import com.moves.utils.FilmsCategory
 import com.moves.utils.CheckDataResult
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -42,7 +41,7 @@ class HomeScreenViewModel(private val repository: FilmsRepository) :
                     repository.getFilms(
                         page = 1,
                         forceFetch = false,
-                        category = FilmsCategory.POPULAR
+                        category = _state.value.category
                     ).collectLatest { result ->
                         when (result) {
                             is CheckDataResult.Success -> {
@@ -59,7 +58,10 @@ class HomeScreenViewModel(private val repository: FilmsRepository) :
                 }
             }
 
-            is HomeScreenEvents.ChangeCategory -> {}
+            is HomeScreenEvents.ChangeCategory -> {
+                _state.update { it.copy(category = event.category) }
+                onEvent(HomeScreenEvents.ShowFilms)
+            }
         }
     }
 }

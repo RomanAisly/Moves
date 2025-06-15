@@ -7,9 +7,6 @@ import com.moves.domain.model.FilmsRepository
 import com.moves.domain.model.FilmsRepositoryImpl
 import com.moves.ui.viewmodels.DetailsScreenViewModel
 import com.moves.ui.viewmodels.HomeScreenViewModel
-import com.moves.ui.viewmodels.NowPlayingScreenViewModel
-import com.moves.ui.viewmodels.TopRatedScreenViewModel
-import com.moves.ui.viewmodels.UpcomingScreenViewModel
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.DefaultRequest
@@ -54,7 +51,4 @@ val appModule = module {
     }
     viewModel { HomeScreenViewModel(get()) }
     viewModel { DetailsScreenViewModel(get(), get()) }
-    viewModel { NowPlayingScreenViewModel(get()) }
-    viewModel { TopRatedScreenViewModel(get()) }
-    viewModel { UpcomingScreenViewModel(get()) }
 }
