@@ -17,6 +17,7 @@ import androidx.navigation.toRoute
 import com.moves.ui.screens.DetailsScreen
 import com.moves.ui.screens.FavoritesScreen
 import com.moves.ui.screens.HomeScreen
+import com.moves.ui.screens.SetLangScreen
 import com.moves.ui.screens.SettingsScreen
 import com.moves.ui.screens.WatchLaterScreen
 
@@ -59,11 +60,16 @@ fun NavGraph(modifier: Modifier = Modifier, navHostController: NavHostController
             }
             composable<Screens.Favorites> { FavoritesScreen() }
             composable<Screens.WatchLater> { WatchLaterScreen() }
-            composable<Screens.Settings> { SettingsScreen() }
+            composable<Screens.Settings> {
+                SettingsScreen(navigateTo = {
+                    navHostController.navigate(it)
+                })
+            }
             composable<Screens.Details> { backStackEntry ->
                 val id = backStackEntry.toRoute<Screens.Details>().id
                 DetailsScreen(filmId = id)
             }
+            composable<Screens.SetLanguageScreen> { SetLangScreen() }
         }
     }
 }

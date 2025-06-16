@@ -10,7 +10,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -19,6 +18,7 @@ import coil.compose.AsyncImage
 import com.moves.R
 import com.moves.data.remote.KtorRequest
 import com.moves.domain.model.Films
+import com.moves.ui.theme.yellow
 
 @Composable
 fun FilmsItem(modifier: Modifier = Modifier, films: Films, onFilmClick: (id: Films) -> Unit) {
@@ -27,7 +27,7 @@ fun FilmsItem(modifier: Modifier = Modifier, films: Films, onFilmClick: (id: Fil
         modifier = modifier
             .padding(4.dp),
         shape = MaterialTheme.shapes.large,
-        border = BorderStroke(1.dp, Color.Yellow),
+        border = BorderStroke(2.dp, yellow),
 
         ) {
         Column(

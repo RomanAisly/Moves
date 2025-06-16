@@ -13,9 +13,6 @@ object FilmsLanguages {
     const val JAPANESE = "ja-JP"
     const val CHINESE = "zh-CN"
     const val CHINESE_TRADITIONAL = "zh-TW"
-    const val THAI = "th-TH"
-    const val INDONESIAN = "id-ID"
-    const val HUNGARIAN = "hu-HU"
     const val ARABIC = "ar-SA"
     const val TURKISH = "tr-TR"
 }

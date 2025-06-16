@@ -19,4 +19,7 @@ sealed class Screens {
 
     @Serializable
     data class Details(val id: Int) : Screens()
+
+    @Serializable
+    data object SetLanguageScreen: Screens()
 }
