@@ -29,6 +29,7 @@ import com.moves.ui.viewmodels.HomeScreenViewModel
 import com.moves.utils.FilmsCategory
 import org.koin.androidx.compose.koinViewModel
 
+
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
@@ -48,19 +49,43 @@ fun HomeScreen(
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             CategoryButton(
-                changeCategory = { viewModel.onEvent(HomeScreenEvents.ChangeCategory(FilmsCategory.POPULAR)) },
+                changeCategory = {
+                    viewModel.onEvent(
+                        HomeScreenEvents.ChangeCategory(
+                            FilmsCategory.POPULAR
+                        )
+                    )
+                },
                 categoryName = stringResource(R.string.film_category_popular)
             )
             CategoryButton(
-                changeCategory = { viewModel.onEvent(HomeScreenEvents.ChangeCategory(FilmsCategory.NOW_PLAYING)) },
+                changeCategory = {
+                    viewModel.onEvent(
+                        HomeScreenEvents.ChangeCategory(
+                            FilmsCategory.NOW_PLAYING
+                        )
+                    )
+                },
                 categoryName = stringResource(R.string.film_category_now_playing)
             )
             CategoryButton(
-                changeCategory = { viewModel.onEvent(HomeScreenEvents.ChangeCategory(FilmsCategory.TOP)) },
+                changeCategory = {
+                    viewModel.onEvent(
+                        HomeScreenEvents.ChangeCategory(
+                            FilmsCategory.TOP
+                        )
+                    )
+                },
                 categoryName = stringResource(R.string.film_category_top)
             )
             CategoryButton(
-                changeCategory = { viewModel.onEvent(HomeScreenEvents.ChangeCategory(FilmsCategory.UPCOMING)) },
+                changeCategory = {
+                    viewModel.onEvent(
+                        HomeScreenEvents.ChangeCategory(
+                            FilmsCategory.UPCOMING
+                        )
+                    )
+                },
                 categoryName = stringResource(R.string.film_category_upcoming)
             )
         }
@@ -76,7 +101,7 @@ fun HomeScreen(
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2)
             ) {
-                items(state.films.size, key = { index -> state.films[index].id }) { index ->
+                items(state.films.size) { index ->
                     FilmsItem(
                         films = state.films[index],
                         modifier = modifier,
