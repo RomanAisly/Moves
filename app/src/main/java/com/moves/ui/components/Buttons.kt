@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.moves.ui.theme.orange
 
 @Composable
 fun CategoryButton(
@@ -23,7 +24,7 @@ fun CategoryButton(
     Button(
         onClick = changeCategory,
         modifier = modifier.height(36.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = Color.Yellow)
+        colors = ButtonDefaults.buttonColors(containerColor = orange)
     ) {
         Text(
             text = categoryName,
