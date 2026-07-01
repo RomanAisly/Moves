@@ -5,8 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.rememberNavController
-import com.moves.domain.navigation.NavGraph
-import com.moves.ui.theme.MovesTheme
+import com.moves.ui.navigation.RootNavGraph
+import com.moves.ui.theme.FilmsTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,8 +14,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
-            MovesTheme {
-                NavGraph(navHostController = navController)
+            FilmsTheme {
+                RootNavGraph(rootNavHost = navController)
             }
         }
     }

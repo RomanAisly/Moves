@@ -2,17 +2,17 @@ package com.moves.domain.model
 
 import coil.network.HttpException
 import com.moves.data.local.FilmsDB
-import com.moves.data.remote.KtorRequest
-import com.moves.utils.CheckDataResult
-import com.moves.utils.HttpStatus
-import com.moves.utils.toFilmsEntity
-import com.moves.utils.toLocalFilms
+import com.moves.data.remote.FilmsService
+import com.moves.data.utils.CheckDataResult
+import com.moves.data.utils.HttpStatus
+import com.moves.data.utils.toFilmsEntity
+import com.moves.data.utils.toLocalFilms
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okio.IOException
 
 class FilmsRepositoryImpl(
-    private val api: KtorRequest,
+    private val api: FilmsService,
     private val db: FilmsDB
 ) : FilmsRepository {
     override suspend fun getFilms(

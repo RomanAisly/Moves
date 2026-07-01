@@ -1,50 +1,68 @@
 package com.moves.ui.components
 
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.moves.ui.theme.orange
+import com.moves.R
+import com.moves.ui.theme.white
+
 
 @Composable
-fun CategoryButton(
+fun ArrowBackButton(
     modifier: Modifier = Modifier,
-    changeCategory: () -> Unit,
-    categoryName: String
+    iconTint: Color = Color.Unspecified,
+    onClick: () -> Unit
 ) {
-    Button(
-        onClick = changeCategory,
-        modifier = modifier.height(36.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = orange)
+    IconButton(
+        modifier = modifier
+            .padding(start = 16.dp, top = 16.dp)
+            .shadow(elevation = 2.dp, shape = CircleShape)
+            .size(48.dp),
+        shape = CircleShape,
+        colors = IconButtonDefaults.iconButtonColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        ),
+        onClick = onClick
     ) {
-        Text(
-            text = categoryName,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.SemiBold
+        Icon(
+            painter = painterResource(R.drawable.arrow_back),
+            contentDescription = null,
+            tint = iconTint
         )
     }
 }
 
 @Composable
-fun CustomIcon(
+fun TabButton(
     modifier: Modifier = Modifier,
-    icon: ImageVector,
-    contDesc: String,
-    tint: Color = Color.White
+    textPadding: Dp = 0.dp,
+    tabName: String,
+    tabColor: Color = white,
+    textColor: Color = MaterialTheme.colorScheme.onSurface,
+    onClick: () -> Unit
 ) {
-    Icon(
-        imageVector = icon,
-        contentDescription = contDesc,
-        tint = tint,
-        modifier = modifier.size(32.dp)
-    )
+    Button(
+        modifier = modifier,
+        colors = ButtonDefaults.buttonColors(containerColor = tabColor),
+        onClick = onClick
+    ) {
+        BaseText(
+            text = tabName,
+            textColor = textColor,
+            modifier = Modifier.padding(textPadding)
+        )
+    }
 }

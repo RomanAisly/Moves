@@ -1,7 +1,7 @@
 package com.moves.domain.model
 
-import com.moves.utils.HttpStatus
-import com.moves.utils.CheckDataResult
+import com.moves.data.utils.HttpStatus
+import com.moves.data.utils.CheckDataResult
 import kotlinx.coroutines.flow.Flow
 
 interface FilmsRepository {
