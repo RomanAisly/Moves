@@ -22,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.moves.R
@@ -34,7 +33,6 @@ import com.moves.ui.components.TabButton
 import com.moves.ui.navigation.BottomNavGraph
 import com.moves.ui.theme.FilmsTheme
 import com.moves.ui.theme.lightYellow
-import com.moves.ui.theme.twilight
 import com.moves.ui.theme.white
 import com.moves.ui.viewmodels.bottom.HomeScreenViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -95,8 +93,13 @@ fun HomeScreen(
 }
 
 @Composable
-@PreviewLightDark
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(name = "Light Mode", showBackground = true, showSystemUi = true)
+@Preview(
+    name = "Dark Mode",
+    showBackground = true,
+    showSystemUi = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 private fun Preview() {
     val koin = remember {
         koinApplication {
