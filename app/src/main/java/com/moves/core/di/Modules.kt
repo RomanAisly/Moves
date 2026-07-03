@@ -31,7 +31,7 @@ val dataBaseModule = module {
             get(),
             FilmsDB::class.java,
             "films_db"
-        ).build()
+        ).fallbackToDestructiveMigration(false).build()
     }
     single {
         get<FilmsDB>().dao()

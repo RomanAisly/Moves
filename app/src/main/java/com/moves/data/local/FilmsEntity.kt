@@ -8,7 +8,7 @@ data class FilmsEntity(
     val adult: Boolean,
     val backdrop_path: String,
     val genre_ids: String,
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     val id: Int,
     val original_language: String,
     val original_title: String,

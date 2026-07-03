@@ -1,6 +1,5 @@
 package com.moves.ui.screens.home
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -16,15 +15,13 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.moves.R
 import com.moves.data.mappers.toLocalizedGenresString
+import com.moves.ui.components.CustomSnaKBar
 import com.moves.ui.components.FilmCategory
 import com.moves.ui.components.FilmsItem
 import com.moves.ui.components.LoadingScreen
@@ -37,15 +34,7 @@ fun HomeScreen(
     viewModel: HomeScreenViewModel = koinViewModel(),
     onFilmClick: (id: Int) -> Unit
 ) {
-
-    val context = LocalContext.current
     val state by viewModel.state.collectAsStateWithLifecycle()
-
-    LaunchedEffect(key1 = Unit) {
-        viewModel.toast.collect {
-            Toast.makeText(context, R.string.toast, Toast.LENGTH_SHORT).show()
-        }
-    }
 
     Column(
         modifier = Modifier
@@ -91,5 +80,6 @@ fun HomeScreen(
                 }
             }
         }
+        CustomSnaKBar(snackBarFlow = viewModel.snack)
     }
 }

@@ -1,7 +1,7 @@
 package com.moves.domain.model
 
+import com.moves.core.utils.AppError
 import com.moves.core.utils.CheckDataResult
-import com.moves.core.utils.HttpStatus
 import kotlinx.coroutines.flow.Flow
 
 interface FilmsRepository {
@@ -10,7 +10,7 @@ interface FilmsRepository {
         page: Int,
         language: String,
         forceFetch: Boolean
-    ): Flow<CheckDataResult<List<Films>, HttpStatus>>
+    ): Flow<CheckDataResult<List<Films>, AppError>>
 
-    suspend fun getFilmById(id: Int): Flow<CheckDataResult<Films, HttpStatus>>
+    suspend fun getFilmById(id: Int): Flow<CheckDataResult<Films, AppError>>
 }

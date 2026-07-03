@@ -2,6 +2,7 @@ package com.moves.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.moves.core.utils.AppError
 import com.moves.core.utils.CheckDataResult
 import com.moves.domain.model.FilmsRepository
 import com.moves.ui.components.FilmCategory
@@ -29,8 +30,8 @@ class HomeScreenViewModel(
         initialValue = HomeScreenState()
     )
 
-    private val _toast = Channel<Boolean>(Channel.Factory.BUFFERED)
-    val toast = _toast.receiveAsFlow()
+    private val _snack = Channel<AppError>(Channel.BUFFERED)
+    val snack = _snack.receiveAsFlow()
 
     private fun loadFilms() {
         viewModelScope.launch {
@@ -48,7 +49,7 @@ class HomeScreenViewModel(
                     }
 
                     is CheckDataResult.Error -> {
-                        _toast.send(true)
+                        _snack.send(result.error)
                     }
                 }
             }

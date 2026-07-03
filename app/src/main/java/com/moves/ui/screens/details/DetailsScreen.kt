@@ -17,6 +17,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -63,6 +64,7 @@ fun DetailsScreen(
         CoilImage(
             model = imageUrl + state.filmDetails?.poster_path,
             placeholder = R.drawable.placeholder_image,
+            contentScale = ContentScale.FillBounds,
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(3f / 2f)
@@ -99,7 +101,6 @@ fun DetailsScreen(
                 } else {
                     R.drawable.favorite_fill
                 }, onClick = {})
-
         }
     }
 

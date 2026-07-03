@@ -31,13 +31,6 @@ enum class AppTheme {
     DARK
 }
 
-enum class SnackBarType(
-    val messageRes: Int,
-    val iconRes: Int
-) {
-
-}
-
 enum class FilmCategory(
     val nameRes: Int,
     val category: String

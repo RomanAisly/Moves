@@ -29,4 +29,12 @@
     <string name="genre_thriller">Thriller</string>
     <string name="genre_war">War</string>
     <string name="genre_western">Western</string>
+
+    <!-- Errors -->
+    <string name="error_no_internet">No internet connection</string>
+    <string name="error_timeout">Request timeout. Check your connection</string>
+    <string name="error_server">Server error. We\'re fixing it!</string>
+    <string name="error_not_found">Data not found</string>
+    <string name="error_unauthorized">Unauthorized. Please log in again</string>
+    <string name="error_unknown">Something went wrong. Try again later</string>
 </resources>

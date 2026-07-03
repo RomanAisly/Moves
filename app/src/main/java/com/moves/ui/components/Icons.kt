@@ -15,12 +15,14 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.moves.R
+import com.moves.ui.theme.unspecified
+import com.moves.ui.theme.yellow
 
 @Composable
 fun BaseIcon(
     iconId: Int,
     modifier: Modifier = Modifier,
-    iconTint: Color = Color.Unspecified
+    iconTint: Color = unspecified
 ) {
     Icon(
         modifier = modifier,
@@ -35,7 +37,7 @@ fun BaseIconButton(
     iconId: Int,
     modifier: Modifier = Modifier,
     size: Dp = 24.dp,
-    iconTint: Color = Color.Unspecified,
+    iconTint: Color = unspecified,
     onClick: () -> Unit
 ) {
     IconButton(
@@ -76,7 +78,7 @@ fun RatingBar(
     starsModifier: Modifier = Modifier,
     rating: Double = 0.0,
     stars: Int = 5,
-    starsColor: Color = Color.Yellow
+    starsColor: Color = yellow
 ) {
     val filledStars = kotlin.math.floor(rating).toInt()
     val outFilledStars = (stars - kotlin.math.ceil(rating)).toInt()

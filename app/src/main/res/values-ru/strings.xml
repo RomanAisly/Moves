@@ -30,4 +30,12 @@
     <string name="genre_thriller">Триллер</string>
     <string name="genre_war">Военный</string>
     <string name="genre_western">Вестерн</string>
+
+    <!-- Errors -->
+    <string name="error_no_internet">Нет подключения к интернету</string>
+    <string name="error_timeout">Превышено время ожидания. Проверьте соединение</string>
+    <string name="error_server">Ошибка на сервере. Мы уже чиним!</string>
+    <string name="error_not_found">Данные не найдены</string>
+    <string name="error_unauthorized">Ошибка авторизации. Войдите заново</string>
+    <string name="error_unknown">Что-то пошло не так. Попробуйте позже</string>
 </resources>
