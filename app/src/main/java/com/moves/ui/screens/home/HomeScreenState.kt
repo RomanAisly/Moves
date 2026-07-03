@@ -1,9 +1,9 @@
-package com.moves.ui.states.bottom
+package com.moves.ui.screens.home
 
 import com.moves.domain.model.Films
 import com.moves.ui.components.FilmCategory
 
 data class HomeScreenState(
     val films: List<Films> = emptyList(),
-    val category: String = FilmCategory.POPULAR.category
+    val selectedCategory: String = FilmCategory.POPULAR.category
 )

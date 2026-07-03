@@ -1,4 +1,4 @@
-package com.moves.ui.states
+package com.moves.ui.screens.details
 
 import com.moves.domain.model.Films
 

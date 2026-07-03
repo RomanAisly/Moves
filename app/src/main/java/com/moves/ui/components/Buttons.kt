@@ -17,7 +17,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.moves.R
-import com.moves.ui.theme.white
 
 
 @Composable
@@ -50,8 +49,8 @@ fun TabButton(
     modifier: Modifier = Modifier,
     textPadding: Dp = 0.dp,
     tabName: String,
-    tabColor: Color = white,
-    textColor: Color = MaterialTheme.colorScheme.onSurface,
+    tabColor: Color = MaterialTheme.colorScheme.primary,
+    textColor: Color = MaterialTheme.colorScheme.onBackground,
     onClick: () -> Unit
 ) {
     Button(

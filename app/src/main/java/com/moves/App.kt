@@ -1,10 +1,10 @@
 package com.moves
 
 import android.app.Application
-import com.moves.domain.di.dataBaseModule
-import com.moves.domain.di.networkModule
-import com.moves.domain.di.repositoriesModule
-import com.moves.domain.di.viewModelsModule
+import com.moves.core.di.dataBaseModule
+import com.moves.core.di.networkModule
+import com.moves.core.di.repositoriesModule
+import com.moves.core.di.viewModelsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 

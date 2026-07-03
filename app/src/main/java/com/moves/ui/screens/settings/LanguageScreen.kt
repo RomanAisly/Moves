@@ -1,4 +1,4 @@
-package com.moves.ui.screens
+package com.moves.ui.screens.settings
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

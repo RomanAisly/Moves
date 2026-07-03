@@ -16,14 +16,16 @@ private val LightColorScheme = lightColorScheme(
     onBackground = darkGray,
     onSurface = blue,
     primary = yellow,
-    onPrimary = white
+    secondary = beige
 )
 
 private val DarkColorScheme = darkColorScheme(
     background = twilight,
     surface = silver,
     onBackground = white,
-    onSurface = blue
+    onSurface = blue,
+    primary = darkOliveGreen,
+    secondary = gray
 )
 
 @Composable

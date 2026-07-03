@@ -1,4 +1,4 @@
-package com.moves.data.utils
+package com.moves.core.utils
 
 sealed interface CheckDataResult<out D, out E>{
     data class Success<D>(val data: D) : CheckDataResult<D, Nothing>

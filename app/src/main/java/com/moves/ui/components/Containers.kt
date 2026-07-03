@@ -46,7 +46,7 @@ fun BaseCard(
     Card(
         modifier = modifier,
         shape = shape,
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.onBackground),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         border = border,
         content = content
     )

@@ -1,12 +1,14 @@
-package com.moves.domain.model
+package com.moves.data.repositories
 
 import coil.network.HttpException
+import com.moves.core.utils.CheckDataResult
+import com.moves.core.utils.HttpStatus
 import com.moves.data.local.FilmsDB
+import com.moves.data.mappers.toFilmsEntity
+import com.moves.data.mappers.toLocalFilms
 import com.moves.data.remote.FilmsService
-import com.moves.data.utils.CheckDataResult
-import com.moves.data.utils.HttpStatus
-import com.moves.data.utils.toFilmsEntity
-import com.moves.data.utils.toLocalFilms
+import com.moves.domain.model.Films
+import com.moves.domain.model.FilmsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okio.IOException

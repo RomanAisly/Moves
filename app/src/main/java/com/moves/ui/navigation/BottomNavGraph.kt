@@ -9,10 +9,10 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.moves.ui.screens.bottom.FavoritesScreen
-import com.moves.ui.screens.bottom.HomeScreen
-import com.moves.ui.screens.bottom.SettingsScreen
-import com.moves.ui.screens.bottom.WatchLaterScreen
+import com.moves.ui.screens.favorites.FavoritesScreen
+import com.moves.ui.screens.home.HomeScreen
+import com.moves.ui.screens.settings.SettingsScreen
+import com.moves.ui.screens.watch_later.WatchLaterScreen
 
 @Composable
 fun BottomNavGraph(
@@ -30,7 +30,9 @@ fun BottomNavGraph(
         NavHost(
             navController = bottomNavController,
             startDestination = Routes.Home,
-            modifier = Modifier.fillMaxSize().padding(paddingValues)
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
         ) {
             composable<Routes.Home> {
                 HomeScreen(onFilmClick = { id ->

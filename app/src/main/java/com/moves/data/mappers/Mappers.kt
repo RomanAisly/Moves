@@ -1,4 +1,4 @@
-package com.moves.data.utils
+package com.moves.data.mappers
 
 import com.moves.data.local.FilmsEntity
 import com.moves.data.remote.ResultDTO
@@ -25,10 +25,11 @@ fun ResultDTO.toFilmsEntity(category: String): FilmsEntity {
 }
 
 fun FilmsEntity.toLocalFilms(category: String): Films {
+
     return Films(
         adult = adult,
         backdrop_path = backdrop_path,
-        genre_ids = genre_ids.split(",").map { it.toInt() },
+        genreIds = genre_ids.split(",").map { it.toInt() },
         id = id,
         original_language = original_language,
         original_title = original_title,

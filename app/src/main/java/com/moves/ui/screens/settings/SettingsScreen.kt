@@ -1,4 +1,4 @@
-package com.moves.ui.screens.bottom
+package com.moves.ui.screens.settings
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -8,9 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun WatchLaterScreen() {
+fun SettingsScreen() {
     Column(
         Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)) {}
+            .background(MaterialTheme.colorScheme.background)
+    ) {
+
+    }
 }

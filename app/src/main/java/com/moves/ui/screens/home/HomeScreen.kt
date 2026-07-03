@@ -1,43 +1,35 @@
-package com.moves.ui.screens.bottom
+package com.moves.ui.screens.home
 
-import android.content.res.Configuration
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.rememberNavController
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.moves.R
-import com.moves.domain.di.previewModule
+import com.moves.data.mappers.toLocalizedGenresString
 import com.moves.ui.components.FilmCategory
 import com.moves.ui.components.FilmsItem
 import com.moves.ui.components.LoadingScreen
 import com.moves.ui.components.TabButton
-import com.moves.ui.navigation.BottomNavGraph
-import com.moves.ui.theme.FilmsTheme
-import com.moves.ui.theme.lightYellow
-import com.moves.ui.theme.white
-import com.moves.ui.viewmodels.bottom.HomeScreenViewModel
 import org.koin.androidx.compose.koinViewModel
-import org.koin.compose.KoinContext
-import org.koin.dsl.koinApplication
 
 
 @Composable
@@ -47,68 +39,57 @@ fun HomeScreen(
 ) {
 
     val context = LocalContext.current
-    val state by viewModel.state.collectAsState()
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .background(lightYellow)) {
+    LaunchedEffect(key1 = Unit) {
+        viewModel.toast.collect {
+            Toast.makeText(context, R.string.toast, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(8.dp)
                 .horizontalScroll(state = rememberScrollState()),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             FilmCategory.entries.forEach { category ->
                 TabButton(
                     tabName = stringResource(category.nameRes),
-                    tabColor = if (state.category == category.category) white else category.colorRes,
+                    tabColor = if (state.selectedCategory == category.category) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary,
                     onClick = {
-//                        viewModel.changeCategory(category.category)
+                        viewModel.changeCategory(category)
                     }
                 )
             }
         }
 
-        LaunchedEffect(key1 = Unit) {
-            viewModel.toast.collect {
-                Toast.makeText(context, R.string.toast, Toast.LENGTH_SHORT).show()
-            }
-        }
-
         if (state.films.isEmpty()) {
             LoadingScreen()
-
         } else {
             LazyVerticalGrid(
-                columns = GridCells.Fixed(2)
+                columns = GridCells.Fixed(2),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = PaddingValues(8.dp)
             ) {
                 items(state.films, key = { it.id }) { films ->
                     FilmsItem(
-                        films = films,
+                        modifier = Modifier,
+                        poster = films.poster_path,
+                        title = films.title,
+                        genres = films.genreIds.toLocalizedGenresString(),
+                        releaseDate = films.release_date,
+                        rating = films.vote_average,
                         onFilmClick = { onFilmClick(films.id) })
                 }
             }
-        }
-    }
-}
-
-@Composable
-@Preview(name = "Light Mode", showBackground = true, showSystemUi = true)
-@Preview(
-    name = "Dark Mode",
-    showBackground = true,
-    showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
-)
-private fun Preview() {
-    val koin = remember {
-        koinApplication {
-            modules(previewModule)
-        }.koin
-    }
-    KoinContext(context = koin) {
-        FilmsTheme {
-            BottomNavGraph(bottomNavHost = rememberNavController())
         }
     }
 }

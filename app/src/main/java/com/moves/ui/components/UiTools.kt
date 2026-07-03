@@ -1,17 +1,12 @@
 package com.moves.ui.components
 
+import android.content.res.Configuration
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.navigation.compose.rememberNavController
 import com.moves.R
-import com.moves.domain.di.previewModule
-import com.moves.ui.navigation.BottomNavGraph
+import com.moves.core.di.previewModule
 import com.moves.ui.theme.FilmsTheme
-import com.moves.ui.theme.yellow
-import org.koin.compose.KoinApplication
 import org.koin.compose.KoinContext
 import org.koin.dsl.koinApplication
 
@@ -45,8 +40,7 @@ enum class SnackBarType(
 
 enum class FilmCategory(
     val nameRes: Int,
-    val category: String,
-    val colorRes: Color = yellow
+    val category: String
 ) {
     POPULAR(R.string.film_category_popular, "popular"),
     NOW_PLAYING(R.string.film_category_now_playing, "now_playing"),
@@ -57,8 +51,13 @@ enum class FilmCategory(
 
 
 @Composable
-@PreviewLightDark
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(name = "Light Mode", showBackground = true, showSystemUi = true)
+@Preview(
+    name = "Dark Mode",
+    showBackground = true,
+    showSystemUi = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 private fun Preview() {
     val koin = remember {
         koinApplication {

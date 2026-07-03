@@ -4,9 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.toRoute
-import com.moves.ui.screens.DetailsScreen
-import com.moves.ui.screens.LanguageScreen
+import com.moves.ui.screens.details.DetailsScreen
+import com.moves.ui.screens.settings.LanguageScreen
 
 
 @Composable
@@ -18,9 +17,8 @@ fun RootNavGraph(rootNavHost: NavHostController) {
         composable<Routes.BottomNavGraph> {
             BottomNavGraph(rootNavHost)
         }
-        composable<Routes.Details> { backStackEntry ->
-            val id = backStackEntry.toRoute<Routes.Details>().id
-            DetailsScreen(filmId = id)
+        composable<Routes.Details> {
+            DetailsScreen()
         }
         composable<Routes.SetLanguageScreen> { LanguageScreen() }
     }
