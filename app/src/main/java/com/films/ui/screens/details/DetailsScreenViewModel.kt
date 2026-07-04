@@ -1,0 +1,57 @@
+package com.films.ui.screens.details
+
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
+import com.films.core.utils.AppError
+import com.films.core.utils.CheckDataResult
+import com.films.domain.model.FilmsRepository
+import com.films.ui.navigation.Routes
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+
+class DetailsScreenViewModel(
+    private val repository: FilmsRepository,
+    savedStateHandle: SavedStateHandle
+) : ViewModel() {
+
+    private val _state = MutableStateFlow(DetailsScreenState())
+    val state = _state.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = DetailsScreenState()
+    )
+    private val filmId = savedStateHandle.toRoute<Routes.Details>().id
+
+    private val _snack = Channel<AppError>(Channel.BUFFERED)
+    val snack = _snack.receiveAsFlow()
+
+    init {
+        getFilmDetails(filmId)
+    }
+
+    private fun getFilmDetails(id: Int) {
+        viewModelScope.launch {
+            repository.getFilmById(id).collectLatest { result ->
+                when (result) {
+                    is CheckDataResult.Success -> {
+                        result.data.let { film ->
+                            _state.update { it.copy(filmDetails = film) }
+                        }
+                    }
+
+                    is CheckDataResult.Error -> {
+                        _snack.send(result.error)
+                    }
+                }
+            }
+        }
+    }
+}

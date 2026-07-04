@@ -19,11 +19,11 @@ if (localPropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.moves"
+    namespace = "com.films"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.moves"
+        applicationId = "com.films"
         minSdk = 29
         targetSdk = 36
         versionCode = 1
