@@ -35,7 +35,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeScreenViewModel = koinViewModel(),
+    viewModel: HomeViewModel = koinViewModel(),
     paddingValues: PaddingValues,
     onFilmClick: (id: Int) -> Unit
 ) {

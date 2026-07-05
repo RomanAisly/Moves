@@ -5,7 +5,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.films.ui.screens.details.DetailsScreen
-import com.films.ui.screens.settings.LanguageScreen
 
 
 @Composable
@@ -20,6 +19,5 @@ fun RootNavGraph(rootNavHost: NavHostController) {
         composable<Routes.Details> {
             DetailsScreen()
         }
-        composable<Routes.SetLanguageScreen> { LanguageScreen() }
     }
 }

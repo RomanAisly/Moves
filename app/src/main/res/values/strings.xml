@@ -1,13 +1,14 @@
 <resources>
     <string name="app_name">Moves</string>
-    <string name="toast">Connection\'s failed</string>
-    <string name="cont_desc_rating_of_the_film">rating of film</string>
+    <string name="theme_system">System</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_light">Light</string>
+    <string name="en">English</string>
+    <string name="ru">Russian</string>
     <string name="film_category_popular">Popular</string>
     <string name="film_category_top">Top</string>
     <string name="film_category_now_playing">Now Playing</string>
     <string name="film_category_upcoming">Upcoming</string>
-    <string name="en">English</string>
-    <string name="ru">Russian</string>
 
     <!-- Genres -->
     <string name="genre_action">Action</string>

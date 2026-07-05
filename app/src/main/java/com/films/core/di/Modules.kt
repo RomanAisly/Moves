@@ -3,17 +3,21 @@ package com.films.core.di
 import androidx.room.Room
 import com.films.core.network.createHttpClient
 import com.films.data.local.FilmsDB
+import com.films.data.local.SettingsManager
+import com.films.data.local.dataStore
 import com.films.data.remote.FilmsService
 import com.films.data.repositories.FilmsRepositoryImpl
 import com.films.domain.model.FilmsRepository
-import com.films.ui.screens.details.DetailsScreenViewModel
-import com.films.ui.screens.home.HomeScreenViewModel
+import com.films.ui.screens.details.DetailsViewModel
+import com.films.ui.screens.home.HomeViewModel
+import com.films.ui.screens.settings.SettingsViewModel
 import io.ktor.client.HttpClient
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val previewModule = module {
-    single { }
+    viewModelOf(::DetailsViewModel)
 }
 
 val networkModule = module {
@@ -39,12 +43,17 @@ val dataBaseModule = module {
 }
 
 val viewModelsModule = module {
-    viewModelOf(::HomeScreenViewModel)
-    viewModelOf(::DetailsScreenViewModel)
+    viewModelOf(::HomeViewModel)
+    viewModelOf(::DetailsViewModel)
+    viewModelOf(::SettingsViewModel)
 }
 
 val repositoriesModule = module {
     single<FilmsRepository> {
         FilmsRepositoryImpl(get(), get())
     }
+}
+val settingsModule = module {
+    single { androidContext().dataStore }
+    single { SettingsManager(get()) }
 }

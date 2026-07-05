@@ -44,7 +44,7 @@ fun BottomNavBar(bottomBarHost: NavController) {
             ),
             BottomTabItem(
                 route = Routes.WatchLater,
-                icon = R.drawable.history
+                icon = R.drawable.time_quarter
             ),
             BottomTabItem(
                 route = Routes.Settings,

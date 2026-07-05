@@ -39,7 +39,7 @@ fun BottomNavGraph(
             }
             composable<Routes.Favorites> { FavoritesScreen() }
             composable<Routes.WatchLater> { WatchLaterScreen() }
-            composable<Routes.Settings> { SettingsScreen() }
+            composable<Routes.Settings> { SettingsScreen(paddingValues) }
         }
     }
 }

@@ -16,19 +16,19 @@ enum class AppLanguage(
 ) {
     ENGLISH(
         R.string.en,
-        "en"
+        "en-US"
     ),
     RUSSIAN(
         R.string.ru,
-        "ru"
+        "ru-RU"
     )
 }
 
 
-enum class AppTheme {
-    SYSTEM,
-    LIGHT,
-    DARK
+enum class AppTheme(val iconRes: Int, val titleRes: Int) {
+    SYSTEM(R.drawable.theme_system, R.string.theme_system),
+    DARK(R.drawable.theme_dark, R.string.theme_dark),
+    LIGHT(R.drawable.theme_light, R.string.theme_light)
 }
 
 enum class FilmCategory(
@@ -40,7 +40,6 @@ enum class FilmCategory(
     TOP_RATED(R.string.film_category_top, "top_rated"),
     UPCOMING(R.string.film_category_upcoming, "upcoming")
 }
-
 
 
 @Composable
@@ -58,7 +57,7 @@ private fun Preview() {
         }.koin
     }
     KoinContext(context = koin) {
-        FilmsTheme {
+        FilmsTheme(onThemeChange = {}) {
 
         }
     }

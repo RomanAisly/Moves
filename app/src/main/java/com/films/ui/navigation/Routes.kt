@@ -22,7 +22,4 @@ sealed class Routes {
 
     @Serializable
     data class Details(val id: Int) : Routes()
-
-    @Serializable
-    data object SetLanguageScreen : Routes()
 }

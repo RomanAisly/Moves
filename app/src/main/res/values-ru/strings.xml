@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Фильмы</string>
-    <string name="toast">Соединение прервано</string>
-    <string name="cont_desc_rating_of_the_film">рейтинг фильма</string>
+    <string name="theme_system">Системная</string>
+    <string name="theme_dark">Тёмная</string>
+    <string name="theme_light">Светлая</string>
+    <string name="en">Английский</string>
+    <string name="ru">Русский</string>
     <string name="film_category_popular">Популярное</string>
     <string name="film_category_top">Топ</string>
     <string name="film_category_now_playing">Смотрят сейчас</string>
     <string name="film_category_upcoming">Скоро появится</string>
-    <string name="en">Английский</string>
-    <string name="ru">Русский</string>
 
     <!-- Genres -->
     <string name="genre_action">Боевик</string>

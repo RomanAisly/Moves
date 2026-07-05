@@ -17,17 +17,17 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class HomeScreenViewModel(
+class HomeViewModel(
     private val repository: FilmsRepository
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(HomeScreenState())
-    val state: StateFlow<HomeScreenState> = _state.onStart {
+    private val _state = MutableStateFlow(HomeState())
+    val state: StateFlow<HomeState> = _state.onStart {
         loadFilms()
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = HomeScreenState()
+        initialValue = HomeState()
     )
 
     private val _snack = Channel<AppError>(Channel.BUFFERED)
