@@ -26,7 +26,7 @@ class HomeViewModel(
 
     private val _state = MutableStateFlow(HomeState())
     val state: StateFlow<HomeState> = _state.onStart {
-        loadFilms(false)
+        loadFilms()
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
@@ -42,7 +42,7 @@ class HomeViewModel(
             val currentLanguage = settingsManager.languageFlow.first()
             repository.getFilms(
                 page = 1,
-                language = currentLanguage.tmdbCode,
+                language = currentLanguage.localeCode,
                 forceFetch = forceFetch,
                 category = _state.value.selectedCategory
             ).collectLatest { result ->
@@ -65,7 +65,7 @@ class HomeViewModel(
 
     fun changeCategory(category: FilmCategory) {
         _state.update { it.copy(selectedCategory = category.category) }
-        loadFilms(false)
+        loadFilms()
     }
 
     fun refreshFilms() {

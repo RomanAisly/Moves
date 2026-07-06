@@ -12,17 +12,14 @@ import org.koin.dsl.koinApplication
 
 enum class AppLanguage(
     val titleRes: Int,
-    val localeCode: String,
-    val tmdbCode: String
+    val localeCode: String
 ) {
     ENGLISH(
         R.string.en,
-        "en",
         "en-US"
     ),
     RUSSIAN(
         R.string.ru,
-        "ru",
         "ru-RU"
     )
 }

@@ -1,6 +1,5 @@
 package com.films.ui.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,7 +30,8 @@ fun FilmsItem(
     BaseCard(
         modifier = modifier.clickable { onFilmClick() },
         shape = MaterialTheme.shapes.large,
-        border = BorderStroke(2.dp, MaterialTheme.colorScheme.outline)
+        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+        elevation = 5.dp,
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -63,7 +63,7 @@ fun FilmsItem(
                 text = releaseDate,
                 textStyle = MaterialTheme.typography.titleSmall,
             )
-            RatingBar(rating = rating / 2, modifier = Modifier.padding(bottom = 6.dp))
+            RatingBar(rating = rating / 2, modifier = Modifier.padding(bottom = 8.dp))
         }
     }
 }

@@ -1,8 +1,6 @@
 package com.films.ui.screens.details
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,33 +15,29 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.films.R
-import com.films.core.di.previewModule
 import com.films.data.mappers.toLocalizedGenresString
 import com.films.data.remote.FilmsService
 import com.films.ui.components.BaseIconButton
 import com.films.ui.components.BaseScreen
 import com.films.ui.components.BaseText
 import com.films.ui.components.CoilImage
+import com.films.ui.components.CustomSnaKBar
+import com.films.ui.components.LoadingScreen
 import com.films.ui.components.RatingBar
-import com.films.ui.theme.FilmsTheme
-import com.films.ui.theme.gray
 import com.films.ui.theme.lightPink
 import com.films.ui.theme.lime
 import com.films.ui.theme.red
 import com.films.ui.theme.royalBlue
-import com.films.ui.theme.white
 import org.koin.androidx.compose.koinViewModel
-import org.koin.compose.KoinContext
-import org.koin.dsl.koinApplication
 
 @Composable
 fun DetailsScreen(
@@ -51,16 +45,16 @@ fun DetailsScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-//    if (state.filmDetails == null) {
-//        LoadingScreen()
-//        return
-//    }
+    if (state.filmDetails == null) {
+        LoadingScreen()
+        return
+    }
 
     BaseScreen(
         modifier = Modifier.verticalScroll(rememberScrollState()),
         useStatusBarsPadding = false,
         horizontal = Alignment.CenterHorizontally,
-        vertical = Arrangement.spacedBy(12.dp)
+        vertical = Arrangement.spacedBy(14.dp)
     ) {
         CoilImage(
             model = FilmsService.IMAGE_URL + state.filmDetails?.poster_path,
@@ -102,80 +96,50 @@ fun DetailsScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 8.dp),
+                .padding(top = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            BaseIconButton(
-                size = 48.dp,
-                modifier = Modifier
-                    .background(
-                        white,
-                        shape = CircleShape
-                    )
-                    .border(2.dp, MaterialTheme.colorScheme.outline, CircleShape),
-                iconTint = if (!state.isFavorite) gray else lightPink,
-                iconId = if (!state.isFavorite) {
-                    R.drawable.favorite
-                } else {
-                    R.drawable.favorite_fill
-                }, onClick = { viewModel.addToFavorite(!state.isFavorite) })
-
-            BaseIconButton(
-                size = 48.dp,
-                modifier = Modifier
-                    .background(
-                        white,
-                        shape = CircleShape
-                    )
-                    .border(2.dp, MaterialTheme.colorScheme.outline, CircleShape),
-                iconTint = if (!state.isWatchLater) lime else red,
-                iconId = if (!state.isWatchLater) {
-                    R.drawable.time_add
-                } else {
-                    R.drawable.time_delete
-                }, onClick = { viewModel.addToWatchLater(!state.isWatchLater) })
-
-            BaseIconButton(
-                size = 48.dp,
-                modifier = Modifier
-                    .background(
-                        white,
-                        shape = CircleShape
-                    )
-                    .border(2.dp, MaterialTheme.colorScheme.outline, CircleShape),
-                iconTint = royalBlue,
+            ActionIconButton(
+                iconId = if (state.isFavorite) R.drawable.favorite_fill else R.drawable.favorite,
+                iconTint = lightPink,
+                onClick = { viewModel.addToFavorite(!state.isFavorite) }
+            )
+            ActionIconButton(
+                iconId = if (state.isWatchLater) R.drawable.time_delete else R.drawable.time_add,
+                iconTint = if (state.isWatchLater) red else lime,
+                onClick = { viewModel.addToWatchLater(!state.isWatchLater) }
+            )
+            ActionIconButton(
                 iconId = R.drawable.share,
-                onClick = { })
+                iconTint = royalBlue,
+                onClick = { /* Share logic */ }
+            )
         }
 
         Spacer(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp)
+                .height(56.dp)
         )
-//        CustomSnaKBar(snackBarFlow = viewModel.snack)
+        CustomSnaKBar(snackBarFlow = viewModel.snack)
     }
 
 }
 
 @Composable
-@Preview(name = "Light Mode", showBackground = true, showSystemUi = true)
-@Preview(
-    name = "Dark Mode",
-    showBackground = true,
-    showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
-)
-private fun Preview() {
-    val koin = remember {
-        koinApplication {
-            modules(previewModule)
-        }.koin
-    }
-    KoinContext(context = koin) {
-        FilmsTheme(onThemeChange = {}) {
-            DetailsScreen()
-        }
-    }
+private fun ActionIconButton(
+    iconId: Int,
+    iconTint: Color,
+    onClick: () -> Unit
+) {
+    BaseIconButton(
+        size = 48.dp,
+        modifier = Modifier
+            .shadow(elevation = 2.dp, shape = CircleShape)
+            .background(MaterialTheme.colorScheme.tertiary, shape = CircleShape),
+        iconTint = iconTint,
+        iconId = iconId,
+        onClick = onClick
+    )
 }

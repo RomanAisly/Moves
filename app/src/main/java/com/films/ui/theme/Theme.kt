@@ -19,30 +19,35 @@ import com.films.ui.components.AppTheme
 
 private val LightColorScheme = lightColorScheme(
     background = mintCream,
-    surface = lightYellow.copy(alpha = 0.6f),
-    onSurface = lightBlue,
+    surface = azure,
+    onSurface = royalBlue,
     surfaceContainer = skyBlue.copy(alpha = 0.85f),
-    surfaceVariant = azure,
     onSurfaceVariant = white,
-    surfaceTint = snow,
+    surfaceTint = azure,
+    surfaceDim = royalBlue,
+    surfaceVariant = azure,
     onBackground = black,
     primary = lightBlue,
     primaryContainer = archer,
     secondary = white,
+    tertiary = white,
     outline = lightSalmon
 )
 
 private val DarkColorScheme = darkColorScheme(
     background = twilight,
-    surface = lightYellow,
-    onSurface = deepSkyBlue,
-    surfaceContainer = silver.copy(alpha = 0.85f),
-    surfaceVariant = gray,
-    onSurfaceVariant = lightGray,
+    surface = teal,
+    onSurface = white,
+    surfaceContainer = darkGray.copy(alpha = 0.85f),
+    onSurfaceVariant = indigo.copy(alpha = 0.8f),
     surfaceTint = white,
+    surfaceDim = lightBlue,
+    surfaceVariant = darkStateBlue.copy(alpha = 0.9f),
     onBackground = white,
-    primary = darkOliveGreen,
+    primary = darkOliveGreen.copy(alpha = 0.9f),
+    primaryContainer = teal.copy(alpha = 0.9f),
     secondary = gray,
+    tertiary = darkGray,
     outline = yellow
 )
 
@@ -94,7 +99,7 @@ fun FilmsTheme(
 
 @Composable
 private fun animateColorSchemeAsState(targetColorScheme: ColorScheme): ColorScheme {
-    val animationSpec = tween<Color>(durationMillis = 500)
+    val animationSpec = tween<Color>(durationMillis = 350)
     return targetColorScheme.copy(
         background = animateColorAsState(targetColorScheme.background, animationSpec).value,
         surface = animateColorAsState(targetColorScheme.surface, animationSpec).value,
@@ -103,15 +108,21 @@ private fun animateColorSchemeAsState(targetColorScheme: ColorScheme): ColorSche
             targetColorScheme.surfaceContainer,
             animationSpec
         ).value,
-        surfaceVariant = animateColorAsState(targetColorScheme.surfaceVariant, animationSpec).value,
         onSurfaceVariant = animateColorAsState(
             targetColorScheme.onSurfaceVariant,
             animationSpec
         ).value,
         surfaceTint = animateColorAsState(targetColorScheme.surfaceTint, animationSpec).value,
+        surfaceDim = animateColorAsState(targetColorScheme.surfaceDim, animationSpec).value,
+        surfaceVariant = animateColorAsState(targetColorScheme.surfaceVariant, animationSpec).value,
         onBackground = animateColorAsState(targetColorScheme.onBackground, animationSpec).value,
         primary = animateColorAsState(targetColorScheme.primary, animationSpec).value,
+        primaryContainer = animateColorAsState(
+            targetColorScheme.primaryContainer,
+            animationSpec
+        ).value,
         secondary = animateColorAsState(targetColorScheme.secondary, animationSpec).value,
+        tertiary = animateColorAsState(targetColorScheme.tertiary, animationSpec).value,
         outline = animateColorAsState(targetColorScheme.outline, animationSpec).value
     )
 }

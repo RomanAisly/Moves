@@ -57,8 +57,8 @@ fun HomeScreen(
             } else {
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalArrangement = Arrangement.spacedBy(14.dp),
                     contentPadding = PaddingValues(
                         start = 8.dp,
                         end = 8.dp,
@@ -87,7 +87,7 @@ fun HomeScreen(
                         bottomEnd = 14.dp
                     )
                 )
-                .background(MaterialTheme.colorScheme.surface)
+                .background(MaterialTheme.colorScheme.surfaceContainer)
                 .padding(top = paddingValues.calculateTopPadding())
                 .fillMaxWidth()
                 .padding(8.dp)
