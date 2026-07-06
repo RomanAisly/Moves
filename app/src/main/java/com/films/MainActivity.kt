@@ -9,6 +9,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
 import com.films.ui.navigation.RootNavGraph
 import com.films.ui.screens.settings.SettingsViewModel
+import com.films.ui.theme.AppLanguageProvider
 import com.films.ui.theme.FilmsTheme
 import org.koin.androidx.compose.koinViewModel
 
@@ -18,13 +19,19 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
+
             val settingsViewModel: SettingsViewModel = koinViewModel()
             val currentTheme by settingsViewModel.themeState.collectAsStateWithLifecycle()
+            val currentLanguage by settingsViewModel.languageState.collectAsStateWithLifecycle()
 
-            FilmsTheme(appTheme = currentTheme, onThemeChange = { newTheme ->
-                settingsViewModel.changeTheme(newTheme)
+            AppLanguageProvider(appLanguage = currentLanguage, onLanguageChange = { newLanguage ->
+                settingsViewModel.changeLanguage(newLanguage)
             }) {
-                RootNavGraph(rootNavHost = navController)
+                FilmsTheme(appTheme = currentTheme, onThemeChange = { newTheme ->
+                    settingsViewModel.changeTheme(newTheme)
+                }) {
+                    RootNavGraph(rootNavHost = navController)
+                }
             }
         }
     }

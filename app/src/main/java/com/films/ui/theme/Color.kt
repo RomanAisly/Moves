@@ -2,7 +2,7 @@ package com.films.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val unspecified = Color(0xFF000000)
+val unspecified = Color.Unspecified
 val transparent = Color(0x00000000)
 val white = Color(0xFFFFFFFF)
 val beige = Color(0xFFF5F5DC)

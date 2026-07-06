@@ -20,10 +20,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.films.ui.components.AppLanguage
 import com.films.ui.components.AppTheme
 import com.films.ui.components.BaseIcon
 import com.films.ui.components.BaseText
+import com.films.ui.theme.LocalAppLanguage
 import com.films.ui.theme.LocalAppTheme
+import com.films.ui.theme.LocalLanguageChangeHandler
 import com.films.ui.theme.LocalThemeChangeHandler
 import com.films.ui.theme.indigo
 import com.films.ui.theme.purple
@@ -33,6 +36,8 @@ fun SettingsScreen(paddingValues: PaddingValues) {
 
     val currentTheme = LocalAppTheme.current
     val onThemeChange = LocalThemeChangeHandler.current
+    val currentLanguage = LocalAppLanguage.current
+    val onLanguageChange = LocalLanguageChangeHandler.current
 
     Column(
         Modifier
@@ -47,6 +52,14 @@ fun SettingsScreen(paddingValues: PaddingValues) {
                 option = theme,
                 isSelected = currentTheme == theme,
                 onClick = { onThemeChange(theme) }
+            )
+        }
+        BaseText("Choose language")
+        AppLanguage.entries.forEach { language ->
+            LanguageItem(
+                option = language,
+                isSelected = currentLanguage == language,
+                onClick = { onLanguageChange(language) }
             )
         }
     }
@@ -72,6 +85,36 @@ private fun ThemeItem(
                 .size(32.dp)
                 .clip(CircleShape)
         )
+        BaseText(
+            stringResource(option.titleRes),
+            textStyle = MaterialTheme.typography.bodySmall,
+            modifier = Modifier.weight(1f)
+        )
+        RadioButton(
+            selected = isSelected,
+            onClick = null,
+            colors = RadioButtonDefaults.colors(
+                selectedColor = purple,
+                unselectedColor = indigo
+            )
+        )
+    }
+}
+
+@Composable
+private fun LanguageItem(
+    option: AppLanguage,
+    isSelected: Boolean,
+    onClick: (AppLanguage) -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = { onClick(option) })
+            .padding(horizontal = 24.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
         BaseText(
             stringResource(option.titleRes),
             textStyle = MaterialTheme.typography.bodySmall,

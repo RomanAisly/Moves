@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -46,31 +47,35 @@ fun HomeScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-
-
-        if (state.films.isEmpty()) {
-            LoadingScreen()
-        } else {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                contentPadding = PaddingValues(
-                    start = 8.dp,
-                    end = 8.dp,
-                    top = paddingValues.calculateTopPadding() + 72.dp,
-                    bottom = 8.dp + paddingValues.calculateBottomPadding()
-                )
-            ) {
-                items(state.films, key = { it.id }) { films ->
-                    FilmsItem(
-                        modifier = Modifier,
-                        poster = films.poster_path,
-                        title = films.title,
-                        genres = films.genreIds.toLocalizedGenresString(),
-                        releaseDate = films.release_date,
-                        rating = films.vote_average,
-                        onFilmClick = { onFilmClick(films.id) })
+        PullToRefreshBox(
+            isRefreshing = state.isRefreshing,
+            onRefresh = { viewModel.refreshFilms() },
+            modifier = Modifier.fillMaxSize()
+        ) {
+            if (state.films.isEmpty() && !state.isRefreshing) {
+                LoadingScreen()
+            } else {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    contentPadding = PaddingValues(
+                        start = 8.dp,
+                        end = 8.dp,
+                        top = paddingValues.calculateTopPadding() + 72.dp,
+                        bottom = 8.dp + paddingValues.calculateBottomPadding()
+                    )
+                ) {
+                    items(state.films, key = { it.id }) { films ->
+                        FilmsItem(
+                            modifier = Modifier,
+                            poster = films.poster_path,
+                            title = films.title,
+                            genres = films.genreIds.toLocalizedGenresString(),
+                            releaseDate = films.release_date,
+                            rating = films.vote_average,
+                            onFilmClick = { onFilmClick(films.id) })
+                    }
                 }
             }
         }
@@ -107,7 +112,7 @@ fun HomeScreen(
             snackBarFlow = viewModel.snack,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = paddingValues.calculateBottomPadding() + 16.dp)
+                .padding(bottom = paddingValues.calculateBottomPadding())
         )
     }
 }

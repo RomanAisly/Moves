@@ -27,7 +27,7 @@ class FilmsRepositoryImpl(
         forceFetch: Boolean,
     ): Flow<CheckDataResult<List<Films>, AppError>> {
         return flow {
-            val localFilms = db.dao().getLocalFilms(category)
+            val localFilms = db.dao().getLocalFilms(category, language)
             val shouldUseLocalCache = localFilms.isNotEmpty() && !forceFetch
             if (shouldUseLocalCache) {
                 emit(CheckDataResult.Success(data = localFilms.map { filmsEntity ->
@@ -72,7 +72,7 @@ class FilmsRepositoryImpl(
                     return@flow
                 }
                 val newFilms = remoteFilms.results.let {
-                    it.map { films -> films.toFilmsEntity(category) }
+                    it.map { films -> films.toFilmsEntity(category, language) }
                 }
                 db.dao().upsertFilms(newFilms)
                 emit(CheckDataResult.Success(data = newFilms.map { it.toLocalFilms(category) }))

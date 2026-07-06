@@ -4,7 +4,7 @@ import com.films.data.local.FilmsEntity
 import com.films.data.remote.ResultDTO
 import com.films.domain.model.Films
 
-fun ResultDTO.toFilmsEntity(category: String): FilmsEntity {
+fun ResultDTO.toFilmsEntity(category: String, language: String): FilmsEntity {
     return FilmsEntity(
         adult = adult,
         backdrop_path = backdrop_path,
@@ -20,7 +20,8 @@ fun ResultDTO.toFilmsEntity(category: String): FilmsEntity {
         video = video,
         vote_average = vote_average,
         vote_count = vote_count,
-        category = category
+        category = category,
+        language = language
     )
 }
 
