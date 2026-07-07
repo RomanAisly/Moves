@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,6 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.films.R
 import com.films.data.remote.FilmsService
+import com.films.ui.theme.AppTheme
 
 @Composable
 fun FilmsItem(
@@ -27,11 +27,11 @@ fun FilmsItem(
     rating: Double,
     onFilmClick: () -> Unit
 ) {
+
     BaseCard(
         modifier = modifier.clickable { onFilmClick() },
         shape = MaterialTheme.shapes.large,
-        containerColor = MaterialTheme.colorScheme.surfaceVariant,
-        elevation = 5.dp,
+        containerColor = AppTheme.colors.cardBackSecondary
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -42,7 +42,9 @@ fun FilmsItem(
                 placeholder = R.drawable.placeholder_image,
                 modifier = modifier
                     .fillMaxWidth()
-                    .clip(shape = RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
+                    .clip(
+                        shape = MaterialTheme.shapes.large
+                    )
                     .aspectRatio(2f / 3f)
             )
             BaseText(
@@ -63,7 +65,7 @@ fun FilmsItem(
                 text = releaseDate,
                 textStyle = MaterialTheme.typography.titleSmall,
             )
-            RatingBar(rating = rating / 2, modifier = Modifier.padding(bottom = 8.dp))
+            RatingBar(rating = rating / 2, modifier = Modifier.padding(bottom = 6.dp))
         }
     }
 }

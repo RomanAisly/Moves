@@ -12,6 +12,7 @@
     <string name="film_category_upcoming">Скоро появится</string>
 
     <!-- Genres -->
+    <string name="language">Язык</string>
     <string name="genre_action">Боевик</string>
     <string name="genre_adventure">Приключения</string>
     <string name="genre_animation">Мультфильм</string>
@@ -39,4 +40,5 @@
     <string name="error_not_found">Данные не найдены</string>
     <string name="error_unauthorized">Ошибка авторизации. Войдите заново</string>
     <string name="error_unknown">Что-то пошло не так. Попробуйте позже</string>
+    <string name="theme">Тема</string>
 </resources>

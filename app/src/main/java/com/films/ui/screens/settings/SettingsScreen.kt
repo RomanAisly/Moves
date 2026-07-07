@@ -26,16 +26,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.films.R
 import com.films.core.di.previewModule
-import com.films.ui.components.AppLanguage
-import com.films.ui.components.AppTheme
 import com.films.ui.components.BaseCard
 import com.films.ui.components.BaseIcon
 import com.films.ui.components.BaseText
+import com.films.ui.components.SetLanguage
+import com.films.ui.components.SetTheme
+import com.films.ui.theme.AppTheme
 import com.films.ui.theme.FilmsTheme
-import com.films.ui.theme.LocalAppLanguage
-import com.films.ui.theme.LocalAppTheme
 import com.films.ui.theme.LocalLanguageChangeHandler
+import com.films.ui.theme.LocalSetLanguage
+import com.films.ui.theme.LocalSetTheme
 import com.films.ui.theme.LocalThemeChangeHandler
 import org.koin.compose.KoinContext
 import org.koin.dsl.koinApplication
@@ -43,15 +45,15 @@ import org.koin.dsl.koinApplication
 @Composable
 fun SettingsScreen(paddingValues: PaddingValues) {
 
-    val currentTheme = LocalAppTheme.current
+    val currentTheme = LocalSetTheme.current
     val onThemeChange = LocalThemeChangeHandler.current
-    val currentLanguage = LocalAppLanguage.current
+    val currentLanguage = LocalSetLanguage.current
     val onLanguageChange = LocalLanguageChangeHandler.current
 
     Column(
         Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+            .background(AppTheme.colors.screenBack)
     ) {
         Row(
             modifier = Modifier
@@ -65,17 +67,17 @@ fun SettingsScreen(paddingValues: PaddingValues) {
                     modifier = Modifier
                         .width(IntrinsicSize.Max)
                         .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                    verticalArrangement = Arrangement.spacedBy(2.dp)
                 ) {
                     BaseText(
-                        "Theme",
+                        stringResource(R.string.theme),
                         textAlign = TextAlign.Center,
                         textStyle = MaterialTheme.typography.titleLarge,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(bottom = 8.dp)
                     )
-                    AppTheme.entries.forEach { theme ->
+                    SetTheme.entries.forEach { theme ->
                         ThemeItem(
                             option = theme,
                             isSelected = currentTheme == theme,
@@ -90,17 +92,17 @@ fun SettingsScreen(paddingValues: PaddingValues) {
                     modifier = Modifier
                         .width(IntrinsicSize.Max)
                         .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     BaseText(
-                        "Language",
+                        stringResource(R.string.language),
                         textAlign = TextAlign.Center,
                         textStyle = MaterialTheme.typography.titleLarge,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(bottom = 8.dp)
                     )
-                    AppLanguage.entries.forEach { language ->
+                    SetLanguage.entries.forEach { language ->
                         LanguageItem(
                             option = language,
                             isSelected = currentLanguage == language,
@@ -115,35 +117,36 @@ fun SettingsScreen(paddingValues: PaddingValues) {
 
 @Composable
 private fun ThemeItem(
-    option: AppTheme,
+    option: SetTheme,
     isSelected: Boolean,
-    onClick: (AppTheme) -> Unit
+    onClick: (SetTheme) -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = { onClick(option) }),
+            .clip(MaterialTheme.shapes.medium)
+            .clickable(onClick = { onClick(option) })
+            .padding(6.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         BaseIcon(
             option.iconRes,
-            iconTint = MaterialTheme.colorScheme.onBackground,
+            iconTint = AppTheme.colors.iconTint,
             modifier = Modifier
                 .size(32.dp)
                 .clip(CircleShape)
         )
         BaseText(
             stringResource(option.titleRes),
-            textStyle = MaterialTheme.typography.bodySmall,
             modifier = Modifier.weight(1f)
         )
         RadioButton(
             selected = isSelected,
             onClick = null,
             colors = RadioButtonDefaults.colors(
-                selectedColor = MaterialTheme.colorScheme.surfaceDim,
-                unselectedColor = MaterialTheme.colorScheme.onSurface
+                selectedColor = AppTheme.colors.iconTintSecondary,
+                unselectedColor = AppTheme.colors.iconTint
             )
         )
     }
@@ -151,28 +154,29 @@ private fun ThemeItem(
 
 @Composable
 private fun LanguageItem(
-    option: AppLanguage,
+    option: SetLanguage,
     isSelected: Boolean,
-    onClick: (AppLanguage) -> Unit
+    onClick: (SetLanguage) -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = { onClick(option) }),
+            .clip(MaterialTheme.shapes.medium)
+            .clickable(onClick = { onClick(option) })
+            .padding(6.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         BaseText(
             stringResource(option.titleRes),
-            textStyle = MaterialTheme.typography.bodySmall,
             modifier = Modifier.weight(1f)
         )
         RadioButton(
             selected = isSelected,
             onClick = null,
             colors = RadioButtonDefaults.colors(
-                selectedColor = MaterialTheme.colorScheme.surfaceDim,
-                unselectedColor = MaterialTheme.colorScheme.onSurface
+                selectedColor = AppTheme.colors.iconTintSecondary,
+                unselectedColor = AppTheme.colors.iconTint
             )
         )
     }

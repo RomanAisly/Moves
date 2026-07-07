@@ -8,6 +8,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import com.films.ui.theme.AppTheme
 
 @Composable
 fun BaseText(
@@ -15,7 +16,7 @@ fun BaseText(
     modifier: Modifier = Modifier,
     textAlign: TextAlign = TextAlign.Start,
     textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
-    textColor: Color = MaterialTheme.colorScheme.onBackground,
+    textColor: Color = AppTheme.colors.text,
     maxLines: Int = Int.MAX_VALUE,
     minLines: Int = 1,
     overflow: TextOverflow = TextOverflow.Ellipsis,

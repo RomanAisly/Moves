@@ -26,6 +26,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.films.R
 import com.films.data.mappers.toLocalizedGenresString
 import com.films.data.remote.FilmsService
+import com.films.ui.components.BaseCard
 import com.films.ui.components.BaseIconButton
 import com.films.ui.components.BaseScreen
 import com.films.ui.components.BaseText
@@ -33,6 +34,7 @@ import com.films.ui.components.CoilImage
 import com.films.ui.components.CustomSnaKBar
 import com.films.ui.components.LoadingScreen
 import com.films.ui.components.RatingBar
+import com.films.ui.theme.AppTheme
 import com.films.ui.theme.lightPink
 import com.films.ui.theme.lime
 import com.films.ui.theme.red
@@ -56,15 +58,17 @@ fun DetailsScreen(
         horizontal = Alignment.CenterHorizontally,
         vertical = Arrangement.spacedBy(14.dp)
     ) {
-        CoilImage(
-            model = FilmsService.IMAGE_URL + state.filmDetails?.poster_path,
-            placeholder = R.drawable.placeholder_image,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(shape = RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
-                .aspectRatio(5f / 6f)
-        )
+        BaseCard {
+            CoilImage(
+                model = FilmsService.IMAGE_URL + state.filmDetails?.poster_path,
+                placeholder = R.drawable.placeholder_image,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(shape = RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
+                    .aspectRatio(5f / 6f)
+            )
+        }
 
         RatingBar(rating = state.filmDetails?.vote_average?.div(2) ?: 0.0)
 
@@ -136,8 +140,13 @@ private fun ActionIconButton(
     BaseIconButton(
         size = 48.dp,
         modifier = Modifier
-            .shadow(elevation = 2.dp, shape = CircleShape)
-            .background(MaterialTheme.colorScheme.tertiary, shape = CircleShape),
+            .shadow(
+                elevation = 2.dp,
+                shape = CircleShape,
+                spotColor = AppTheme.colors.text,
+                ambientColor = AppTheme.colors.text
+            )
+            .background(AppTheme.colors.iconBack, shape = CircleShape),
         iconTint = iconTint,
         iconId = iconId,
         onClick = onClick

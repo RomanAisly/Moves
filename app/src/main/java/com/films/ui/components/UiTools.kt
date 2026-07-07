@@ -10,7 +10,7 @@ import com.films.ui.theme.FilmsTheme
 import org.koin.compose.KoinContext
 import org.koin.dsl.koinApplication
 
-enum class AppLanguage(
+enum class SetLanguage(
     val titleRes: Int,
     val localeCode: String
 ) {
@@ -25,7 +25,7 @@ enum class AppLanguage(
 }
 
 
-enum class AppTheme(val iconRes: Int, val titleRes: Int) {
+enum class SetTheme(val iconRes: Int, val titleRes: Int) {
     SYSTEM(R.drawable.theme_system, R.string.theme_system),
     DARK(R.drawable.theme_dark, R.string.theme_dark),
     LIGHT(R.drawable.theme_light, R.string.theme_light)

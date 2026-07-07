@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.films.R
+import com.films.ui.theme.AppTheme
 
 
 @Composable
@@ -33,7 +34,7 @@ fun ArrowBackButton(
             .size(48.dp),
         shape = CircleShape,
         colors = IconButtonDefaults.iconButtonColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = AppTheme.colors.cardBack
         ),
         onClick = onClick
     ) {
@@ -50,8 +51,8 @@ fun TabButton(
     modifier: Modifier = Modifier,
     textPadding: Dp = 0.dp,
     tabName: String,
-    tabColor: Color = MaterialTheme.colorScheme.primary,
-    textColor: Color = MaterialTheme.colorScheme.onBackground,
+    tabColor: Color = AppTheme.colors.buttPrimary,
+    textColor: Color = AppTheme.colors.text,
     border: BorderStroke? = null,
     onClick: () -> Unit
 ) {

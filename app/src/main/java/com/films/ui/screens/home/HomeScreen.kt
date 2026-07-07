@@ -15,7 +15,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,6 +30,7 @@ import com.films.ui.components.FilmCategory
 import com.films.ui.components.FilmsItem
 import com.films.ui.components.LoadingScreen
 import com.films.ui.components.TabButton
+import com.films.ui.theme.AppTheme
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -45,7 +45,7 @@ fun HomeScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+            .background(AppTheme.colors.screenBack)
     ) {
         PullToRefreshBox(
             isRefreshing = state.isRefreshing,
@@ -87,7 +87,7 @@ fun HomeScreen(
                         bottomEnd = 14.dp
                     )
                 )
-                .background(MaterialTheme.colorScheme.surfaceContainer)
+                .background(AppTheme.colors.bottomBar)
                 .padding(top = paddingValues.calculateTopPadding())
                 .fillMaxWidth()
                 .padding(8.dp)
@@ -97,10 +97,10 @@ fun HomeScreen(
             FilmCategory.entries.forEach { category ->
                 TabButton(
                     tabName = stringResource(category.nameRes),
-                    tabColor = if (state.selectedCategory == category.category) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primaryContainer,
+                    tabColor = if (state.selectedCategory == category.category) AppTheme.colors.buttTertiary else AppTheme.colors.buttSecondary,
                     border = if (state.selectedCategory == category.category) BorderStroke(
                         2.dp,
-                        MaterialTheme.colorScheme.outline
+                        AppTheme.colors.border
                     ) else null,
                     onClick = {
                         viewModel.changeCategory(category)

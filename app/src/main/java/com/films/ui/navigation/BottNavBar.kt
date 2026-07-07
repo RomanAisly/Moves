@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LocalRippleConfiguration
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -26,6 +25,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.films.R
 import com.films.ui.components.BaseIcon
+import com.films.ui.theme.AppTheme
 import com.films.ui.theme.lightBlue
 import com.films.ui.theme.transparent
 
@@ -60,7 +60,7 @@ fun BottomNavBar(bottomBarHost: NavController) {
                 topEnd = 16.dp
             )
         ),
-        containerColor = MaterialTheme.colorScheme.surfaceContainer
+        containerColor = AppTheme.colors.bottomBar
     ) {
         val navBackStackEntry by bottomBarHost.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
@@ -85,7 +85,7 @@ fun BottomNavBar(bottomBarHost: NavController) {
                             modifier = Modifier
                                 .size(44.dp)
                                 .background(
-                                    color = if (isSelected) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.primary,
+                                    color = if (isSelected) AppTheme.colors.iconBackSecondary else AppTheme.colors.buttPrimary,
                                     shape = CircleShape
                                 )
                                 .border(
@@ -98,7 +98,7 @@ fun BottomNavBar(bottomBarHost: NavController) {
                         ) {
                             BaseIcon(
                                 iconId = item.icon,
-                                iconTint = if (isSelected) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.surfaceTint,
+                                iconTint = if (isSelected) AppTheme.colors.iconTint else AppTheme.colors.iconBackTertiary,
                             )
                         }
 

@@ -8,8 +8,8 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.films.ui.components.AppLanguage
-import com.films.ui.components.AppTheme
+import com.films.ui.components.SetLanguage
+import com.films.ui.components.SetTheme
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -34,14 +34,14 @@ class SettingsManager(private val dataStore: DataStore<Preferences>) {
             runCatching { enumValueOf<T>(name) }.getOrDefault(defaultValue)
         }
 
-    val themeFlow: Flow<AppTheme> = getEnumFlow(THEME_KEY, AppTheme.SYSTEM)
-    val languageFlow: Flow<AppLanguage> = getEnumFlow(LANGUAGE_KEY, AppLanguage.ENGLISH)
+    val themeFlow: Flow<SetTheme> = getEnumFlow(THEME_KEY, SetTheme.SYSTEM)
+    val languageFlow: Flow<SetLanguage> = getEnumFlow(LANGUAGE_KEY, SetLanguage.ENGLISH)
 
-    suspend fun saveTheme(theme: AppTheme) {
+    suspend fun saveTheme(theme: SetTheme) {
         dataStore.edit { it[THEME_KEY] = theme.name }
     }
 
-    suspend fun saveLanguage(language: AppLanguage) {
+    suspend fun saveLanguage(language: SetLanguage) {
         dataStore.edit { it[LANGUAGE_KEY] = language.name }
     }
 

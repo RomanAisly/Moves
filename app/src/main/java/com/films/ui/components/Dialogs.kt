@@ -23,7 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.films.R
 import com.films.core.utils.AppError
-import com.films.ui.theme.white
+import com.films.ui.theme.AppTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
@@ -53,7 +53,7 @@ fun CustomSnaKBar(
             Snackbar(
                 modifier = modifier.padding(horizontal = 18.dp),
                 shape = MaterialTheme.shapes.large,
-                containerColor = white,
+                containerColor = AppTheme.colors.cardBack,
                 dismissAction = {
                     BaseIconButton(
                         modifier = Modifier.padding(end = 8.dp),

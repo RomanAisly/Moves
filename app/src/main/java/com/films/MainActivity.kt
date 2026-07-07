@@ -24,10 +24,10 @@ class MainActivity : ComponentActivity() {
             val currentTheme by settingsViewModel.themeState.collectAsStateWithLifecycle()
             val currentLanguage by settingsViewModel.languageState.collectAsStateWithLifecycle()
 
-            AppLanguageProvider(appLanguage = currentLanguage, onLanguageChange = { newLanguage ->
+            AppLanguageProvider(setLanguage = currentLanguage, onLanguageChange = { newLanguage ->
                 settingsViewModel.changeLanguage(newLanguage)
             }) {
-                FilmsTheme(appTheme = currentTheme, onThemeChange = { newTheme ->
+                FilmsTheme(setTheme = currentTheme, onThemeChange = { newTheme ->
                     settingsViewModel.changeTheme(newTheme)
                 }) {
                     RootNavGraph(rootNavHost = navController)

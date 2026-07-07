@@ -14,10 +14,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.films.ui.theme.AppTheme
+import com.films.ui.theme.transparent
 
 @Composable
 fun BaseScreen(
@@ -31,7 +34,7 @@ fun BaseScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+            .background(AppTheme.colors.screenBack)
             .then(if (useStatusBarsPadding) Modifier.statusBarsPadding() else Modifier)
             .then(if (useNavigationBarsPadding) Modifier.navigationBarsPadding() else Modifier),
         verticalArrangement = vertical,
@@ -45,16 +48,26 @@ fun BaseScreen(
 fun BaseCard(
     modifier: Modifier = Modifier,
     shape: Shape = MaterialTheme.shapes.large,
-    containerColor: Color = MaterialTheme.colorScheme.surface,
-    elevation: Dp = 4.dp,
+    containerColor: Color = AppTheme.colors.cardBack,
+    elevation: Dp = 5.dp,
+    shadowColor: Color = AppTheme.colors.text,
     border: BorderStroke? = null,
     content: @Composable (ColumnScope.() -> Unit)
 ) {
     Card(
-        modifier = modifier,
+        modifier = modifier.then(
+            if (shadowColor != transparent) {
+                Modifier.shadow(
+                    elevation = elevation,
+                    shape = shape,
+                    ambientColor = shadowColor,
+                    spotColor = shadowColor
+                )
+            } else Modifier
+        ),
         shape = shape,
         colors = CardDefaults.cardColors(containerColor = containerColor),
-        elevation = CardDefaults.cardElevation(defaultElevation = elevation),
+        elevation = CardDefaults.cardElevation(defaultElevation = if (shadowColor != AppTheme.colors.text) 0.dp else elevation),
         border = border,
         content = content
     )

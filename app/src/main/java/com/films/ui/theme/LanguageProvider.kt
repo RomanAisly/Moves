@@ -6,19 +6,19 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import com.films.ui.components.AppLanguage
+import com.films.ui.components.SetLanguage
 import java.util.Locale
 
-val LocalAppLanguage = compositionLocalOf { AppLanguage.ENGLISH }
-val LocalLanguageChangeHandler = compositionLocalOf<(AppLanguage) -> Unit> { {} }
+val LocalSetLanguage = compositionLocalOf { SetLanguage.ENGLISH }
+val LocalLanguageChangeHandler = compositionLocalOf<(SetLanguage) -> Unit> { {} }
 
 @Composable
 fun AppLanguageProvider(
-    appLanguage: AppLanguage,
-    onLanguageChange: (AppLanguage) -> Unit,
+    setLanguage: SetLanguage,
+    onLanguageChange: (SetLanguage) -> Unit,
     content: @Composable () -> Unit
 ) {
-    val locale = Locale.forLanguageTag(appLanguage.localeCode)
+    val locale = Locale.forLanguageTag(setLanguage.localeCode)
     Locale.setDefault(locale)
 
     val configuration = Configuration(LocalConfiguration.current)
@@ -29,7 +29,7 @@ fun AppLanguageProvider(
     CompositionLocalProvider(
         LocalContext provides newConfigurationContext,
         LocalConfiguration provides configuration,
-        LocalAppLanguage provides appLanguage,
+        LocalSetLanguage provides setLanguage,
         LocalLanguageChangeHandler provides onLanguageChange,
         content = content
     )

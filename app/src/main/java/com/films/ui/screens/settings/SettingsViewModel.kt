@@ -3,8 +3,8 @@ package com.films.ui.screens.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.films.data.local.SettingsManager
-import com.films.ui.components.AppLanguage
-import com.films.ui.components.AppTheme
+import com.films.ui.components.SetLanguage
+import com.films.ui.components.SetTheme
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -12,26 +12,26 @@ import kotlinx.coroutines.launch
 
 class SettingsViewModel(private val settingsManager: SettingsManager) : ViewModel() {
 
-    val themeState: StateFlow<AppTheme> = settingsManager.themeFlow.stateIn(
+    val themeState: StateFlow<SetTheme> = settingsManager.themeFlow.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = AppTheme.SYSTEM
+        initialValue = SetTheme.SYSTEM
     )
 
-    val languageState: StateFlow<AppLanguage> = settingsManager.languageFlow.stateIn(
+    val languageState: StateFlow<SetLanguage> = settingsManager.languageFlow.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = AppLanguage.ENGLISH
+        initialValue = SetLanguage.ENGLISH
     )
 
 
-    fun changeTheme(newTheme: AppTheme) {
+    fun changeTheme(newTheme: SetTheme) {
         viewModelScope.launch {
             settingsManager.saveTheme(newTheme)
         }
     }
 
-    fun changeLanguage(newLanguage: AppLanguage) {
+    fun changeLanguage(newLanguage: SetLanguage) {
         viewModelScope.launch {
             settingsManager.saveLanguage(newLanguage)
         }
