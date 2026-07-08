@@ -10,10 +10,9 @@ import com.films.domain.model.FilmsRepository
 import com.films.ui.navigation.Routes
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -23,11 +22,7 @@ class DetailsViewModel(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(DetailsState())
-    val state = _state.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = DetailsState()
-    )
+    val state = _state.asStateFlow()
 
     private val filmId = savedStateHandle.toRoute<Routes.Details>().id
 

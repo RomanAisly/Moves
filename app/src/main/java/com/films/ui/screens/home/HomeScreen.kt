@@ -16,6 +16,8 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -41,6 +43,7 @@ fun HomeScreen(
     onFilmClick: (id: Int) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val refreshState = rememberPullToRefreshState()
 
     Box(
         modifier = Modifier
@@ -50,7 +53,20 @@ fun HomeScreen(
         PullToRefreshBox(
             isRefreshing = state.isRefreshing,
             onRefresh = { viewModel.refreshFilms() },
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            state = refreshState,
+            indicator = {
+                PullToRefreshDefaults.Indicator(
+                    state = refreshState,
+                    isRefreshing = state.isRefreshing,
+                    modifier = Modifier
+                        .align(Alignment.TopCenter)
+                        .padding(top = paddingValues.calculateTopPadding()),
+                    containerColor = AppTheme.colors.screenBack,
+                    color = AppTheme.colors.border
+                )
+
+            }
         ) {
             if (state.films.isEmpty() && !state.isRefreshing) {
                 LoadingScreen()
