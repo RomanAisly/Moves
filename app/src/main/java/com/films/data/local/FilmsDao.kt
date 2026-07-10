@@ -3,6 +3,7 @@ package com.films.data.local
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FilmsDao {
@@ -15,4 +16,16 @@ interface FilmsDao {
 
     @Query("SELECT * FROM filmsentity WHERE id = :id")
     suspend fun getFilmByIds(id: Int): FilmsEntity?
+
+    @Query("UPDATE filmsentity SET isFavorite = :isFavorite WHERE id = :id")
+    suspend fun updateFavoriteStatus(id: Int, isFavorite: Boolean)
+
+    @Query("SELECT * FROM filmsentity WHERE isFavorite = 1")
+    fun getFavoriteFilms(): Flow<List<FilmsEntity>>
+
+    @Query("UPDATE filmsentity SET isWatchLater = :isWatchLater WHERE id = :id")
+    suspend fun updateWatchLaterStatus(id: Int, isWatchLater: Boolean)
+
+    @Query("SELECT * FROM filmsentity WHERE isWatchLater = 1")
+    fun getWatchLaterFilms(): Flow<List<FilmsEntity>>
 }

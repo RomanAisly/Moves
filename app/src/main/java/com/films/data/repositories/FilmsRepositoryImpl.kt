@@ -15,6 +15,7 @@ import io.ktor.client.plugins.ServerResponseException
 import io.ktor.util.network.UnresolvedAddressException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
 class FilmsRepositoryImpl(
     private val api: FilmsService,
@@ -96,6 +97,26 @@ class FilmsRepositoryImpl(
                 Log.e("FilmsRepositoryImpl", "DB exception: ", e)
                 emit(CheckDataResult.Error(AppError.UNKNOWN))
             }
+        }
+    }
+
+    override suspend fun updateFavoriteStatus(id: Int, isFavorite: Boolean) {
+        db.dao().updateFavoriteStatus(id, isFavorite)
+    }
+
+    override fun getFavoriteFilms(): Flow<List<Films>> {
+        return db.dao().getFavoriteFilms().map { list ->
+            list.map { it.toLocalFilms(it.category) }
+        }
+    }
+
+    override suspend fun updateWatchLaterStatus(id: Int, isWatchLater: Boolean) {
+        db.dao().updateWatchLaterStatus(id, isWatchLater)
+    }
+
+    override fun getWatchLaterFilms(): Flow<List<Films>> {
+        return db.dao().getWatchLaterFilms().map { list ->
+            list.map { it.toLocalFilms(it.category) }
         }
     }
 }

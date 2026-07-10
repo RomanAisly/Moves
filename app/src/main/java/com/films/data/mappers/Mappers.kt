@@ -21,7 +21,9 @@ fun ResultDTO.toFilmsEntity(category: String, language: String): FilmsEntity {
         vote_average = vote_average,
         vote_count = vote_count,
         category = category,
-        language = language
+        language = language,
+        isFavorite = false,
+        isWatchLater = false
     )
 }
 
@@ -42,6 +44,8 @@ fun FilmsEntity.toLocalFilms(category: String): Films {
         video = video,
         vote_average = vote_average,
         vote_count = vote_count,
-        category = category
+        category = category,
+        isFavorite = isFavorite,
+        isWatchLater = isWatchLater
     )
 }

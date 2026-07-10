@@ -63,6 +63,7 @@ fun RefreshIndicator(
                 state = state,
                 isRefreshing = isRefreshing,
                 modifier = modifier.padding(top = paddingValues.calculateTopPadding()),
+                maxDistance = 85.dp,
                 elevation = 2.dp,
                 containerColor = AppTheme.colors.screenBack,
                 content = {

@@ -1,16 +1,16 @@
 package com.films.ui.components
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Snackbar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -51,25 +51,28 @@ fun <T> SnackBarFlow(
 
     AnimatedVisibility(
         visible = isVisible,
-        enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
-        exit = slideOutVertically(targetOffsetY = { it }) + fadeOut(),
+        enter = slideInVertically(
+            initialOffsetY = { it + 100 },
+            animationSpec = tween(durationMillis = 400)
+        ),
+        exit = slideOutVertically(
+            targetOffsetY = { it + 100 },
+            animationSpec = tween(durationMillis = 400)
+        ),
         modifier = modifier
     ) {
         displayItem?.let { item ->
-            Snackbar(
-                modifier = Modifier.padding(horizontal = 18.dp),
-                shape = MaterialTheme.shapes.medium,
-                containerColor = AppTheme.colors.cardBack,
-                dismissAction = {
-                    BaseIconButton(
-                        modifier = Modifier.padding(end = 8.dp),
-                        iconId = R.drawable.close,
-                        iconTint = AppTheme.colors.text,
-                        onClick = { isVisible = false }
-                    )
-                }
+            BaseCard(
+                modifier = Modifier
+                    .navigationBarsPadding()
+                    .padding(bottom = 10.dp)
+                    .padding(horizontal = 18.dp)
+                    .fillMaxWidth(),
+                elevation = 3.dp,
+                shape = MaterialTheme.shapes.medium
             ) {
                 Row(
+                    modifier = Modifier.padding(10.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     BaseIcon(iconId = iconRes(item), iconTint = iconTint(item))
@@ -77,6 +80,12 @@ fun <T> SnackBarFlow(
                     BaseText(
                         text = stringResource(messageRes(item)),
                         modifier = Modifier.weight(1f)
+                    )
+                    BaseIconButton(
+                        modifier = Modifier.padding(end = 8.dp),
+                        iconId = R.drawable.close,
+                        iconTint = AppTheme.colors.text,
+                        onClick = { isVisible = false }
                     )
                 }
             }

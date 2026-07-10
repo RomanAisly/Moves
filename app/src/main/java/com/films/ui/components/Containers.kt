@@ -59,14 +59,14 @@ fun BaseCard(
     modifier: Modifier = Modifier,
     shape: Shape = MaterialTheme.shapes.large,
     containerColor: Color = AppTheme.colors.cardBack,
-    elevation: Dp = 5.dp,
+    elevation: Dp = 4.dp,
     shadowColor: Color = AppTheme.colors.text,
     border: BorderStroke? = null,
     content: @Composable (ColumnScope.() -> Unit)
 ) {
     Card(
         modifier = modifier.then(
-            if (shadowColor != transparent) {
+            if (elevation > 0.dp && shadowColor != transparent) {
                 Modifier.shadow(
                     elevation = elevation,
                     shape = shape,
@@ -77,7 +77,6 @@ fun BaseCard(
         ),
         shape = shape,
         colors = CardDefaults.cardColors(containerColor = containerColor),
-        elevation = CardDefaults.cardElevation(defaultElevation = if (shadowColor != AppTheme.colors.text) 0.dp else elevation),
         border = border,
         content = content
     )

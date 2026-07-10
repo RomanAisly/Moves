@@ -13,6 +13,7 @@
 
     <!-- Genres -->
     <string name="language">Язык</string>
+    <string name="watch_later">Отложенное</string>
     <string name="genre_action">Боевик</string>
     <string name="genre_adventure">Приключения</string>
     <string name="genre_animation">Мультфильм</string>
@@ -45,4 +46,5 @@
     <string name="removed_from_favorites">Удалено из избранго</string>
     <string name="added_to_watch_later">Добавлено в отложенные</string>
     <string name="removed_from_watch_later">Удалено из отложенные</string>
+    <string name="favorites">Избраное</string>
 </resources>

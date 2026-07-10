@@ -2,7 +2,6 @@ package com.films.ui.screens.details
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -22,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.films.R
@@ -46,7 +46,6 @@ import org.koin.androidx.compose.koinViewModel
 fun DetailsScreen(
     viewModel: DetailsViewModel = koinViewModel()
 ) {
-    val paddingValues = PaddingValues()
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     if (state.filmDetails == null) {
@@ -67,7 +66,6 @@ fun DetailsScreen(
                 messageRes = { it.messageRes },
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = paddingValues.calculateBottomPadding() + 10.dp)
 
             )
             SnackBarFlow(
@@ -77,12 +75,15 @@ fun DetailsScreen(
                 iconTint = { it.iconTint },
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = paddingValues.calculateBottomPadding() + 10.dp)
 
             )
         }
     ) {
-        BaseCard {
+        BaseCard(
+            modifier = Modifier.fillMaxWidth(),
+            elevation = 8.dp,
+            shape = RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp)
+        ) {
             CoilImage(
                 model = FilmsService.IMAGE_URL + film.poster_path,
                 placeholder = R.drawable.placeholder_image,
@@ -99,12 +100,14 @@ fun DetailsScreen(
         BaseText(
             text = film.title,
             textStyle = MaterialTheme.typography.headlineLarge,
+            textAlign = TextAlign.Center,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
 
         BaseText(
             text = film.genreIds.toLocalizedGenresString(),
             textStyle = MaterialTheme.typography.headlineMedium,
+            textAlign = TextAlign.Center,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
 

@@ -21,5 +21,7 @@ data class FilmsEntity(
     val vote_average: Double,
     val vote_count: Int,
     val category: String,
-    val language: String
+    val language: String,
+    val isFavorite: Boolean = false,
+    val isWatchLater: Boolean = false
 )

@@ -9,7 +9,9 @@ import com.films.core.utils.AppSuccess
 import com.films.core.utils.CheckDataResult
 import com.films.domain.model.FilmsRepository
 import com.films.ui.navigation.Routes
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -33,6 +35,9 @@ class DetailsViewModel(
     private val _successSnack = Channel<AppSuccess>(Channel.BUFFERED)
     val successSnack = _successSnack.receiveAsFlow()
 
+    private var favoriteJob: Job? = null
+    private var watchLaterJob: Job? = null
+
     init {
         getFilmDetails(filmId)
     }
@@ -43,7 +48,13 @@ class DetailsViewModel(
                 when (result) {
                     is CheckDataResult.Success -> {
                         result.data.let { film ->
-                            _state.update { it.copy(filmDetails = film) }
+                            _state.update {
+                                it.copy(
+                                    filmDetails = film,
+                                    isFavorite = film.isFavorite,
+                                    isWatchLater = film.isWatchLater
+                                )
+                            }
                         }
                     }
 
@@ -57,8 +68,10 @@ class DetailsViewModel(
 
     fun addToFavorite(isFavorite: Boolean) {
         _state.update { it.copy(isFavorite = isFavorite) }
-
-        viewModelScope.launch {
+        favoriteJob?.cancel()
+        favoriteJob = viewModelScope.launch {
+            delay(500)
+            repository.updateFavoriteStatus(filmId, isFavorite)
             val message =
                 if (isFavorite) AppSuccess.ADDED_TO_FAVORITES else AppSuccess.REMOVED_FROM_FAVORITES
             _successSnack.send(message)
@@ -67,8 +80,10 @@ class DetailsViewModel(
 
     fun addToWatchLater(isWatchLater: Boolean) {
         _state.update { it.copy(isWatchLater = isWatchLater) }
-
-        viewModelScope.launch {
+        watchLaterJob?.cancel()
+        watchLaterJob = viewModelScope.launch {
+            delay(500)
+            repository.updateWatchLaterStatus(filmId, isWatchLater)
             val message =
                 if (isWatchLater) AppSuccess.ADDED_TO_WATCH_LATER else AppSuccess.REMOVED_FROM_WATCH_LATER
             _successSnack.send(message)

@@ -37,8 +37,16 @@ fun BottomNavGraph(
                     bottomNavHost.navigate(Routes.Details(id))
                 })
             }
-            composable<Routes.Favorites> { FavoritesScreen(paddingValues) }
-            composable<Routes.WatchLater> { WatchLaterScreen() }
+            composable<Routes.Favorites> {
+                FavoritesScreen(paddingValues = paddingValues, onFilmClick = { id ->
+                    bottomNavHost.navigate(Routes.Details(id))
+                })
+            }
+            composable<Routes.WatchLater> {
+                WatchLaterScreen(paddingValues = paddingValues, onFilmClick = { id ->
+                    bottomNavHost.navigate(Routes.Details(id))
+                })
+            }
             composable<Routes.Settings> { SettingsScreen(paddingValues) }
         }
     }
