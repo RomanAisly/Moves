@@ -1,5 +1,7 @@
 package com.films.ui.screens.details
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -21,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -36,6 +39,7 @@ import com.films.ui.components.LoadingScreen
 import com.films.ui.components.RatingBar
 import com.films.ui.components.SnackBarFlow
 import com.films.ui.theme.AppTheme
+import com.films.ui.theme.LocalSetLanguage
 import com.films.ui.theme.lightPink
 import com.films.ui.theme.lime
 import com.films.ui.theme.red
@@ -53,6 +57,8 @@ fun DetailsScreen(
         return
     }
     val film = state.filmDetails!!
+    val context = LocalContext.current
+    val currentLanguage = LocalSetLanguage.current
 
     BaseScreen(
         modifier = Modifier.verticalScroll(rememberScrollState()),
@@ -144,7 +150,7 @@ fun DetailsScreen(
             ActionIconButton(
                 iconId = R.drawable.share,
                 iconTint = royalBlue,
-                onClick = { /* Share logic */ }
+                onClick = { shareMovie(context, film.title, film.id, currentLanguage.localeCode) }
             )
         }
 
@@ -176,4 +182,21 @@ private fun ActionIconButton(
         iconId = iconId,
         onClick = onClick
     )
+}
+
+private fun shareMovie(context: Context, filmTitle: String, filmId: Int, languageCode: String) {
+    val tmdbUrl = "https://www.themoviedb.org/movie/$filmId?language=$languageCode"
+
+    val chooserTitle = context.getString(R.string.share_title)
+    val sendIntent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(
+            Intent.EXTRA_TITLE,
+            filmTitle
+        )
+        putExtra(Intent.EXTRA_TEXT, tmdbUrl)
+    }
+    val chooserIntent = Intent.createChooser(sendIntent, chooserTitle)
+    chooserIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+    context.startActivity(chooserIntent)
 }
