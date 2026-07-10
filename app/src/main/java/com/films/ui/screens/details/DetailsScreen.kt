@@ -2,6 +2,7 @@ package com.films.ui.screens.details
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -31,9 +32,9 @@ import com.films.ui.components.BaseIconButton
 import com.films.ui.components.BaseScreen
 import com.films.ui.components.BaseText
 import com.films.ui.components.CoilImage
-import com.films.ui.components.CustomSnaKBar
 import com.films.ui.components.LoadingScreen
 import com.films.ui.components.RatingBar
+import com.films.ui.components.SnackBarFlow
 import com.films.ui.theme.AppTheme
 import com.films.ui.theme.lightPink
 import com.films.ui.theme.lime
@@ -45,22 +46,45 @@ import org.koin.androidx.compose.koinViewModel
 fun DetailsScreen(
     viewModel: DetailsViewModel = koinViewModel()
 ) {
+    val paddingValues = PaddingValues()
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     if (state.filmDetails == null) {
         LoadingScreen()
         return
     }
+    val film = state.filmDetails!!
 
     BaseScreen(
         modifier = Modifier.verticalScroll(rememberScrollState()),
         useStatusBarsPadding = false,
         horizontal = Alignment.CenterHorizontally,
-        vertical = Arrangement.spacedBy(14.dp)
+        vertical = Arrangement.spacedBy(14.dp),
+        overlayContent = {
+            SnackBarFlow(
+                snackBarFlow = viewModel.snack,
+                iconRes = { it.iconRes },
+                messageRes = { it.messageRes },
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = paddingValues.calculateBottomPadding() + 10.dp)
+
+            )
+            SnackBarFlow(
+                snackBarFlow = viewModel.successSnack,
+                iconRes = { it.iconRes },
+                messageRes = { it.messageRes },
+                iconTint = { it.iconTint },
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = paddingValues.calculateBottomPadding() + 10.dp)
+
+            )
+        }
     ) {
         BaseCard {
             CoilImage(
-                model = FilmsService.IMAGE_URL + state.filmDetails?.poster_path,
+                model = FilmsService.IMAGE_URL + film.poster_path,
                 placeholder = R.drawable.placeholder_image,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -70,33 +94,33 @@ fun DetailsScreen(
             )
         }
 
-        RatingBar(rating = state.filmDetails?.vote_average?.div(2) ?: 0.0)
+        RatingBar(rating = film.vote_average / 2)
 
         BaseText(
-            text = state.filmDetails?.title ?: "",
+            text = film.title,
             textStyle = MaterialTheme.typography.headlineLarge,
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp)
         )
 
         BaseText(
-            text = state.filmDetails?.genreIds?.toLocalizedGenresString() ?: "",
+            text = film.genreIds.toLocalizedGenresString(),
             textStyle = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp)
         )
 
         BaseText(
-            text = state.filmDetails?.release_date ?: "",
+            text = film.release_date,
             textStyle = MaterialTheme.typography.headlineSmall
         )
+
         BaseText(
-            text = state.filmDetails?.overview ?: "",
+            text = film.overview,
             textStyle = MaterialTheme.typography.bodyLarge,
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .padding(top = 8.dp)
         )
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -124,11 +148,9 @@ fun DetailsScreen(
         Spacer(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp)
+                .height(68.dp)
         )
-        CustomSnaKBar(snackBarFlow = viewModel.snack)
     }
-
 }
 
 @Composable

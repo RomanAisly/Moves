@@ -43,7 +43,11 @@ enum class FilmCategory(
 
 
 @Composable
-@Preview(name = "Light Mode", showBackground = true, showSystemUi = true)
+@Preview(
+    name = "Light Mode",
+    showBackground = true,
+    showSystemUi = true
+)
 @Preview(
     name = "Dark Mode",
     showBackground = true,

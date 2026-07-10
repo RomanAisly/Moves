@@ -3,6 +3,8 @@ package com.films.ui.components
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,18 +31,26 @@ fun BaseScreen(
     useNavigationBarsPadding: Boolean = true,
     vertical: Arrangement.Vertical = Arrangement.Top,
     horizontal: Alignment.Horizontal = Alignment.Start,
+    overlayContent: @Composable (BoxScope.() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    Column(
-        modifier = modifier
+    Box(
+        modifier = Modifier
             .fillMaxSize()
             .background(AppTheme.colors.screenBack)
             .then(if (useStatusBarsPadding) Modifier.statusBarsPadding() else Modifier)
-            .then(if (useNavigationBarsPadding) Modifier.navigationBarsPadding() else Modifier),
-        verticalArrangement = vertical,
-        horizontalAlignment = horizontal
+            .then(if (useNavigationBarsPadding) Modifier.navigationBarsPadding() else Modifier)
     ) {
-        content()
+        Column(
+            modifier = modifier
+                .fillMaxSize(),
+            verticalArrangement = vertical,
+            horizontalAlignment = horizontal,
+            content = content
+        )
+        if (overlayContent != null) {
+            overlayContent()
+        }
     }
 }
 

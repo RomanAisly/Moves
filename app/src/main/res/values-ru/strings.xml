@@ -41,4 +41,8 @@
     <string name="error_unauthorized">Ошибка авторизации. Войдите заново</string>
     <string name="error_unknown">Что-то пошло не так. Попробуйте позже</string>
     <string name="theme">Тема</string>
+    <string name="added_to_favorites">Добавлено в избраное</string>
+    <string name="removed_from_favorites">Удалено из избранго</string>
+    <string name="added_to_watch_later">Добавлено в отложенные</string>
+    <string name="removed_from_watch_later">Удалено из отложенные</string>
 </resources>

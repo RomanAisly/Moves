@@ -15,8 +15,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.pulltorefresh.PullToRefreshBox
-import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,10 +25,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.films.data.mappers.toLocalizedGenresString
-import com.films.ui.components.CustomSnaKBar
 import com.films.ui.components.FilmCategory
 import com.films.ui.components.FilmsItem
 import com.films.ui.components.LoadingScreen
+import com.films.ui.components.RefreshIndicator
+import com.films.ui.components.SnackBarFlow
 import com.films.ui.components.TabButton
 import com.films.ui.theme.AppTheme
 import org.koin.androidx.compose.koinViewModel
@@ -50,23 +49,11 @@ fun HomeScreen(
             .fillMaxSize()
             .background(AppTheme.colors.screenBack)
     ) {
-        PullToRefreshBox(
-            isRefreshing = state.isRefreshing,
-            onRefresh = { viewModel.refreshFilms() },
-            modifier = Modifier.fillMaxSize(),
+        RefreshIndicator(
             state = refreshState,
-            indicator = {
-                PullToRefreshDefaults.Indicator(
-                    state = refreshState,
-                    isRefreshing = state.isRefreshing,
-                    modifier = Modifier
-                        .align(Alignment.TopCenter)
-                        .padding(top = paddingValues.calculateTopPadding()),
-                    containerColor = AppTheme.colors.screenBack,
-                    color = AppTheme.colors.border
-                )
-
-            }
+            isRefreshing = state.isRefreshing,
+            paddingValues = paddingValues,
+            onRefresh = { viewModel.refreshFilms() }
         ) {
             if (state.films.isEmpty() && !state.isRefreshing) {
                 LoadingScreen()
@@ -124,8 +111,10 @@ fun HomeScreen(
                 )
             }
         }
-        CustomSnaKBar(
+        SnackBarFlow(
             snackBarFlow = viewModel.snack,
+            iconRes = { it.iconRes },
+            messageRes = { it.messageRes },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = paddingValues.calculateBottomPadding())

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.films.core.utils.AppError
+import com.films.core.utils.AppSuccess
 import com.films.core.utils.CheckDataResult
 import com.films.domain.model.FilmsRepository
 import com.films.ui.navigation.Routes
@@ -28,6 +29,9 @@ class DetailsViewModel(
 
     private val _snack = Channel<AppError>(Channel.BUFFERED)
     val snack = _snack.receiveAsFlow()
+
+    private val _successSnack = Channel<AppSuccess>(Channel.BUFFERED)
+    val successSnack = _successSnack.receiveAsFlow()
 
     init {
         getFilmDetails(filmId)
@@ -53,9 +57,21 @@ class DetailsViewModel(
 
     fun addToFavorite(isFavorite: Boolean) {
         _state.update { it.copy(isFavorite = isFavorite) }
+
+        viewModelScope.launch {
+            val message =
+                if (isFavorite) AppSuccess.ADDED_TO_FAVORITES else AppSuccess.REMOVED_FROM_FAVORITES
+            _successSnack.send(message)
+        }
     }
 
     fun addToWatchLater(isWatchLater: Boolean) {
         _state.update { it.copy(isWatchLater = isWatchLater) }
+
+        viewModelScope.launch {
+            val message =
+                if (isWatchLater) AppSuccess.ADDED_TO_WATCH_LATER else AppSuccess.REMOVED_FROM_WATCH_LATER
+            _successSnack.send(message)
+        }
     }
 }
