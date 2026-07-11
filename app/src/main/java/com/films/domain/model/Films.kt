@@ -19,3 +19,9 @@ data class Films(
     val isFavorite: Boolean,
     val isWatchLater: Boolean
 )
+
+data class WatchProvider(
+    val name: String,
+    val logoUrl: String,
+    val link: String
+)

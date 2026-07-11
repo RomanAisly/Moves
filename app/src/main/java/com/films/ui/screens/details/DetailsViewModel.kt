@@ -44,6 +44,7 @@ class DetailsViewModel(
     init {
         getFilmDetails(filmId)
         getTrailer(filmId)
+        getProviders(filmId)
     }
 
     private fun getFilmDetails(id: Int) {
@@ -78,8 +79,19 @@ class DetailsViewModel(
                 if (result is CheckDataResult.Success) {
                     _state.update { it.copy(trailerKey = result.data) }
                 }
-                // Ошибки трейлера можно игнорировать (не показывать юзеру),
-                // просто трейлера не будет на экране
+            }
+        }
+    }
+
+    private fun getProviders(id: Int) {
+        viewModelScope.launch {
+            val currentLang = settingsManager.languageFlow.first().localeCode
+            val countryCode = currentLang.split("-").last()
+
+            repository.getWatchProviders(id, countryCode).collectLatest { result ->
+                if (result is CheckDataResult.Success) {
+                    _state.update { it.copy(watchProviders = result.data) }
+                }
             }
         }
     }

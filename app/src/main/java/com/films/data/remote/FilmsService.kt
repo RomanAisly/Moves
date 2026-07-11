@@ -33,6 +33,15 @@ class FilmsService(private val httpClient: HttpClient) {
         }
     }
 
+    suspend fun getWatchProviders(filmId: Int): WatchProvidersResponseDTO {
+        val response = httpClient.get("movie/$filmId/watch/providers")
+        return if (response.status.value in 200..299) {
+            response.body()
+        } else {
+            throw Exception("Error is: ${response.status.value}")
+        }
+    }
+
     companion object {
         const val IMAGE_URL = "https://image.tmdb.org/t/p/w500"
     }

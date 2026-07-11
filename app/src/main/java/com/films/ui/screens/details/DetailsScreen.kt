@@ -11,6 +11,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -19,6 +20,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -40,6 +43,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.net.toUri
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.films.R
@@ -181,22 +185,58 @@ fun DetailsScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
+                    .padding(horizontal = 12.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 BaseText(
                     text = stringResource(R.string.trailer),
-                    textStyle = MaterialTheme.typography.headlineMedium
+                    textStyle = MaterialTheme.typography.headlineMedium,
+                    modifier = Modifier.padding(vertical = 10.dp)
                 )
                 YouTubeTrailerPlayer(youtubeKey = state.trailerKey!!)
+            }
+        }
+
+        if (state.watchProviders.isNotEmpty()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                BaseText(
+                    text = stringResource(R.string.where_wanna_watch),
+                    textStyle = MaterialTheme.typography.headlineMedium,
+                    modifier = Modifier.padding(vertical = 10.dp)
+                )
+
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(20.dp),
+                    contentPadding = PaddingValues(horizontal = 16.dp)
+                ) {
+                    items(state.watchProviders, key = { it.name }) { provider ->
+                        BaseCard(
+                            modifier = Modifier
+                                .size(110.dp)
+                                .clickable {
+                                    context.openBrowser(provider.link)
+                                }) {
+                            CoilImage(
+                                model = FilmsService.IMAGE_URL + provider.logoUrl,
+                                contentScale = ContentScale.Crop
+                            )
+                        }
+                    }
+                }
             }
         }
 
         Spacer(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(60.dp)
+                .height(54.dp)
         )
     }
 }
@@ -240,6 +280,13 @@ private fun shareMovie(context: Context, filmTitle: String, filmId: Int, languag
     context.startActivity(chooserIntent)
 }
 
+private fun Context.openBrowser(url: String) {
+    val intent = Intent(Intent.ACTION_VIEW, url.toUri()).apply {
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+    }
+    startActivity(intent)
+}
+
 @Composable
 private fun YouTubeTrailerPlayer(
     youtubeKey: String,
@@ -253,7 +300,7 @@ private fun YouTubeTrailerPlayer(
     )
 
     BaseCard(
-        border = BorderStroke(4.dp, borderColor),
+        border = BorderStroke(3.dp, borderColor),
         elevation = 6.dp
     ) {
         Box(

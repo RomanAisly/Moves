@@ -15,6 +15,7 @@
     <string name="watch_later">Watch later</string>
     <string name="share_title">Share movie</string>
     <string name="trailer">Watch the Trailer</string>
+    <string name="where_wanna_watch">Where want to watch?</string>
 
     <!-- Genres -->
     <string name="genre_action">Action</string>

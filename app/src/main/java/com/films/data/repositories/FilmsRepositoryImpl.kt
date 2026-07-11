@@ -9,6 +9,7 @@ import com.films.data.mappers.toLocalFilms
 import com.films.data.remote.FilmsService
 import com.films.domain.model.Films
 import com.films.domain.model.FilmsRepository
+import com.films.domain.model.WatchProvider
 import io.ktor.client.network.sockets.ConnectTimeoutException
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.ServerResponseException
@@ -87,12 +88,11 @@ class FilmsRepositoryImpl(
     ): Flow<CheckDataResult<String?, AppError>> = flow {
         try {
             val response = api.getMovieVideos(id, language)
-            // Ищем первое видео, которое является трейлером и лежит на ютубе
             val trailer =
                 response.results.firstOrNull { it.site == "YouTube" && it.type == "Trailer" }
-            // Отдаем просто ключ видео (String), он нам и нужен!
             emit(CheckDataResult.Success(trailer?.key))
         } catch (e: Exception) {
+            Log.e("FilmsRepositoryImpl", "exception: ", e)
             emit(CheckDataResult.Error(AppError.UNKNOWN))
         }
     }
@@ -113,6 +113,40 @@ class FilmsRepositoryImpl(
                 Log.e("FilmsRepositoryImpl", "DB exception: ", e)
                 emit(CheckDataResult.Error(AppError.UNKNOWN))
             }
+        }
+    }
+
+    override suspend fun getWatchProviders(
+        filmId: Int,
+        countryCode: String
+    ): Flow<CheckDataResult<List<WatchProvider>, AppError>> = flow {
+        try {
+            val response = api.getWatchProviders(filmId)
+            val countryData = response.results[countryCode]
+
+            if (countryData == null) {
+                emit(CheckDataResult.Success(emptyList()))
+                return@flow
+            }
+
+            val countryLink = countryData.link
+            val flatrateProviders = countryData.flatrate ?: emptyList()
+            val buyProviders = countryData.buy ?: emptyList()
+
+            val allProvidersDTO = (flatrateProviders + buyProviders).distinctBy { it.provider_name }
+
+            val providersForUI = allProvidersDTO.map { dto ->
+                WatchProvider(
+                    name = dto.provider_name,
+                    logoUrl = dto.logo_path,
+                    link = countryLink
+                )
+            }
+            emit(CheckDataResult.Success(providersForUI))
+
+        } catch (e: Exception) {
+            Log.e("FilmsRepositoryImpl", "exception: ", e)
+            emit(CheckDataResult.Error(AppError.UNKNOWN))
         }
     }
 

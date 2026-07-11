@@ -40,3 +40,22 @@ data class VideoDTO(
     val site: String,
     val type: String
 )
+
+@Serializable
+data class WatchProvidersResponseDTO(
+    val id: Int,
+    val results: Map<String, CountryProviderDTO>
+)
+
+@Serializable
+data class CountryProviderDTO(
+    val link: String,
+    val flatrate: List<ProviderDTO>? = null,
+    val buy: List<ProviderDTO>? = null
+)
+
+@Serializable
+data class ProviderDTO(
+    val provider_name: String,
+    val logo_path: String
+)
