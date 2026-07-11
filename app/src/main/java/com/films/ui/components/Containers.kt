@@ -59,7 +59,7 @@ fun BaseCard(
     modifier: Modifier = Modifier,
     shape: Shape = MaterialTheme.shapes.large,
     containerColor: Color = AppTheme.colors.cardBack,
-    elevation: Dp = 4.dp,
+    elevation: Dp = 5.dp,
     shadowColor: Color = AppTheme.colors.text,
     border: BorderStroke? = null,
     content: @Composable (ColumnScope.() -> Unit)

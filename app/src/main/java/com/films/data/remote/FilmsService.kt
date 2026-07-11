@@ -22,6 +22,17 @@ class FilmsService(private val httpClient: HttpClient) {
         }
     }
 
+    suspend fun getMovieVideos(id: Int, language: String): VideoResponseDTO {
+        val response = httpClient.get("movie/$id/videos") {
+            parameter("language", language)
+        }
+        return if (response.status.value in 200..299) {
+            response.body()
+        } else {
+            throw Exception("Error is: ${response.status.value}")
+        }
+    }
+
     companion object {
         const val IMAGE_URL = "https://image.tmdb.org/t/p/w500"
     }

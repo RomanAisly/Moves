@@ -27,3 +27,16 @@ data class ResultDTO(
     val vote_average: Double,
     val vote_count: Int
 )
+
+@Serializable
+data class VideoResponseDTO(
+    val id: Int,
+    val results: List<VideoDTO>
+)
+
+@Serializable
+data class VideoDTO(
+    val key: String,
+    val site: String,
+    val type: String
+)

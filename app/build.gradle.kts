@@ -70,6 +70,7 @@ dependencies {
     // UI
     implementation(libs.bundles.androidx.compose)
     implementation(libs.lottie.compose)
+    implementation(libs.core)
 
     // Network, Coroutines
     implementation(libs.bundles.koin)

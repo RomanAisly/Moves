@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Moves</string>
+    <string name="app_name">Films</string>
     <string name="theme_system">System</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_light">Light</string>
@@ -14,6 +14,7 @@
     <string name="favorites">Favorites</string>
     <string name="watch_later">Watch later</string>
     <string name="share_title">Share movie</string>
+    <string name="trailer">Watch the Trailer</string>
 
     <!-- Genres -->
     <string name="genre_action">Action</string>

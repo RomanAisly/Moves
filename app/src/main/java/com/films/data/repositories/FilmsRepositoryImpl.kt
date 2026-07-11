@@ -81,6 +81,22 @@ class FilmsRepositoryImpl(
         }
     }
 
+    override suspend fun getMovieTrailer(
+        id: Int,
+        language: String
+    ): Flow<CheckDataResult<String?, AppError>> = flow {
+        try {
+            val response = api.getMovieVideos(id, language)
+            // Ищем первое видео, которое является трейлером и лежит на ютубе
+            val trailer =
+                response.results.firstOrNull { it.site == "YouTube" && it.type == "Trailer" }
+            // Отдаем просто ключ видео (String), он нам и нужен!
+            emit(CheckDataResult.Success(trailer?.key))
+        } catch (e: Exception) {
+            emit(CheckDataResult.Error(AppError.UNKNOWN))
+        }
+    }
+
     override suspend fun getFilmById(id: Int): Flow<CheckDataResult<Films, AppError>> {
         return flow {
             try {

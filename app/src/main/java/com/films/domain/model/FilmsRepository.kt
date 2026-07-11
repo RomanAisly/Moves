@@ -14,8 +14,13 @@ interface FilmsRepository {
 
     suspend fun getFilmById(id: Int): Flow<CheckDataResult<Films, AppError>>
 
+    suspend fun getMovieTrailer(id: Int, language: String): Flow<CheckDataResult<String?, AppError>>
+
     suspend fun updateFavoriteStatus(id: Int, isFavorite: Boolean)
+
     fun getFavoriteFilms(): Flow<List<Films>>
+
     suspend fun updateWatchLaterStatus(id: Int, isWatchLater: Boolean)
+
     fun getWatchLaterFilms(): Flow<List<Films>>
 }

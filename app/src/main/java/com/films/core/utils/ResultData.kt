@@ -2,8 +2,8 @@ package com.films.core.utils
 
 import androidx.compose.ui.graphics.Color
 import com.films.R
+import com.films.ui.theme.green
 import com.films.ui.theme.lightPink
-import com.films.ui.theme.lime
 import com.films.ui.theme.red
 import com.films.ui.theme.unspecified
 
@@ -31,6 +31,6 @@ enum class AppSuccess(
 ) {
     ADDED_TO_FAVORITES(R.drawable.favorite_fill, R.string.added_to_favorites, lightPink),
     REMOVED_FROM_FAVORITES(R.drawable.favorite, R.string.removed_from_favorites, lightPink),
-    ADDED_TO_WATCH_LATER(R.drawable.time_add, R.string.added_to_watch_later, lime),
+    ADDED_TO_WATCH_LATER(R.drawable.time_add, R.string.added_to_watch_later, green),
     REMOVED_FROM_WATCH_LATER(R.drawable.time_delete, R.string.removed_from_watch_later, red)
 }
