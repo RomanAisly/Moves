@@ -81,7 +81,6 @@ dependencies {
     // Navigation, Coil, DataStore и WorkManager
     implementation(libs.androidx.navigation.compose)
     implementation(libs.coil.compose)
-    implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.androidx.datastore.preferences)
 
     // Room
