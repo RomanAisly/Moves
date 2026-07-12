@@ -73,8 +73,18 @@ class FilmsRepositoryImpl(
                     emit(CheckDataResult.Error(AppError.UNKNOWN))
                     return@flow
                 }
-                val newFilms = remoteFilms.results.let {
-                    it.map { films -> films.toFilmsEntity(category, language) }
+                val newFilms = remoteFilms.results.map { dto ->
+
+                    val existingFilm = db.dao().getFilmByIds(dto.id)
+                    val savedIsFavorite = existingFilm?.isFavorite ?: false
+                    val savedIsWatchLater = existingFilm?.isWatchLater ?: false
+
+                    dto.toFilmsEntity(
+                        category = category,
+                        language = language,
+                        isFavorite = savedIsFavorite,
+                        isWatchLater = savedIsWatchLater
+                    )
                 }
                 db.dao().upsertFilms(newFilms)
                 emit(CheckDataResult.Success(data = newFilms.map { it.toLocalFilms(category) }))
