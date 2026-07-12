@@ -5,6 +5,11 @@
     <string name="theme_light">Light</string>
     <string name="en">English</string>
     <string name="ru">Russian</string>
+    <string name="zh">Chinese</string>
+    <string name="es">Spanish</string>
+    <string name="fr">French</string>
+    <string name="de">German</string>
+    <string name="uk">Ukrainian</string>
     <string name="film_category_popular">Popular</string>
     <string name="film_category_top">Top</string>
     <string name="film_category_now_playing">Now Playing</string>

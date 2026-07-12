@@ -6,17 +6,24 @@
     <string name="theme_light">Светлая</string>
     <string name="en">Английский</string>
     <string name="ru">Русский</string>
+    <string name="zh">Китайский</string>
+    <string name="es">Испанский</string>
+    <string name="fr">Французский</string>
+    <string name="de">Немецкий</string>
+    <string name="uk">Украинский</string>
     <string name="film_category_popular">Популярное</string>
     <string name="film_category_top">Топ</string>
     <string name="film_category_now_playing">Смотрят сейчас</string>
     <string name="film_category_upcoming">Скоро появится</string>
-
-    <!-- Genres -->
+    <string name="theme">Тема</string>
     <string name="language">Язык</string>
+    <string name="favorites">Избранное</string>
     <string name="watch_later">Отложенное</string>
     <string name="share_title">Поделиться фильмом</string>
-    <string name="trailer">Смотреть Трейлер</string>
+    <string name="trailer">Смотреть трейлер</string>
     <string name="where_wanna_watch">Где хотите посмотреть?</string>
+
+    <!-- Genres -->
     <string name="genre_action">Боевик</string>
     <string name="genre_adventure">Приключения</string>
     <string name="genre_animation">Мультфильм</string>
@@ -44,10 +51,10 @@
     <string name="error_not_found">Данные не найдены</string>
     <string name="error_unauthorized">Ошибка авторизации. Войдите заново</string>
     <string name="error_unknown">Что-то пошло не так. Попробуйте позже</string>
-    <string name="theme">Тема</string>
-    <string name="added_to_favorites">Добавлено в избраное</string>
-    <string name="removed_from_favorites">Удалено из избранго</string>
+
+    <!-- Success -->
+    <string name="added_to_favorites">Добавлено в избранное</string>
+    <string name="removed_from_favorites">Удалено из избранного</string>
     <string name="added_to_watch_later">Добавлено в отложенные</string>
-    <string name="removed_from_watch_later">Удалено из отложенные</string>
-    <string name="favorites">Избраное</string>
+    <string name="removed_from_watch_later">Удалено из отложенных</string>
 </resources>

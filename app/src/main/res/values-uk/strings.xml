@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">Фільми</string>
+    <string name="theme_system">Системна</string>
+    <string name="theme_dark">Темна</string>
+    <string name="theme_light">Світла</string>
+    <string name="en">Англійська</string>
+    <string name="ru">Російська</string>
+    <string name="zh">Китайська</string>
+    <string name="es">Іспанська</string>
+    <string name="fr">Французька</string>
+    <string name="de">Німецька</string>
+    <string name="uk">Українська</string>
+    <string name="film_category_popular">Популярні</string>
+    <string name="film_category_top">Найкращі</string>
+    <string name="film_category_now_playing">Зараз у прокаті</string>
+    <string name="film_category_upcoming">Очікуються</string>
+    <string name="theme">Тема</string>
+    <string name="language">Мова</string>
+    <string name="favorites">Обране</string>
+    <string name="watch_later">Дивитися пізніше</string>
+    <string name="share_title">Поділитися фільмом</string>
+    <string name="trailer">Дивитися трейлер</string>
+    <string name="where_wanna_watch">Де хочете подивитися?</string>
+
+    <!-- Genres -->
+    <string name="genre_action">Бойовик</string>
+    <string name="genre_adventure">Пригоди</string>
+    <string name="genre_animation">Мультфільм</string>
+    <string name="genre_comedy">Комедія</string>
+    <string name="genre_crime">Кримінал</string>
+    <string name="genre_documentary">Документальний</string>
+    <string name="genre_drama">Драма</string>
+    <string name="genre_family">Сімейний</string>
+    <string name="genre_fantasy">Фентезі</string>
+    <string name="genre_history">Історичний</string>
+    <string name="genre_horror">Жахи</string>
+    <string name="genre_music">Музика</string>
+    <string name="genre_mystery">Детектив</string>
+    <string name="genre_romance">Мелодрама</string>
+    <string name="genre_science_fiction">Фантастика</string>
+    <string name="genre_tv_movie">Телефільм</string>
+    <string name="genre_thriller">Трилер</string>
+    <string name="genre_war">Військовий</string>
+    <string name="genre_western">Вестерн</string>
+
+    <!-- Errors -->
+    <string name="error_no_internet">Немає підключення до інтернету</string>
+    <string name="error_timeout">Час очікування запиту минув. Перевірте з\'єднання</string>
+    <string name="error_server">Помилка сервера. Ми це виправляємо!</string>
+    <string name="error_not_found">Дані не знайдено</string>
+    <string name="error_unauthorized">Неавторизовано. Будь ласка, увійдіть знову</string>
+    <string name="error_unknown">Щось пішло не так. Спробуйте пізніше</string>
+
+    <!-- Success -->
+    <string name="added_to_favorites">Додано до обраного</string>
+    <string name="removed_from_favorites">Вилучено з обраного</string>
+    <string name="added_to_watch_later">Додано до списку \"Дивитися пізніше\"</string>
+    <string name="removed_from_watch_later">Вилучено зі списку \"Дивитися пізніше\"</string>
+</resources>

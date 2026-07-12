@@ -21,6 +21,26 @@ enum class SetLanguage(
     RUSSIAN(
         R.string.ru,
         "ru-RU"
+    ),
+    CHINESE(
+        R.string.zh,
+        "zh-CN"
+    ),
+    SPANISH(
+        R.string.es,
+        "es-ES"
+    ),
+    FRENCH(
+        R.string.fr,
+        "fr-FR"
+    ),
+    GERMAN(
+        R.string.de,
+        "de-DE"
+    ),
+    UKRAINIAN(
+        R.string.uk,
+        "uk-UA"
     )
 }
 

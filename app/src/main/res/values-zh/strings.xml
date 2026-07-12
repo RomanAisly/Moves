@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">电影</string>
+    <string name="theme_system">系统默认</string>
+    <string name="theme_dark">深色模式</string>
+    <string name="theme_light">浅色模式</string>
+    <string name="en">英语</string>
+    <string name="ru">俄语</string>
+    <string name="zh">中文</string>
+    <string name="uk">乌克兰语</string>
+    <string name="film_category_popular">热门</string>
+    <string name="film_category_top">高分</string>
+    <string name="film_category_now_playing">正在上映</string>
+    <string name="film_category_upcoming">即将上映</string>
+    <string name="theme">主题</string>
+    <string name="language">语言</string>
+    <string name="favorites">收藏</string>
+    <string name="watch_later">稍后观看</string>
+    <string name="share_title">分享电影</string>
+    <string name="trailer">观看预告片</string>
+    <string name="where_wanna_watch">想在哪里看？</string>
+
+    <!-- Genres -->
+    <string name="genre_action">动作</string>
+    <string name="genre_adventure">冒险</string>
+    <string name="genre_animation">动画</string>
+    <string name="genre_comedy">喜剧</string>
+    <string name="genre_crime">犯罪</string>
+    <string name="genre_documentary">纪录片</string>
+    <string name="genre_drama">剧情</string>
+    <string name="genre_family">家庭</string>
+    <string name="genre_fantasy">奇幻</string>
+    <string name="genre_history">历史</string>
+    <string name="genre_horror">恐怖</string>
+    <string name="genre_music">音乐</string>
+    <string name="genre_mystery">悬疑</string>
+    <string name="genre_romance">爱情</string>
+    <string name="genre_science_fiction">科幻</string>
+    <string name="genre_tv_movie">电视电影</string>
+    <string name="genre_thriller">惊悚</string>
+    <string name="genre_war">战争</string>
+    <string name="genre_western">西部</string>
+
+    <!-- Errors -->
+    <string name="error_no_internet">无网络连接</string>
+    <string name="error_timeout">请求超时。请检查网络</string>
+    <string name="error_server">服务器错误。我们正在修复！</string>
+    <string name="error_not_found">未找到数据</string>
+    <string name="error_unauthorized">未授权。请重新登录</string>
+    <string name="error_unknown">出错了。请稍后再试</string>
+
+    <!-- Success -->
+    <string name="added_to_favorites">已加入收藏</string>
+    <string name="removed_from_favorites">已从收藏中移除</string>
+    <string name="added_to_watch_later">已加入稍后观看</string>
+    <string name="removed_from_watch_later">已从稍后观看中移除</string>
+    <string name="es">西班牙语</string>
+    <string name="fr">法语</string>
+    <string name="de">德语</string>
+</resources>
