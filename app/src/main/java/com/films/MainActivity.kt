@@ -7,10 +7,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
-import com.films.ui.navigation.RootNavGraph
-import com.films.ui.screens.settings.SettingsViewModel
-import com.films.ui.theme.AppLanguageProvider
-import com.films.ui.theme.FilmsTheme
+import com.films.navigation.RootNavGraph
+import com.films.screens.settings.SettingsViewModel
+import com.films.theme.AppLanguageProvider
+import com.films.theme.FilmsTheme
 import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {

@@ -1,11 +1,11 @@
 package com.films
 
 import android.app.Application
-import com.films.core.di.dataBaseModule
-import com.films.core.di.networkModule
-import com.films.core.di.repositoriesModule
-import com.films.core.di.settingsModule
-import com.films.core.di.viewModelsModule
+import com.films.components.viewModelsModule
+import com.films.local.dataBaseModule
+import com.films.local.networkModule
+import com.films.local.repositoriesModule
+import com.films.local.settingsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 

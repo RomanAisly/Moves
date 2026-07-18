@@ -1,21 +1,9 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.ksp)
-
-}
-
-val localProperties = Properties()
-val localPropertiesFile = rootProject.file("local.properties")
-if (localPropertiesFile.exists()) {
-    localPropertiesFile.inputStream().use {
-        localProperties.load(it)
-    }
 }
 
 android {
@@ -33,8 +21,6 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-
-        buildConfigField("String", "API_KEY", "\"${localProperties.getProperty("API_KEY")}\"")
     }
 
     buildTypes {
@@ -58,53 +44,23 @@ android {
 
     buildFeatures {
         compose = true
-        buildConfig = true
     }
 }
 
-ksp {
-    arg("room.schemaLocation", "$projectDir/schemas")
-}
-
 dependencies {
+    implementation(project(":domain"))
+    implementation(project(":data"))
+    implementation(project(":ui"))
 
-    // Compose- BOM
-    implementation(platform(libs.androidx.compose.bom))
-
-    // UI
     implementation(libs.bundles.androidx.compose)
-    implementation(libs.lottie.compose)
-    implementation(libs.core)
-
-    // Network, Coroutines
-    implementation(libs.bundles.koin)
-    implementation(libs.bundles.ktor)
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.kotlinx.coroutines.android)
-
-    // Navigation, Coil, DataStore и WorkManager
+    implementation(libs.youtube)
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.coil.compose)
-    implementation(libs.androidx.datastore.preferences)
 
-    // Room
-    implementation(libs.bundles.room)
-    ksp(libs.room.compiler)
+    implementation(libs.bundles.koin)
 
-    //Security
-    implementation(libs.androidx.security.crypto.ktx)
-
-    // Debug
-    debugImplementation(libs.androidx.compose.ui.tooling)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
-
-    // Unit-tests
     testImplementation(libs.junit)
-
-    // Android-tests
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom)) // BOM нужен и для тестов
+    androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-
 }

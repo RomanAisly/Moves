@@ -1,0 +1,58 @@
+<resources>
+    <string name="theme_system">System</string>
+    <string name="theme_dark">Dunkel</string>
+    <string name="theme_light">Hell</string>
+    <string name="en">Englisch</string>
+    <string name="ru">Russisch</string>
+    <string name="zh">Chinesisch</string>
+    <string name="es">Spanisch</string>
+    <string name="fr">Französisch</string>
+    <string name="de">Deutsch</string>
+    <string name="uk">Ukrainisch</string>
+    <string name="film_category_popular">Beliebt</string>
+    <string name="film_category_top">Top bewertet</string>
+    <string name="film_category_now_playing">Aktuell im Kino</string>
+    <string name="film_category_upcoming">Demnächst</string>
+    <string name="theme">Design</string>
+    <string name="language">Sprache</string>
+    <string name="favorites">Favoriten</string>
+    <string name="watch_later">Später ansehen</string>
+    <string name="share_title">Film teilen</string>
+    <string name="trailer">Trailer ansehen</string>
+    <string name="where_wanna_watch">Wo möchtest du schauen?</string>
+
+    <!-- Genres -->
+    <string name="genre_action">Action</string>
+    <string name="genre_adventure">Abenteuer</string>
+    <string name="genre_animation">Animation</string>
+    <string name="genre_comedy">Komödie</string>
+    <string name="genre_crime">Krimi</string>
+    <string name="genre_documentary">Dokumentarfilm</string>
+    <string name="genre_drama">Drama</string>
+    <string name="genre_family">Familie</string>
+    <string name="genre_fantasy">Fantasy</string>
+    <string name="genre_history">Historie</string>
+    <string name="genre_horror">Horror</string>
+    <string name="genre_music">Musik</string>
+    <string name="genre_mystery">Mystery</string>
+    <string name="genre_romance">Liebesfilm</string>
+    <string name="genre_science_fiction">Science Fiction</string>
+    <string name="genre_tv_movie">TV-Film</string>
+    <string name="genre_thriller">Thriller</string>
+    <string name="genre_war">Kriegsfilm</string>
+    <string name="genre_western">Western</string>
+
+    <!-- Errors -->
+    <string name="error_no_internet">Keine Internetverbindung</string>
+    <string name="error_timeout">Zeitüberschreitung der Anfrage. Überprüfen Sie Ihre Verbindung</string>
+    <string name="error_server">Serverfehler. Wir arbeiten daran!</string>
+    <string name="error_not_found">Daten nicht gefunden</string>
+    <string name="error_unauthorized">Nicht autorisiert. Bitte melden Sie sich erneut an</string>
+    <string name="error_unknown">Etwas ist schief gelaufen. Versuchen Sie es später noch einmal</string>
+
+    <!-- Success -->
+    <string name="added_to_favorites">Zu Favoriten hinzugefügt</string>
+    <string name="removed_from_favorites">Aus Favoriten entfernt</string>
+    <string name="added_to_watch_later">Zu Später ansehen hinzugefügt</string>
+    <string name="removed_from_watch_later">Aus Später ansehen entfernt</string>
+</resources>

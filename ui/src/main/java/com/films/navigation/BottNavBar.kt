@@ -1,0 +1,119 @@
+package com.films.navigation
+
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.LocalRippleConfiguration
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.currentBackStackEntryAsState
+import com.films.components.BaseIcon
+import com.films.theme.BaseTheme
+import com.films.theme.lightBlue
+import com.films.theme.transparent
+import com.films.ui.R
+
+@Composable
+fun BottomNavBar(bottomBarHost: NavController) {
+
+    val bottomScreens = remember {
+        listOf(
+            BottomTabItem(
+                route = Routes.Home,
+                icon = R.drawable.home
+            ),
+            BottomTabItem(
+                route = Routes.Favorites,
+                icon = R.drawable.favorite
+            ),
+            BottomTabItem(
+                route = Routes.WatchLater,
+                icon = R.drawable.time_quarter
+            ),
+            BottomTabItem(
+                route = Routes.Settings,
+                icon = R.drawable.settings
+            )
+        )
+    }
+
+    NavigationBar(
+        modifier = Modifier.clip(
+            shape = RoundedCornerShape(
+                topStart = 16.dp,
+                topEnd = 16.dp
+            )
+        ),
+        containerColor = BaseTheme.colors.bottomBar
+    ) {
+        val navBackStackEntry by bottomBarHost.currentBackStackEntryAsState()
+        val currentDestination = navBackStackEntry?.destination
+
+        bottomScreens.forEach { item ->
+            val isSelected = currentDestination?.hasRoute(item.route::class) == true
+
+            CompositionLocalProvider(LocalRippleConfiguration provides null) {
+                NavigationBarItem(
+                    selected = isSelected,
+                    onClick = {
+                        bottomBarHost.navigate(item.route) {
+                            popUpTo(bottomBarHost.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    },
+                    icon = {
+                        Box(
+                            modifier = Modifier
+                                .size(44.dp)
+                                .background(
+                                    color = if (isSelected) BaseTheme.colors.iconBackSecondary else BaseTheme.colors.buttPrimary,
+                                    shape = CircleShape
+                                )
+                                .border(
+                                    border = if (isSelected) BorderStroke(
+                                        2.dp,
+                                        lightBlue
+                                    ) else BorderStroke(0.dp, transparent), shape = CircleShape
+                                ),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            BaseIcon(
+                                iconId = item.icon,
+                                iconTint = if (isSelected) BaseTheme.colors.iconTint else BaseTheme.colors.iconBackTertiary,
+                            )
+                        }
+
+                    },
+                    colors = NavigationBarItemDefaults.colors(
+                        indicatorColor = transparent
+                    )
+                )
+            }
+        }
+
+    }
+}
+
+data class BottomTabItem(
+    val route: Routes,
+    val icon: Int
+)
