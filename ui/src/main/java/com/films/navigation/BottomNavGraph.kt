@@ -1,53 +1,89 @@
 package com.films.navigation
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.ui.NavDisplay
+import androidx.savedstate.serialization.SavedStateConfiguration
 import com.films.screens.favorites.FavoritesScreen
 import com.films.screens.home.HomeScreen
 import com.films.screens.settings.SettingsScreen
 import com.films.screens.watch_later.WatchLaterScreen
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.modules.polymorphic
 
+@OptIn(ExperimentalSerializationApi::class)
 @Composable
 fun BottomNavGraph(
-    bottomNavHost: NavController
+    onNavigateToDetails: (Int) -> Unit
 ) {
-    val bottomNavController = rememberNavController()
+    val config = remember {
+        SavedStateConfiguration {
+            serializersModule = SerializersModule {
+                polymorphic(NavKey::class) {
+                    subclassesOfSealed<Routes>()
+                }
+            }
+        }
+    }
+
+    val bottomBackStack = rememberNavBackStack(config, Routes.Home)
+    val currentTab = bottomBackStack.last()
+
+    BackHandler(enabled = currentTab != Routes.Home) {
+        bottomBackStack.clear()
+        bottomBackStack.add(Routes.Home)
+    }
 
     Scaffold(
         bottomBar = {
             BottomNavBar(
-                bottomBarHost = bottomNavController
+                currentTab = currentTab,
+                onTabSelected = { tabRoute ->
+                    if (currentTab != tabRoute) {
+                        bottomBackStack.clear()
+                        bottomBackStack.add(tabRoute)
+                    }
+                }
             )
         }
     ) { paddingValues ->
-        NavHost(
-            navController = bottomNavController,
-            startDestination = Routes.Home,
+        NavDisplay(
+            backStack = bottomBackStack,
             modifier = Modifier
-                .fillMaxSize()
-        ) {
-            composable<Routes.Home> {
-                HomeScreen(paddingValues = paddingValues, onFilmClick = { id ->
-                    bottomNavHost.navigate(Routes.Details(id))
-                })
-            }
-            composable<Routes.Favorites> {
-                FavoritesScreen(paddingValues = paddingValues, onFilmClick = { id ->
-                    bottomNavHost.navigate(Routes.Details(id))
-                })
-            }
-            composable<Routes.WatchLater> {
-                WatchLaterScreen(paddingValues = paddingValues, onFilmClick = { id ->
-                    bottomNavHost.navigate(Routes.Details(id))
-                })
-            }
-            composable<Routes.Settings> { SettingsScreen(paddingValues) }
-        }
+                .fillMaxSize(),
+            entryProvider = entryProvider {
+                entry<Routes.Home> {
+                    HomeScreen(
+                        paddingValues = paddingValues,
+                        onFilmClick = onNavigateToDetails
+                    )
+                }
+
+                entry<Routes.Favorites> {
+                    FavoritesScreen(
+                        paddingValues = paddingValues,
+                        onFilmClick = onNavigateToDetails
+                    )
+                }
+
+                entry<Routes.WatchLater> {
+                    WatchLaterScreen(
+                        paddingValues = paddingValues,
+                        onFilmClick = onNavigateToDetails
+                    )
+                }
+
+                entry<Routes.Settings> {
+                    SettingsScreen(paddingValues = paddingValues)
+                }
+            })
     }
 }

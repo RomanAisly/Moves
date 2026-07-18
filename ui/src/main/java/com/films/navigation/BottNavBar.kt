@@ -13,16 +13,11 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination.Companion.hasRoute
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.films.components.BaseIcon
 import com.films.theme.BaseTheme
 import com.films.theme.lightBlue
@@ -30,8 +25,10 @@ import com.films.theme.transparent
 import com.films.ui.R
 
 @Composable
-fun BottomNavBar(bottomBarHost: NavController) {
-
+fun BottomNavBar(
+    currentTab: Any,
+    onTabSelected: (Routes) -> Unit
+) {
     val bottomScreens = remember {
         listOf(
             BottomTabItem(
@@ -52,7 +49,6 @@ fun BottomNavBar(bottomBarHost: NavController) {
             )
         )
     }
-
     NavigationBar(
         modifier = Modifier.clip(
             shape = RoundedCornerShape(
@@ -62,24 +58,13 @@ fun BottomNavBar(bottomBarHost: NavController) {
         ),
         containerColor = BaseTheme.colors.bottomBar
     ) {
-        val navBackStackEntry by bottomBarHost.currentBackStackEntryAsState()
-        val currentDestination = navBackStackEntry?.destination
-
         bottomScreens.forEach { item ->
-            val isSelected = currentDestination?.hasRoute(item.route::class) == true
+            val isSelected = currentTab::class == item.route::class
 
             CompositionLocalProvider(LocalRippleConfiguration provides null) {
                 NavigationBarItem(
                     selected = isSelected,
-                    onClick = {
-                        bottomBarHost.navigate(item.route) {
-                            popUpTo(bottomBarHost.graph.findStartDestination().id) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    },
+                    onClick = { onTabSelected(item.route) },
                     icon = {
                         Box(
                             modifier = Modifier

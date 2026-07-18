@@ -1,15 +1,12 @@
 package com.films.screens.details
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.toRoute
 import com.films.AppError
 import com.films.CheckDataResult
 import com.films.FilmsRepository
 import com.films.SettingsRepository
 import com.films.components.AppSuccess
-import com.films.navigation.Routes
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
@@ -25,13 +22,11 @@ import kotlin.time.Duration.Companion.milliseconds
 class DetailsViewModel(
     private val repository: FilmsRepository,
     private val settingsRepository: SettingsRepository,
-    savedStateHandle: SavedStateHandle
+    private val filmId: Int
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(DetailsState())
     val state = _state.asStateFlow()
-
-    private val filmId = savedStateHandle.toRoute<Routes.Details>().id
 
     private val _errorSnack = Channel<AppError>(Channel.BUFFERED)
     val errorSnack = _errorSnack.receiveAsFlow()

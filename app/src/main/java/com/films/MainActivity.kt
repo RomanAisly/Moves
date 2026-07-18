@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.compose.rememberNavController
 import com.films.navigation.RootNavGraph
 import com.films.screens.settings.SettingsViewModel
 import com.films.theme.AppLanguageProvider
@@ -18,7 +17,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val navController = rememberNavController()
 
             val settingsViewModel: SettingsViewModel = koinViewModel()
             val currentTheme by settingsViewModel.themeState.collectAsStateWithLifecycle()
@@ -30,7 +28,7 @@ class MainActivity : ComponentActivity() {
                 FilmsTheme(setTheme = currentTheme, onThemeChange = { newTheme ->
                     settingsViewModel.changeTheme(newTheme)
                 }) {
-                    RootNavGraph(rootNavHost = navController)
+                    RootNavGraph()
                 }
             }
         }

@@ -53,8 +53,6 @@ dependencies {
     implementation(project(":ui"))
 
     implementation(libs.bundles.androidx.compose)
-    implementation(libs.youtube)
-    implementation(libs.androidx.navigation.compose)
 
     implementation(libs.bundles.koin)
 

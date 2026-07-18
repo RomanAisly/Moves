@@ -1,25 +1,26 @@
 package com.films.navigation
 
+import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed class Routes {
+sealed interface Routes : NavKey {
 
     @Serializable
-    data object BottomNavGraph : Routes()
+    data object BottomNavGraph : Routes
 
     @Serializable
-    data object Home : Routes()
+    data object Home : Routes
 
     @Serializable
-    data object Favorites : Routes()
+    data object Favorites : Routes
 
     @Serializable
-    data object WatchLater : Routes()
+    data object WatchLater : Routes
 
     @Serializable
-    data object Settings : Routes()
+    data object Settings : Routes
 
     @Serializable
-    data class Details(val id: Int) : Routes()
+    data class Details(val id: Int) : Routes
 }
