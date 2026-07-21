@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -46,6 +47,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.films.components.ArrowBackButton
 import com.films.components.BaseCard
 import com.films.components.BaseIcon
 import com.films.components.BaseIconButton
@@ -77,7 +79,8 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun DetailsScreen(
-    viewModel: DetailsViewModel = koinViewModel()
+    viewModel: DetailsViewModel = koinViewModel(),
+    onBack: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -111,6 +114,12 @@ fun DetailsScreen(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
 
+            )
+            ArrowBackButton(
+                onClick = onBack,
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .statusBarsPadding()
             )
         }
     ) {

@@ -42,9 +42,9 @@ fun FavoritesScreen(
             .background(BaseTheme.colors.screenBack)
     ) {
         LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-            verticalArrangement = Arrangement.spacedBy(14.dp),
+            columns = GridCells.Adaptive(minSize = 160.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(
                 start = 8.dp,
                 end = 8.dp,

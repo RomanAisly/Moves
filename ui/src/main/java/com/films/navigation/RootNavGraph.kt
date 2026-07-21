@@ -51,7 +51,12 @@ fun RootNavGraph() {
                     parameters = { parametersOf(route.id) })
 
                 DetailsScreen(
-                    viewModel = viewModel
+                    viewModel = viewModel,
+                    onBack = {
+                        if (rootBackStack.size > 1) {
+                            rootBackStack.removeAt(rootBackStack.lastIndex)
+                        }
+                    }
                 )
             }
         }

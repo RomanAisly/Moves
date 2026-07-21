@@ -11,6 +11,7 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
+import com.films.components.AdaptiveFilmListDetailPane
 import com.films.screens.favorites.FavoritesScreen
 import com.films.screens.home.HomeScreen
 import com.films.screens.settings.SettingsScreen
@@ -60,25 +61,32 @@ fun BottomNavGraph(
             modifier = Modifier
                 .fillMaxSize(),
             entryProvider = entryProvider {
+
                 entry<Routes.Home> {
-                    HomeScreen(
-                        paddingValues = paddingValues,
-                        onFilmClick = onNavigateToDetails
-                    )
+                    AdaptiveFilmListDetailPane { onFilmClick ->
+                        HomeScreen(
+                            paddingValues = paddingValues,
+                            onFilmClick = onFilmClick
+                        )
+                    }
                 }
 
                 entry<Routes.Favorites> {
-                    FavoritesScreen(
-                        paddingValues = paddingValues,
-                        onFilmClick = onNavigateToDetails
-                    )
+                    AdaptiveFilmListDetailPane { onFilmClick ->
+                        FavoritesScreen(
+                            paddingValues = paddingValues,
+                            onFilmClick = onFilmClick
+                        )
+                    }
                 }
 
                 entry<Routes.WatchLater> {
-                    WatchLaterScreen(
-                        paddingValues = paddingValues,
-                        onFilmClick = onNavigateToDetails
-                    )
+                    AdaptiveFilmListDetailPane { onFilmClick ->
+                        WatchLaterScreen(
+                            paddingValues = paddingValues,
+                            onFilmClick = onFilmClick
+                        )
+                    }
                 }
 
                 entry<Routes.Settings> {
