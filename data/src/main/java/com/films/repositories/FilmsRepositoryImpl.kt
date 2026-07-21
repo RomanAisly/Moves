@@ -73,17 +73,17 @@ class FilmsRepositoryImpl(
                     emit(CheckDataResult.Error(AppError.UNKNOWN))
                     return@flow
                 }
-                val newFilms = remoteFilms.results.map { dto ->
-
-                    val existingFilm = db.dao().getFilmByIds(dto.id)
-                    val savedIsFavorite = existingFilm?.isFavorite ?: false
-                    val savedIsWatchLater = existingFilm?.isWatchLater ?: false
+                val dtoList = remoteFilms.results
+                val remoteIds = dtoList.map { it.id }
+                val existingFilmsMap = db.dao().getFilmsByIds(remoteIds).associateBy { it.id }
+                val newFilms = dtoList.map { dto ->
+                    val existingFilm = existingFilmsMap[dto.id]
 
                     dto.toFilmsEntity(
                         category = category,
                         language = language,
-                        isFavorite = savedIsFavorite,
-                        isWatchLater = savedIsWatchLater
+                        isFavorite = existingFilm?.isFavorite ?: false,
+                        isWatchLater = existingFilm?.isWatchLater ?: false
                     )
                 }
                 db.dao().upsertFilms(newFilms)
@@ -110,7 +110,7 @@ class FilmsRepositoryImpl(
     override suspend fun getFilmById(id: Int): Flow<CheckDataResult<Films, AppError>> {
         return flow {
             try {
-                val filmsEntity = db.dao().getFilmByIds(id)
+                val filmsEntity = db.dao().getFilmById(id)
 
                 if (filmsEntity != null) {
                     emit(CheckDataResult.Success(filmsEntity.toLocalFilms(filmsEntity.category)))
