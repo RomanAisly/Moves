@@ -6,9 +6,9 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [FilmsEntity::class],
-    version = 7,
+    version = 2,
     exportSchema = true,
-    autoMigrations = [AutoMigration(from = 6, to = 7)]
+    autoMigrations = [AutoMigration(from = 1, to = 2)]
 )
 abstract class FilmsDB : RoomDatabase() {
     abstract fun dao(): FilmsDao

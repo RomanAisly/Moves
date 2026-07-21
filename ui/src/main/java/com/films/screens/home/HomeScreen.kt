@@ -61,9 +61,9 @@ fun HomeScreen(
                 LoadingScreen()
             } else {
                 LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    verticalArrangement = Arrangement.spacedBy(14.dp),
+                    columns = GridCells.Adaptive(minSize = 160.dp),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
                     contentPadding = PaddingValues(
                         start = 8.dp,
                         end = 8.dp,
@@ -95,9 +95,9 @@ fun HomeScreen(
                 .background(BaseTheme.colors.bottomBar)
                 .padding(top = paddingValues.calculateTopPadding())
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(6.dp)
                 .horizontalScroll(state = rememberScrollState()),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.SpaceAround
         ) {
             FilmCategory.entries.forEach { category ->
                 TabButton(
@@ -107,6 +107,7 @@ fun HomeScreen(
                         2.dp,
                         BaseTheme.colors.border
                     ) else null,
+                    modifier = Modifier.padding(horizontal = 2.dp),
                     onClick = {
                         viewModel.changeCategory(category)
                     }

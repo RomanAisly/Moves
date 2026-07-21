@@ -36,7 +36,11 @@ fun FilmsEntity.toLocalFilms(category: String): Films {
     return Films(
         adult = adult,
         backdrop_path = backdrop_path,
-        genreIds = genre_ids.split(",").map { it.toInt() },
+        genreIds = if (genre_ids.isBlank()) {
+            emptyList()
+        } else {
+            genre_ids.split(",").map { it.toInt() }
+        },
         id = id,
         original_language = original_language,
         original_title = original_title,
