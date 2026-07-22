@@ -1,8 +1,6 @@
 package com.films.components
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -22,13 +20,16 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffold
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
 import androidx.compose.material3.adaptive.layout.PaneAdaptedValue
 import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldValue
+import androidx.compose.material3.adaptive.layout.calculatePaneScaffoldDirective
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
@@ -109,15 +110,37 @@ fun BaseCard(
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
-fun AdaptiveFilmListDetailPane(listPaneContent: @Composable (onFilmClick: (Int) -> Unit) -> Unit) {
+fun AdaptiveFilmListDetailPane(
+    onNavigateToRootDetails: (Int) -> Unit,
+    listPaneContent: @Composable (onFilmClick: (Int) -> Unit) -> Unit
+) {
 
     var selectedFilmId by rememberSaveable { mutableStateOf<Int?>(null) }
-    val navigator = rememberListDetailPaneScaffoldNavigator<Int>()
+    var lastSelectedFilmId by rememberSaveable { mutableStateOf<Int?>(null) }
+
+    LaunchedEffect(selectedFilmId) {
+        if (selectedFilmId != null) {
+            lastSelectedFilmId = selectedFilmId
+        }
+    }
+
     val scope = rememberCoroutineScope()
 
+    val adaptiveInfo = currentWindowAdaptiveInfo()
+    val defaultDirective = calculatePaneScaffoldDirective(adaptiveInfo)
+    val isCompactScreen = defaultDirective.maxHorizontalPartitions == 1
+
+    val navigator = rememberListDetailPaneScaffoldNavigator<Int>(
+        scaffoldDirective = defaultDirective
+    )
+
     BackHandler(enabled = selectedFilmId != null) {
-        selectedFilmId = null
-        scope.launch { navigator.navigateBack() }
+        scope.launch {
+            if (navigator.canNavigateBack()) {
+                navigator.navigateBack()
+            }
+            selectedFilmId = null
+        }
     }
 
     val customScaffoldValue = if (selectedFilmId == null) {
@@ -137,43 +160,43 @@ fun AdaptiveFilmListDetailPane(listPaneContent: @Composable (onFilmClick: (Int) 
         listPane = {
             AnimatedPane(
                 enterTransition = slideInHorizontally(tween(500)) { -it } + fadeIn(tween(500)),
-                exitTransition = slideOutHorizontally(tween(500)) { -it } + fadeOut(tween(500)),
-                boundsAnimationSpec = spring(
-                    dampingRatio = Spring.DampingRatioLowBouncy,
-                    stiffness = Spring.StiffnessMediumLow
-                )
+                exitTransition = slideOutHorizontally(tween(500)) { -it } + fadeOut(tween(500))
             ) {
                 listPaneContent { filmId ->
-                    selectedFilmId = filmId
-                    scope.launch {
-                        navigator.navigateTo(ListDetailPaneScaffoldRole.Detail, filmId)
+                    if (isCompactScreen) {
+                        onNavigateToRootDetails(filmId)
+                    } else {
+                        selectedFilmId = filmId
+                        scope.launch {
+                            navigator.navigateTo(ListDetailPaneScaffoldRole.Detail, filmId)
+                        }
                     }
                 }
             }
         },
         detailPane = {
             AnimatedPane(
-                enterTransition = slideInHorizontally(tween(500)) { it } + fadeIn(tween(500)),
-                exitTransition = slideOutHorizontally(tween(500)) { it } + fadeOut(tween(500)),
-                boundsAnimationSpec = spring(
-                    dampingRatio = Spring.DampingRatioLowBouncy,
-                    stiffness = Spring.StiffnessMediumLow
-                )
+                enterTransition = slideInHorizontally() { it } + fadeIn(),
+                exitTransition = slideOutHorizontally() { it } + fadeOut()
             ) {
-                if (selectedFilmId != null) {
+                val filmId = selectedFilmId ?: lastSelectedFilmId
+                if (filmId != null) {
                     val detailsViewModel: DetailsViewModel = koinViewModel(
-                        key = selectedFilmId.toString(),
-                        parameters = { parametersOf(selectedFilmId) }
+                        key = filmId.toString(),
+                        parameters = { parametersOf(filmId) }
                     )
                     DetailsScreen(
                         viewModel = detailsViewModel,
                         onBack = {
-                            selectedFilmId = null
-                            scope.launch { navigator.navigateBack() }
+                            scope.launch {
+                                if (navigator.canNavigateBack()) {
+                                    navigator.navigateBack()
+                                }
+                                selectedFilmId = null
+                            }
                         }
                     )
                 }
-
             }
         }
     )

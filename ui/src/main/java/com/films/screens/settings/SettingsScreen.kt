@@ -4,14 +4,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
@@ -55,12 +53,11 @@ fun SettingsScreen(paddingValues: PaddingValues) {
                 .fillMaxWidth()
                 .padding(top = paddingValues.calculateTopPadding() + 16.dp)
                 .padding(horizontal = 12.dp),
-            horizontalArrangement = Arrangement.SpaceAround
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            BaseCard {
+            BaseCard(modifier = Modifier.weight(1f)) {
                 Column(
                     modifier = Modifier
-                        .width(IntrinsicSize.Max)
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(2.dp)
                 ) {
@@ -82,10 +79,9 @@ fun SettingsScreen(paddingValues: PaddingValues) {
                 }
             }
 
-            BaseCard {
+            BaseCard(modifier = Modifier.weight(1f)) {
                 Column(
                     modifier = Modifier
-                        .width(IntrinsicSize.Max)
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
@@ -134,6 +130,7 @@ private fun ThemeItem(
         )
         BaseText(
             stringResource(option.getTitleRes()),
+            maxLines = 1,
             modifier = Modifier.weight(1f)
         )
         RadioButton(
@@ -164,6 +161,7 @@ private fun LanguageItem(
     ) {
         BaseText(
             stringResource(option.getTitleRes()),
+            maxLines = 1,
             modifier = Modifier.weight(1f)
         )
         RadioButton(

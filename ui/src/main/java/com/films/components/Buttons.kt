@@ -12,7 +12,6 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
@@ -54,11 +53,10 @@ fun ArrowBackButton(
     IconButton(
         modifier = modifier
             .padding(start = 16.dp, top = 16.dp)
-            .shadow(elevation = 2.dp, shape = CircleShape)
             .size(48.dp),
         shape = CircleShape,
         colors = IconButtonDefaults.iconButtonColors(
-            containerColor = BaseTheme.colors.buttTertiary,
+            containerColor = BaseTheme.colors.buttTertiary.copy(alpha = 0.5f),
         ),
         onClick = onClick
     ) {

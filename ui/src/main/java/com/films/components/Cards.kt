@@ -39,7 +39,7 @@ fun FilmsItem(
             CoilImage(
                 model = IMAGE_URL + poster,
                 placeholder = R.drawable.placeholder_image,
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .clip(
                         shape = MaterialTheme.shapes.large

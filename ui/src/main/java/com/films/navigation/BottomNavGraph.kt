@@ -63,7 +63,7 @@ fun BottomNavGraph(
             entryProvider = entryProvider {
 
                 entry<Routes.Home> {
-                    AdaptiveFilmListDetailPane { onFilmClick ->
+                    AdaptiveFilmListDetailPane(onNavigateToRootDetails = onNavigateToDetails) { onFilmClick ->
                         HomeScreen(
                             paddingValues = paddingValues,
                             onFilmClick = onFilmClick
@@ -72,7 +72,7 @@ fun BottomNavGraph(
                 }
 
                 entry<Routes.Favorites> {
-                    AdaptiveFilmListDetailPane { onFilmClick ->
+                    AdaptiveFilmListDetailPane(onNavigateToRootDetails = onNavigateToDetails) { onFilmClick ->
                         FavoritesScreen(
                             paddingValues = paddingValues,
                             onFilmClick = onFilmClick
@@ -81,7 +81,7 @@ fun BottomNavGraph(
                 }
 
                 entry<Routes.WatchLater> {
-                    AdaptiveFilmListDetailPane { onFilmClick ->
+                    AdaptiveFilmListDetailPane(onNavigateToRootDetails = onNavigateToDetails) { onFilmClick ->
                         WatchLaterScreen(
                             paddingValues = paddingValues,
                             onFilmClick = onFilmClick

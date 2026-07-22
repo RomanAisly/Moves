@@ -98,6 +98,12 @@ fun DetailsScreen(
         horizontal = Alignment.CenterHorizontally,
         vertical = Arrangement.spacedBy(14.dp),
         overlayContent = {
+            ArrowBackButton(
+                onClick = onBack,
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .statusBarsPadding()
+            )
             SnackBarFlow(
                 snackBarFlow = viewModel.errorSnack,
                 iconRes = { it.getIconRes() },
@@ -114,12 +120,6 @@ fun DetailsScreen(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
 
-            )
-            ArrowBackButton(
-                onClick = onBack,
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .statusBarsPadding()
             )
         }
     ) {

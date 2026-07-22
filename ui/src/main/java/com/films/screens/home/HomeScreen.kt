@@ -1,5 +1,7 @@
 package com.films.screens.home
 
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -13,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
@@ -45,6 +48,8 @@ fun HomeScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val refreshState = rememberPullToRefreshState()
+    val gridState = rememberLazyGridState()
+    val isScrollInProgress = gridState.isScrollInProgress
 
     Box(
         modifier = Modifier
@@ -61,6 +66,7 @@ fun HomeScreen(
                 LoadingScreen()
             } else {
                 LazyVerticalGrid(
+                    state = gridState,
                     columns = GridCells.Adaptive(minSize = 160.dp),
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -73,7 +79,16 @@ fun HomeScreen(
                 ) {
                     items(state.films, key = { it.id }) { films ->
                         FilmsItem(
-                            modifier = Modifier,
+                            modifier = Modifier.animateItem(
+                                placementSpec = if (isScrollInProgress) {
+                                    null
+                                } else {
+                                    spring(
+                                        dampingRatio = Spring.DampingRatioLowBouncy,
+                                        stiffness = Spring.StiffnessLow
+                                    )
+                                }
+                            ),
                             poster = films.poster_path,
                             title = films.title,
                             genres = films.genreIds.toLocalizedGenresString(),
